@@ -16,6 +16,11 @@ app.use(
 
 app.use(express.json());
 
+//db
+const db = require("./models");
+// db.sequelize.sync({ alter: true });
+db.sequelize.sync();
+
 //#region API ROUTES
 
 // ===========================
