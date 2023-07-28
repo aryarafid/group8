@@ -5,6 +5,7 @@ const { join } = require("path");
 
 const PORT = process.env.PORT || 8000;
 const app = express();
+
 app.use(
   cors({
     origin: [
@@ -19,7 +20,7 @@ app.use(express.json());
 //db
 const db = require("./models");
 // db.sequelize.sync({ alter: true });
-db.sequelize.sync();
+// db.sequelize.sync();
 
 //#region API ROUTES
 
