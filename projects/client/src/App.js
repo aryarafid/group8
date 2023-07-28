@@ -7,7 +7,8 @@ import {Routes, Route} from 'react-router-dom'
 
 import './App.css'
 import Login from "./components/Landing/Login";
-import Title from "./components/navbar/components/title";
+import Home from "./components/Landing/Home";
+
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     <>
     <Navbar/>
     <Routes>
-      <Route path="/homepage" element={<Title/>}/>
+      <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}></Route>
     </Routes>
     </>
