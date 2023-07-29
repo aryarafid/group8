@@ -21,10 +21,13 @@ const authController = {
             if(!checkPassword) return res.status(500).json({message : "Password wrong"})
             let payload = {
                 id : checkLogin.id,
-                username : checkLogin.username
+                username : checkLogin.username,
+                role : checkLogin.role
             }
+            console.log("role => ", checkLogin.role)
+            console.log("payload => ", payload)
             const token = jwt.sign(payload, process.env.JWT_KEY, {expiresIn : "3h"})
-            res.status(200).json({message : "Login Success", data : token})
+            res.status(200).json({message : "Login Success", isAccountExist : payload, role: checkLogin.role, token : token})
         } catch (error) {
             res.status(500).json({message : error.message})
         }

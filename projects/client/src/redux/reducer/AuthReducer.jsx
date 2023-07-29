@@ -49,11 +49,14 @@ export const loginAuth = (values, toast) => {
           password: values.password,
         }
       );
-      console.log("ini respon", respon);
+      console.log("ini datanya =>", respon);
       const token = respon.data.token;
+      console.log("data user", respon.data.user)
+      console.log("apakah role masuk?", respon.data.role);
       localStorage.setItem("token", token);
       dispatch(userLogin());
-      //   dispatch(setUser(respon.data.isAccountExist));
+      dispatch(setUser(respon.data.isAccountExist));
+
       //   toast({
       //     title: "Login Success",
       //     status: "success",

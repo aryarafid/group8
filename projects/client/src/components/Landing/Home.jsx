@@ -1,18 +1,24 @@
 import { useState } from "react";
-import Navbar from "../navbar/navbar";
 import Login from "./Login";
-import DashBoardAdmin from "./dashBoardAdmin";
 import { useSelector } from "react-redux";
+import DashBoardCashier from "./dashBoardCashier";
 
 export default function Home() {
   // const [login, setLogin] = useState(true);
   const { login } = useSelector((state) => state.AuthReducer);
 
-  console.log("loh kok => ?", login);
+  const { user } = useSelector((state) => state.AuthReducer);
+  console.log("penasaran ?", user.role);
   return (
     <>
       <main>
-        {!login ? <Login /> : <DashBoardAdmin />}
+        {!login ? (
+          <Login />
+        ) : user.role === "Cashier" ? (
+          <DashBoardCashier />
+        ) : (
+          <></>
+        )}
       </main>
     </>
   );

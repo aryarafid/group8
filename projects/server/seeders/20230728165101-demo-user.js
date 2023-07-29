@@ -3,17 +3,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Users', [
-      {
-        username : "Usop99",
-        email : "usop@gmail.com",
-        password : "$2a$10$Ld5F6BHFiIZ6iPX6sugsIuoOIpnE4CD5ci.WUm97vUqGDYNlqclY.",
-        role : "Admin",
-        isActive : true,
-        imgProfile : null,
-        createdAt: "2023-01-27 07:52:27",
-        updatedAt: "2023-01-27 07:52:27"
-     }], {});
+    // await queryInterface.bulkInsert('Users', [
+    //   {
+    //     username : "Sanji99",
+    //     email : "sanji@gmail.com",
+    //     password : "$2a$10$ZkQdFbPf0yMFxTU2yAyujeadvU9GlkxS5oaDj1Rj.3xZzZnfIt0ry",
+    //     role : "Cashier",
+    //     isActive : true,
+    //     imgProfile : null,
+    //     createdAt: "2023-01-27 07:52:27",
+    //     updatedAt: "2023-01-27 07:52:27"
+    //  }], {});
 
   },
 

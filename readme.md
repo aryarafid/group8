@@ -5,6 +5,7 @@ npm axios
 npm install bcrypt
 npm install sequelize
 npm install express
+npm install express-validator
 npm install sequelize-cli
 npm install dotenv
 npm i formik yup

@@ -6,7 +6,6 @@ const db = require("../models");
 const { authRouter } = require("../Routers");
 // db.sequelize.sync({ alter: true });
 
-const db = require("../models");
 // db.sequelize.sync({ alter: true });
 
 const PORT = process.env.PORT || 8000;
@@ -14,8 +13,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      process.env.WHITELISTED_DOMAIN &&
-        process.env.WHITELISTED_DOMAIN.split(","),
+      "http://localhost:3000"
     ],
   })
 );

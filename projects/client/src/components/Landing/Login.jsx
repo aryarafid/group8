@@ -7,11 +7,6 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -71,120 +66,73 @@ export default function Login() {
             <Text fontSize={"48px"} pt={"40px"} textAlign={"center"}>
               Login
             </Text>
-            <Tabs isFitted variant="enclosed">
-              <TabList mb="1em">
-                <Tab>Admin</Tab>
-                <Tab>Cashier</Tab>
-              </TabList>
-              <TabPanels>
-                <TabPanel>
-                  <form onSubmit={formik.handleSubmit}>
-                    <Box w={"500px"} ml={"150px"}>
-                      <Text pt={"5px"} fontSize={"32px"}>
-                        Username
-                      </Text>
-                      <FormControl
-                        isInvalid={
-                          formik.touched.username && formik.errors.username
-                        }
-                      >
-                        <Input
-                          w={"500px"}
-                          variant={"flushed"}
-                          placeholder="Input admin username"
-                          id="username"
-                          name="username"
-                          type="text"
-                          value={formik.values.username}
-                          onChange={formik.handleChange}
-                        ></Input>
-                        {formik.touched.username && formik.errors.username && (
-                          <FormErrorMessage>
-                            {formik.errors.username}
-                          </FormErrorMessage>
-                        )}
-                      </FormControl>
-                      <FormControl
-                        isInvalid={
-                          formik.touched.password && formik.errors.password
-                        }
-                      >
-                        <Text pt={"32px"} fontSize={"32px"}>
-                          Password
-                        </Text>
-                        <InputGroup>
-                          <Input
-                            type={show ? "text" : "password"}
-                            w={"500px"}
-                            variant={"flushed"}
-                            placeholder="Type here"
-                            id="password"
-                            name="password"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
-                          ></Input>
-                          <InputRightElement>
-                            <Button onClick={handleClick} variant={"unstyled"}>
-                              {show ? (
-                                <AiFillEyeInvisible size={"40px"} />
-                              ) : (
-                                <AiFillEye size={"40px"} />
-                              )}
-                            </Button>
-                          </InputRightElement>
-                        </InputGroup>
-                        {formik.touched.password && formik.errors.password && (
-                          <FormErrorMessage>
-                            {formik.errors.password}
-                          </FormErrorMessage>
-                        )}
-                      </FormControl>
-                      <Button
-                        mt={"50px"}
-                        w={"500px"}
-                        colorScheme="green"
-                        type="submit"
-                      >
-                        Submit Admin
-                      </Button>
-                    </Box>
-                  </form>
-                </TabPanel>
-                <TabPanel>
-                  <Box w={"500px"} ml={"150px"}>
-                    <Text pt={"5px"} fontSize={"32px"}>
-                      Username
-                    </Text>
+            <form onSubmit={formik.handleSubmit}>
+              <Box w={"500px"} ml={"150px"}>
+                <Text pt={"5px"} fontSize={"32px"}>
+                  Username
+                </Text>
+                <FormControl
+                  isInvalid={formik.touched.username && formik.errors.username}
+                >
+                  <Input
+                    w={"500px"}
+                    variant={"flushed"}
+                    placeholder="Input admin username"
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                  ></Input>
+                  {formik.touched.username && formik.errors.username && (
+                    <FormErrorMessage>
+                      {formik.errors.username}
+                    </FormErrorMessage>
+                  )}
+                </FormControl>
+                <FormControl
+                  isInvalid={formik.touched.password && formik.errors.password}
+                >
+                  <Text pt={"32px"} fontSize={"32px"}>
+                    Password
+                  </Text>
+                  <InputGroup>
                     <Input
+                      type={show ? "text" : "password"}
                       w={"500px"}
                       variant={"flushed"}
-                      placeholder="Input cashier username"
+                      placeholder="Type here"
+                      id="password"
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
                     ></Input>
-                    <Text pt={"32px"} fontSize={"32px"}>
-                      Password
-                    </Text>
-                    <InputGroup>
-                      <Input
-                        type={show ? "text" : "password"}
-                        w={"500px"}
-                        variant={"flushed"}
-                        placeholder="Type here"
-                      ></Input>
-                      <InputRightElement>
-                        <Button onClick={handleClick} variant={"unstyled"}>
-                          {show ? (
-                            <AiFillEyeInvisible size={"40px"} />
-                          ) : (
-                            <AiFillEye size={"40px"} />
-                          )}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                    <Button colorScheme="green">Submit</Button>
-                  </Box>
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+                    <InputRightElement>
+                      <Button onClick={handleClick} variant={"unstyled"}>
+                        {show ? (
+                          <AiFillEyeInvisible size={"40px"} />
+                        ) : (
+                          <AiFillEye size={"40px"} />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                  {formik.touched.password && formik.errors.password && (
+                    <FormErrorMessage>
+                      {formik.errors.password}
+                    </FormErrorMessage>
+                  )}
+                </FormControl>
+                <Button
+                  mt={"50px"}
+                  w={"500px"}
+                  colorScheme="green"
+                  type="submit"
+                >
+                  Submit Admin
+                </Button>
+              </Box>
+            </form>
           </Box>
         </Stack>
       </Box>
