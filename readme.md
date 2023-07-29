@@ -9,6 +9,10 @@ npm install express-validator
 npm install sequelize-cli
 npm install dotenv
 npm i formik yup
+npm i nodemailer
+npm i multer
+npm i react-router-dom
+npm i handlebars
 This is monorepo contain frontend project using ReactJS and backend project using ExpressJS.
 
 ## Available Scripts

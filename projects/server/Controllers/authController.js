@@ -18,16 +18,19 @@ const authController = {
             const checkLogin = await user.findOne({where: account})
             if(!checkLogin) return res.status(500).json({message : "Account not defined"})
             const checkPassword = await bcrypt.compare(password, checkLogin.password)
-            if(!checkPassword) return res.status(500).json({message : "Password wrong"})
+            if(!checkPassword) return res.status(500).json({message : "Incorrect password"})
             let payload = {
                 id : checkLogin.id,
                 username : checkLogin.username,
-                role : checkLogin.role
+                email : checkLogin.email,
+                role : checkLogin.role,
+                isActive : checkLogin.isActive,
+                imgProfile : checkLogin.imgProfile
             }
             console.log("role => ", checkLogin.role)
             console.log("payload => ", payload)
             const token = jwt.sign(payload, process.env.JWT_KEY, {expiresIn : "3h"})
-            res.status(200).json({message : "Login Success", isAccountExist : payload, role: checkLogin.role, token : token})
+            res.status(200).json({message : "Login Success", isAccountExist : payload, token : token})
         } catch (error) {
             res.status(500).json({message : error.message})
         }
