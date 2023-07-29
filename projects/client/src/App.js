@@ -9,6 +9,7 @@ import Login from "./components/Landing/Login";
 import Home from "./components/Landing/Home";
 
 import "./App.css"
+import ResetPassword from "./components/Landing/ResetPassword";
 
 
 
@@ -29,6 +30,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}></Route>
+      <Route path="/reset-password/:token" element={<ResetPassword/>}/>
     </Routes>
     </>
   );

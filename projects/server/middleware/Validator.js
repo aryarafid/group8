@@ -17,6 +17,22 @@ const loginValidator = [
       .isLength({min : 10, max : 12}).withMessage("Phone must have min 10 number and max 12 number")
 ]
 
+const forgotPassValidator = [
+  body("email").notEmpty().withMessage("Email cannot be empty").isEmail().withMessage("Invalid email address format")
+]
+
+const resetPasswordValidator = [
+  body("newPassword").notEmpty().withMessage("Password can not be empty")
+  .matches(/^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/)
+  .withMessage("Password must contain 6 character, one uppercase, one number, and one special case character"),
+  body("confirmPassword").custom((confirmPassword, {req}) => {
+    if(confirmPassword !== req.body.newPassword){
+      throw new Error("Password not match")
+    } 
+    return true
+  })
+]
+
 const validateRegist = (req, res, next) => {
     const errors = validationResult(req);
   //   validationResult memiliki method isEmpty untuk mengembalikan nilai true/false
@@ -27,6 +43,6 @@ const validateRegist = (req, res, next) => {
   };
 
   module.exports = {
-    validateRegist, loginValidator
+    validateRegist, loginValidator, forgotPassValidator, resetPasswordValidator
   }
 
