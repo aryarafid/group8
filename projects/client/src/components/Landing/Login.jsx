@@ -8,8 +8,10 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  Spinner,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -38,6 +40,8 @@ const loginSchema = Yup.object().shape({
 });
 export default function Login() {
   const [show, setShow] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
   const dispath = useDispatch();
   const handleClick = () => {
     setShow(!show);
@@ -50,7 +54,7 @@ export default function Login() {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      dispath(loginAuth(values));
+      dispath(loginAuth(values, setLoading, toast));
     },
   });
 
@@ -61,10 +65,6 @@ export default function Login() {
           <Box
             w={{ base: "250px", sm: "380px", md: "450px", lg: "600px" }}
             h={"600px"}
-            // bgGradient={
-            //   "radial-gradient(circle at 50% 44.4%, #4f3f66 0, #3b2e5f 25%, #1f1f59 50%, #001253 75%, #00004e 100%)"
-            // }
-            // bgColor={"black"}
             fontFamily={"montserrat"}
             m={{
               base: "50px auto",
@@ -99,6 +99,7 @@ export default function Login() {
                         md: "450px",
                         lg: "500px",
                       }}
+                      focusBorderColor="green.200"
                       placeholder="Username"
                       id="username"
                       name="username"
@@ -106,12 +107,12 @@ export default function Login() {
                       value={formik.values.username}
                       onChange={formik.handleChange}
                     ></Input>
-                    {formik.touched.username && formik.errors.username && (
-                      <FormErrorMessage>
-                        {formik.errors.username}
-                      </FormErrorMessage>
-                    )}
                   </InputGroup>
+                  {formik.touched.username && formik.errors.username && (
+                    <FormErrorMessage>
+                      {formik.errors.username}
+                    </FormErrorMessage>
+                  )}
                 </FormControl>
                 <FormControl
                   isInvalid={formik.touched.password && formik.errors.password}
@@ -121,6 +122,7 @@ export default function Login() {
                       <BiSolidLockAlt size={"20px"} />
                     </InputLeftElement>
                     <Input
+                      focusBorderColor="green.200"
                       m={"20px 10px"}
                       type={show ? "text" : "password"}
                       w={{
@@ -129,7 +131,6 @@ export default function Login() {
                         md: "450px",
                         lg: "500px",
                       }}
-                      // variant={"flushed"}
                       placeholder="Password"
                       id="password"
                       name="password"
@@ -140,7 +141,6 @@ export default function Login() {
                       <Button
                         onClick={handleClick}
                         variant={"unstyled"}
-                        // size={"md"}
                         mt={"40px"}
                         mr={"50px"}
                       >
@@ -172,13 +172,14 @@ export default function Login() {
                     </FormErrorMessage>
                   )}
                 </FormControl>
+
                 <Button
                   mt={"50px"}
                   w={{ base: "200px", sm: "250px", md: "350px", lg: "400px" }}
                   colorScheme="green"
                   type="submit"
                 >
-                  Submit
+                  {isLoading ? <Spinner /> : "Submit"}
                 </Button>
               </Box>
             </form>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { useState } from "react";
 
 const initialState = {
   user: {
@@ -38,9 +39,10 @@ export const AuthReducer = createSlice({
   },
 });
 
-export const loginAuth = (values, toast) => {
+export const loginAuth = (values, setLoading, toast) => {
   return async (dispatch) => {
     try {
+      setLoading(false);
       console.log("=>", values);
       const respon = await axios.post(
         "http://localhost:8000/mini-project/api/auth/login",
@@ -56,26 +58,27 @@ export const loginAuth = (values, toast) => {
       localStorage.setItem("token", token);
       dispatch(userLogin());
       dispatch(setUser(respon.data.isAccountExist));
-
-      //   toast({
-      //     title: "Login Success",
-      //     status: "success",
-      //     duration: 3000,
-      //     isClosable: true,
-      //   });
+      toast({
+        title: "Login Success",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       //   setTimeout(() => {
       //     // window.location.reload();
       //     document.location.href = "/";
       //   }, 350);
     } catch (error) {
       console.log("ini error", error);
-      //   toast({
-      //     title: "Login Failed",
-      //     description: "Account Not Verify",
-      //     status: "error",
-      //     duration: 3000,
-      //     isClosable: true,
-      //   });
+      toast({
+        title: "Login Failed",
+        description: "Account Not Verify",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(true);
     }
   };
 };

@@ -13,13 +13,16 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineMail } from "react-icons/ai";
+import { useState } from "react";
 
 const ResetSchema = Yup.object().shape({
   email: Yup.string()
@@ -28,8 +31,11 @@ const ResetSchema = Yup.object().shape({
 });
 
 export default function ForgetPassword({ isOpen, onClose }) {
+  const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
   const resetPassword = async (values) => {
     try {
+      setLoading(true);
       const respon = await axios.put(
         `http://localhost:8000/mini-project/api/auth/forgotPassword`,
         {
@@ -38,8 +44,23 @@ export default function ForgetPassword({ isOpen, onClose }) {
         }
       );
       console.log("forget password => ", respon);
+      toast({
+        title: "Link reset password send",
+        description: "Please check your email",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Invalid emaill address",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
     }
   };
   const formik = useFormik({
@@ -85,10 +106,10 @@ export default function ForgetPassword({ isOpen, onClose }) {
                         lg: "350px",
                       }}
                     ></Input>
-                    {formik.touched.email && formik.errors.email && (
-                      <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
-                    )}
                   </InputGroup>
+                  {formik.touched.email && formik.errors.email && (
+                    <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                  )}
                   <Button
                     mt={{ base: "10px", sm: "10px", md: "15px", lg: "20px" }}
                     w={{ base: "50px", sm: "100px", md: "150px", lg: "200px" }}
@@ -101,7 +122,7 @@ export default function ForgetPassword({ isOpen, onClose }) {
                       lg: "20px",
                     }}
                   >
-                    Get Link
+                    {isLoading ? <Spinner /> : "Get link"}
                   </Button>
                 </FormControl>
               </form>

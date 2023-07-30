@@ -8,7 +8,7 @@ export default function ButtonForgorPassword() {
       <Button
         onClick={onOpen}
         mt={"20px"}
-        ml={{ base: "20px", sm: "60px", md: "60px", lg: "100px" }}
+        ml={{ base: "20px", sm: "120px", md: "200px", lg: "300px" }}
         w={"200px"}
         variant={"unstyled"}
         borderRadius={"30px"}
