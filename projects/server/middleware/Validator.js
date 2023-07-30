@@ -66,6 +66,22 @@ const resetPasswordValidator = [
   })
 ]
 
+const forgotPassValidator = [
+  body("email").notEmpty().withMessage("Email cannot be empty").isEmail().withMessage("Invalid email address format")
+]
+
+const resetPasswordValidator = [
+  body("newPassword").notEmpty().withMessage("Password can not be empty")
+  .matches(/^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/)
+  .withMessage("Password must contain 6 character, one uppercase, one number, and one special case character"),
+  body("confirmPassword").custom((confirmPassword, {req}) => {
+    if(confirmPassword !== req.body.newPassword){
+      throw new Error("Password not match")
+    } 
+    return true
+  })
+]
+
 const validateRegist = (req, res, next) => {
   const errors = validationResult(req);
   //   validationResult memiliki method isEmpty untuk mengembalikan nilai true/false
@@ -73,9 +89,9 @@ const validateRegist = (req, res, next) => {
     return res.status(400).json({
       errors: errors.array()
     });
-  }
-  next();
-};
+    next();
+  };
+}
 
 module.exports = {
   validateRegist,

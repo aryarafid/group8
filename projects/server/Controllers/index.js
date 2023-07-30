@@ -9,3 +9,6 @@ module.exports = {
     forgetController,
     adminController
 }
+const forgetController = require("./forgetController")
+
+module.exports = {authController, forgetController}
