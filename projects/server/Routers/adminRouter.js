@@ -7,23 +7,28 @@ const {
   createCashierValidator,
 } = require("../middleware/Validator");
 const {
-  authValidator
-} = require("../middleware/authValidator");
+  auth
+} = require("../middleware/auth");
 
+router.get(
+  "/get-cashier",
+  // auth.verifyToken,
+  adminController.getCashier
+);
 router.post(
   "/create-cashier",
   createCashierValidator,
   validateRegist,
-  authValidator.verifyToken,
+  // auth.verifyToken,
   adminController.createCashier
 );
 router.patch(
   "/update-cashier/:id",
-  // authValidator.verifyToken,
+  // auth.verifyToken,
   adminController.updateCashier
 );
-router.delete("/delete-cashier/:id",
-  // authValidator.verifyToken,
+router.patch("/delete-cashier/:id",
+  // auth.verifyToken,
   adminController.deleteCashier);
 
 module.exports = router;
