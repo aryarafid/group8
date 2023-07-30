@@ -51,8 +51,8 @@ export const loginAuth = (values, toast) => {
       );
       console.log("ini datanya =>", respon);
       const token = respon.data.token;
-      console.log("data user", respon.data.user)
-      console.log("apakah role masuk?", respon.data.role);
+      console.log("data user", respon.data.isAccountExist);
+      console.log("apakah role masuk?", respon.data.isAccountExist.role);
       localStorage.setItem("token", token);
       dispatch(userLogin());
       dispatch(setUser(respon.data.isAccountExist));

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   Input,
@@ -15,6 +16,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { loginAuth } from "../../redux/reducer/AuthReducer";
+import ForgetPassword from "../components/ForgetPassword";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -54,12 +56,12 @@ export default function Login() {
         <Stack>
           <Box
             w={"800px"}
-            h={"550px"}
+            h={"600px"}
             bgGradient={
               "radial-gradient(circle at 50% 44.4%, #4f3f66 0, #3b2e5f 25%, #1f1f59 50%, #001253 75%, #00004e 100%)"
             }
             fontFamily={"montserrat"}
-            m={"100px auto"}
+            m={"50px auto"}
             color={"white"}
             borderRadius={"20px"}
           >
@@ -77,7 +79,7 @@ export default function Login() {
                   <Input
                     w={"500px"}
                     variant={"flushed"}
-                    placeholder="Input admin username"
+                    placeholder="Type here"
                     id="username"
                     name="username"
                     type="text"
@@ -129,10 +131,11 @@ export default function Login() {
                   colorScheme="green"
                   type="submit"
                 >
-                  Submit Admin
+                  Submit
                 </Button>
               </Box>
             </form>
+            <ForgetPassword />
           </Box>
         </Stack>
       </Box>
