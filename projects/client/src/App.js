@@ -35,6 +35,8 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/profile" element={<ProfileCashier/>}/>
       <Route path="/category" element={<CategoryProduct/>}/>
+      {/* <Route path="/login" element={<Login/>}></Route> */}
+      <Route path="/login" element={<Login/>}></Route>
       <Route path="/reset-password/:token" element={<ResetPassword/>}/>
     </Routes>
     </UserAuth>
