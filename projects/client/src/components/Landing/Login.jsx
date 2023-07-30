@@ -61,7 +61,12 @@ export default function Login() {
               "radial-gradient(circle at 50% 44.4%, #4f3f66 0, #3b2e5f 25%, #1f1f59 50%, #001253 75%, #00004e 100%)"
             }
             fontFamily={"montserrat"}
-            m={{ base: "50px 10px", lg: "50px auto" }}
+            m={{
+              base: "50px auto",
+              sm: "50px auto",
+              md: "50px auto",
+              lg: "50px auto",
+            }}
             color={"white"}
             borderRadius={"20px"}
           >
@@ -165,7 +170,7 @@ export default function Login() {
                 </FormControl>
                 <Button
                   mt={"50px"}
-                  w={{ base: "200px", sm: "300px", md: "", lg: "500px" }}
+                  w={{ base: "200px", sm: "350px", md: "450px", lg: "500px" }}
                   colorScheme="green"
                   type="submit"
                 >

@@ -43,7 +43,10 @@ export default function ForgetPassword() {
   });
   return (
     <>
-      <Box ml={"150px"} mt={"20px"}>
+      <Box
+        mt={"20px"}
+        ml={{ base: "64px", sm: "64px", md: "100px", lg: "150px" }}
+      >
         <Text>Forget your password ?</Text>
         <Flex mt={"20px"}>
           <form onSubmit={formik.handleSubmit}>
@@ -57,13 +60,23 @@ export default function ForgetPassword() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 placeholder="Email Address"
-                w={"300px"}
+                w={{
+                  base: "200px",
+                  sm: "250px",
+                  md: "300px",
+                  lg: "300px",
+                }}
                 variant={"flushed"}
               ></Input>
               {formik.touched.email && formik.errors.email && (
                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               )}
-              <Button w={"200px"} type="submit" colorScheme="yellow">
+              <Button
+                w={{ base: "50px", sm: "100px", md: "150px", lg: "200px" }}
+                type="submit"
+                colorScheme="yellow"
+                fontSize={{ base: "12px", sm: "12px", md: "16px", lg: "20px" }}
+              >
                 Reset Password
               </Button>
             </FormControl>
