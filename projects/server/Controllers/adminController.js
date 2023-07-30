@@ -3,9 +3,6 @@ const path = require("path");
 const user = db.User;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {
-  now
-} = require("sequelize/types/utils");
 require("dotenv").config({
   path: path.resolve("../.env"),
 });
