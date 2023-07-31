@@ -20,9 +20,17 @@ const productController = {
                 categoryId,
                 name,
                 sortByName,
+<<<<<<< HEAD
+                sortByDate,
+                size
+            } = req.query
+
+            const limitPerPage = parseInt(size) || 2;
+=======
                 sortByDate
             } = req.query
 
+>>>>>>> 5e96549f17b2dc9fdedc5be1e131c66451da1b51
             const whereClause = {};
             if (categoryId) {
                 whereClause.categoryId = categoryId

@@ -1,7 +1,11 @@
 const multer = require("multer");
 const fs = require("fs");
 
+<<<<<<< HEAD
+let defaultPath = "public/images";
+=======
 let defaultPath = "src/public";
+>>>>>>> 5e96549f17b2dc9fdedc5be1e131c66451da1b51
 const storage = multer.diskStorage({
     // destination: (req, file, cb) => {
     //     cb(null, defaultPath);

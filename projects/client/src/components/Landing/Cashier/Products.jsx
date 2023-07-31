@@ -25,7 +25,8 @@ export default function Products() {
             <Button variant={"unstyled"}>Add to cart</Button>
           </CardFooter>
         </Card>
-        <Card maxW={"500px"} maxH={"350px"}>
+
+        {/* <Card maxW={"500px"} maxH={"350px"}>
           <CardBody>
             <Box bgImage={"ayamm.jpeg"} w={"200px"} h={"180px"}></Box>
             <Text>Ayam Sakti</Text>
@@ -34,7 +35,8 @@ export default function Products() {
           <CardFooter>
             <Button variant={"unstyled"}>Add to cart</Button>
           </CardFooter>
-        </Card>
+        </Card> */}
+
       </Flex>
     </>
   );
