@@ -10,6 +10,8 @@ import Home from "./components/Landing/Home";
 
 import "./App.css"
 import ResetPassword from "./components/Landing/ResetPassword";
+import ProfileCashier from "./components/Landing/Cashier/ProfileCashier";
+import CategoryProduct from "./components/Landing/Cashier/CategoryProduct";
 
 
 
@@ -29,7 +31,9 @@ function App() {
     <>
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/login" element={<Login/>}></Route>
+      <Route path="/profile" element={<ProfileCashier/>}/>
+      <Route path="/category" element={<CategoryProduct/>}/>
+      {/* <Route path="/login" element={<Login/>}></Route> */}
       <Route path="/reset-password/:token" element={<ResetPassword/>}/>
     </Routes>
     </>
