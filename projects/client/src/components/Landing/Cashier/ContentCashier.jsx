@@ -36,6 +36,7 @@ export default function ContentCashier() {
             h={{ md: "100px", lg: "150px" }}
           ></Image>
           <Spacer />
+
           <InputGroup>
             <InputLeftElement>
               <AiOutlineSearch />
@@ -52,7 +53,7 @@ export default function ContentCashier() {
           </InputGroup>
         </Flex>
 
-        <Tabs variant="soft-rounded" colorScheme="blue">
+        <Tabs variant='soft-rounded' colorScheme='blue'>
           <TabList>
             <Tab>Tab 1</Tab>
             <Tab>Tab 2</Tab>
@@ -66,7 +67,10 @@ export default function ContentCashier() {
             </TabPanel>
           </TabPanels>
         </Tabs>
+
+        {/* product */}
         <Products />
+
       </Box>
     </>
   );
