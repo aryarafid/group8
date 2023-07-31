@@ -9,6 +9,28 @@ require("dotenv").config({
 });
 
 const authController = {
+    getAccount : async(req,res) => {
+        try {
+            const account = await user.findAll()
+            return res.status(200).json({message : "Get Data success", data: account})
+        } catch (error) {
+            return res.status(500).json({message : error.message})
+        }
+    },
+    getAccountById : async(req,res) => {
+        try {
+        const {id} = req.params
+        const account = await user.findOne({
+            where : {
+                id : id
+            }
+        })
+        return res.status(200).json({message : "Success", data : account})
+        } catch (error) {
+            return res.status(500).json({message : error.message})
+        }        
+        
+    },
     login: async (req, res) => {
         try {
             const {
