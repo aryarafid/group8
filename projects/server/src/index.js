@@ -8,7 +8,8 @@ const db = require("../models");
 const {
   authRouter,
   adminRouter,
-  categoryRouter
+  categoryRouter,
+  productRouter
 } = require("../Routers");
 
 // db.sequelize.sync({
@@ -32,8 +33,9 @@ app.use(
 
 app.use(express.json());
 app.use("/mini-project/api", authRouter);
-app.use("/mini-project/api/admin", adminRouter);
+app.use("/mini-project/api/cashier", adminRouter);
 app.use("/mini-project/api/category", categoryRouter);
+app.use("/mini-project/api/product", productRouter);
 
 //#region API ROUTES
 
