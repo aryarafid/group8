@@ -7,6 +7,11 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -29,6 +34,7 @@ export default function ContentCashier() {
             h={{ md: "100px", lg: "150px" }}
           ></Image>
           <Spacer />
+
           <InputGroup>
             <InputLeftElement>
               <AiOutlineSearch />
@@ -44,7 +50,25 @@ export default function ContentCashier() {
             ></Input>
           </InputGroup>
         </Flex>
+
+        <Tabs variant='soft-rounded' colorScheme='blue'>
+          <TabList>
+            <Tab>Tab 1</Tab>
+            <Tab>Tab 2</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <p>one!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
+        {/* product */}
         <Products />
+
       </Box>
     </>
   );

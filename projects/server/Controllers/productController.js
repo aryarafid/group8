@@ -20,9 +20,11 @@ const productController = {
                 categoryId,
                 name,
                 sortByName,
-                sortByDate
+                sortByDate,
+                size
             } = req.query
 
+            const limitPerPage = parseInt(size) || 2;
             const whereClause = {};
             if (categoryId) {
                 whereClause.categoryId = categoryId
@@ -47,14 +49,15 @@ const productController = {
             }
 
             const result = await product.findAndCountAll({
-                limit: 10,
                 offset: page == null || page == 1 ? 0 : 10 * (page - 1),
                 where: whereClause,
+                limit: limitPerPage,
                 order: orderClause,
             });
             return res.status(200).json({
                 message: "get product success",
                 page: page == null || page == 1 ? 1 : page,
+                limit: limitPerPage,
                 data: result
             });
         } catch (error) {
