@@ -4,10 +4,11 @@ export default function TransactionCashier() {
   return (
     <>
       <Box
-        bgColor={"black"}
+        bgColor={"#223256"}
         w={"450px"}
         fontFamily={"montserrat"}
         color={"white"}
+        position={"sticky"}
       >
         <Stack>
           <Box m={"20px 30px"}>

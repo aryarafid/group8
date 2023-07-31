@@ -60,7 +60,7 @@ export default function Login() {
 
   return (
     <>
-      <Box w={"100%"} h={"100vh"} bgImage={"Wave.svg"} bgPos={"center"}>
+      <Box w={"100%"} h={"100vh"} bgImage={"Wave2.svg"} bgPos={"center"}>
         <Stack>
           <Box
             w={{ base: "250px", sm: "380px", md: "450px", lg: "600px" }}

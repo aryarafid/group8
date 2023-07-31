@@ -1,30 +1,25 @@
 import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  Icon,
-  IconButton,
-  Image,
-  Spacer,
-  Text,
-} from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
-import { BsFillPersonFill } from "react-icons/bs";
-import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { userLogout } from "../../redux/reducer/AuthReducer";
-
-export default function SideBarsCashier() {
+    Avatar,
+    Box,
+    Button,
+    Flex,
+    Icon,
+    IconButton,
+    Image,
+    Spacer,
+    Text,
+  } from "@chakra-ui/react";
+  import { Link, useNavigate } from "react-router-dom";
+  import { BiLogOut } from "react-icons/bi";
+  import { BsFillPersonFill } from "react-icons/bs";
+  import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
+  import { useDispatch } from "react-redux";
+export default function SideBarAdmin(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  function toProfile() {
-    navigate("/profile");
-  }
   return (
     <>
-      <Box w={"100px"} h={"100vh"} bgColor={"#223256"}>
+      <Box w={"100px"} h={"100vh"} bgColor={"#223256"} position={"sticky"}>
         <Link to={"/category"}>
           <Box
             textAlign={"center"}
@@ -77,7 +72,6 @@ export default function SideBarsCashier() {
             w={"80px"}
             h={"100px"}
             icon={<BiLogOut size={"2xl"} />}
-            onClick={() => dispatch(userLogout())}
           ></IconButton>
           <Text>Logout</Text>
         </Box>

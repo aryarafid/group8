@@ -32,10 +32,14 @@ export const AuthReducer = createSlice({
     userLogin: (state) => {
       state.login = true;
     },
-    // userLogout: (state, action) => {
-    //   state.login = false;
-    //   localStorage.removeItem("token");
-    // },
+    userLogout: (state, action) => {
+      state.login = false;
+      localStorage.removeItem("token");
+      setTimeout(() => {
+        // window.location.reload();
+        document.location.href = "/";
+      }, 350);
+    },
   },
 });
 
@@ -83,5 +87,5 @@ export const loginAuth = (values, setLoading, toast) => {
   };
 };
 
-export const { userLogin, setUser } = AuthReducer.actions;
+export const { userLogin, userLogout, setUser } = AuthReducer.actions;
 export default AuthReducer.reducer;
