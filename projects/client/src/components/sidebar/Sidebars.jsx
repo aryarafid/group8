@@ -1,9 +1,14 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 export default function SideBars() {
   return (
     <>
-      <Box w={"50px"} h={"100vh"} bgColor={"blue"}></Box>
+      <Box w={"80px"} h={"100vh"} bgColor={"red"}>
+        <Link>
+          <Image src="home.png"></Image>
+        </Link>
+      </Box>
     </>
   );
 }

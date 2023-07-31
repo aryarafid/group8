@@ -6,9 +6,12 @@ import {
   FormErrorMessage,
   Input,
   InputGroup,
+  InputLeftElement,
   InputRightElement,
+  Spinner,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
@@ -16,7 +19,10 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { loginAuth } from "../../redux/reducer/AuthReducer";
-import ForgetPassword from "../components/ForgetPassword";
+import ForgetPassword from "../ForgetPassword/ForgetPassword";
+import { BsPersonCircle } from "react-icons/bs";
+import { BiSolidLockAlt } from "react-icons/bi";
+import ButtonForgorPassword from "../ForgetPassword/ButtonForgotPassword";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -34,6 +40,8 @@ const loginSchema = Yup.object().shape({
 });
 export default function Login() {
   const [show, setShow] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const toast = useToast();
   const dispath = useDispatch();
   const handleClick = () => {
     setShow(!show);
@@ -46,46 +54,60 @@ export default function Login() {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      dispath(loginAuth(values));
+      dispath(loginAuth(values, setLoading, toast));
     },
   });
 
   return (
     <>
-      <Box w={"100%"} h={"100vh"}>
+      <Box w={"100%"} h={"100vh"} bgImage={"Wave.svg"} bgPos={"center"}>
         <Stack>
           <Box
-            w={"800px"}
+            w={{ base: "250px", sm: "380px", md: "450px", lg: "600px" }}
             h={"600px"}
-            bgGradient={
-              "radial-gradient(circle at 50% 44.4%, #4f3f66 0, #3b2e5f 25%, #1f1f59 50%, #001253 75%, #00004e 100%)"
-            }
             fontFamily={"montserrat"}
-            m={"50px auto"}
+            m={{
+              base: "50px auto",
+              sm: "60px auto",
+              md: "60px auto",
+              lg: "80px auto",
+            }}
             color={"white"}
             borderRadius={"20px"}
           >
             <Text fontSize={"48px"} pt={"40px"} textAlign={"center"}>
-              Login
+              Ei8th Cashier
             </Text>
             <form onSubmit={formik.handleSubmit}>
-              <Box w={"500px"} ml={"150px"}>
-                <Text pt={"5px"} fontSize={"32px"}>
-                  Username
-                </Text>
+              <Box
+                w={{ base: "200px", sm: "250px", md: "350px", lg: "400px" }}
+                m={"24px auto"}
+                // bgColor={"red"}
+              >
                 <FormControl
                   isInvalid={formik.touched.username && formik.errors.username}
                 >
-                  <Input
-                    w={"500px"}
-                    variant={"flushed"}
-                    placeholder="Type here"
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={formik.values.username}
-                    onChange={formik.handleChange}
-                  ></Input>
+                  <InputGroup>
+                    <InputLeftElement m={"20px 10px"}>
+                      <BsPersonCircle size={"20px"} />
+                    </InputLeftElement>
+                    <Input
+                      m={"20px 10px"}
+                      w={{
+                        base: "300px",
+                        sm: "350px",
+                        md: "450px",
+                        lg: "500px",
+                      }}
+                      focusBorderColor="green.200"
+                      placeholder="Username"
+                      id="username"
+                      name="username"
+                      type="text"
+                      value={formik.values.username}
+                      onChange={formik.handleChange}
+                    ></Input>
+                  </InputGroup>
                   {formik.touched.username && formik.errors.username && (
                     <FormErrorMessage>
                       {formik.errors.username}
@@ -95,26 +117,51 @@ export default function Login() {
                 <FormControl
                   isInvalid={formik.touched.password && formik.errors.password}
                 >
-                  <Text pt={"32px"} fontSize={"32px"}>
-                    Password
-                  </Text>
                   <InputGroup>
+                    <InputLeftElement m={"20px 10px"}>
+                      <BiSolidLockAlt size={"20px"} />
+                    </InputLeftElement>
                     <Input
+                      focusBorderColor="green.200"
+                      m={"20px 10px"}
                       type={show ? "text" : "password"}
-                      w={"500px"}
-                      variant={"flushed"}
-                      placeholder="Type here"
+                      w={{
+                        base: "300px",
+                        sm: "350px",
+                        md: "450px",
+                        lg: "500px",
+                      }}
+                      placeholder="Password"
                       id="password"
                       name="password"
                       value={formik.values.password}
                       onChange={formik.handleChange}
                     ></Input>
                     <InputRightElement>
-                      <Button onClick={handleClick} variant={"unstyled"}>
+                      <Button
+                        onClick={handleClick}
+                        variant={"unstyled"}
+                        mt={"40px"}
+                        mr={"50px"}
+                      >
                         {show ? (
-                          <AiFillEyeInvisible size={"40px"} />
+                          <AiFillEyeInvisible
+                            size={{
+                              base: "8px",
+                              sm: "12px",
+                              md: "16px",
+                              lg: "16px",
+                            }}
+                          />
                         ) : (
-                          <AiFillEye size={"40px"} />
+                          <AiFillEye
+                            size={{
+                              base: "8px",
+                              sm: "12px",
+                              md: "16px",
+                              lg: "16px",
+                            }}
+                          />
                         )}
                       </Button>
                     </InputRightElement>
@@ -125,17 +172,18 @@ export default function Login() {
                     </FormErrorMessage>
                   )}
                 </FormControl>
+
                 <Button
                   mt={"50px"}
-                  w={"500px"}
+                  w={{ base: "200px", sm: "250px", md: "350px", lg: "400px" }}
                   colorScheme="green"
                   type="submit"
                 >
-                  Submit
+                  {isLoading ? <Spinner /> : "Submit"}
                 </Button>
               </Box>
             </form>
-            <ForgetPassword />
+            <ButtonForgorPassword />
           </Box>
         </Stack>
       </Box>
