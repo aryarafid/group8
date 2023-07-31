@@ -48,6 +48,16 @@ const createCashierValidator = [
   .withMessage("Invalid email address format"),
 ];
 
+const createProductValidator = [
+  body('name').notEmpty().withMessage('Nama produk tidak boleh kosong.'),
+  body('categoryId').notEmpty().withMessage('Kode kategori tidak boleh kosong.'),
+  body('productImg').notEmpty().withMessage('Gambar produk tidak boleh kosong.'),
+  body('modal_produk').notEmpty().withMessage('Harga modal produk tidak boleh kosong.'),
+  body('harga_produk').notEmpty().withMessage('Harga produk tidak boleh kosong.'),
+  body('quantity').notEmpty().withMessage('Jumlah stok produk tidak boleh kosong.'),
+  body('description').notEmpty().withMessage('Deskripsi produk tidak boleh kosong.'),
+];
+
 const forgotPassValidator = [
   body("email").notEmpty().withMessage("Email cannot be empty").isEmail().withMessage("Invalid email address format")
 ]
@@ -82,5 +92,6 @@ module.exports = {
   loginValidator,
   forgotPassValidator,
   resetPasswordValidator,
-  createCashierValidator
+  createCashierValidator,
+  createProductValidator
 }

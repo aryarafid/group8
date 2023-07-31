@@ -12,7 +12,6 @@ const adminController = {
     try {
       const userFind = await user.findAll({
         where: {
-          isActive: 1,
           role: "Cashier"
         }
       });
