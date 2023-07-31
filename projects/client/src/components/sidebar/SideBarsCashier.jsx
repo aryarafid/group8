@@ -13,7 +13,7 @@ import { BiLogOut } from "react-icons/bi";
 export default function SideBarsCashier() {
   return (
     <>
-      <Box w={"100px"} h={"100vh"} bgColor={"teal"}>
+      <Box w={"100px"} h={"100vh"} bgColor={"#223256"}>
         <Link>
           <Flex>
             <Button
@@ -23,13 +23,8 @@ export default function SideBarsCashier() {
             >
               Logout
             </Button>
-            {/* <Icon as="button">
-              <BiLogOut size={"100px"} />
-              Logout
-            </Icon> */}
-            {/* <IconButton>Phone</IconButton> */}
-            {/* <Button leftIcon={""}>Logout</Button> */}
           </Flex>
+          <Box></Box>
         </Link>
         <Image src="home.png"></Image>
       </Box>
