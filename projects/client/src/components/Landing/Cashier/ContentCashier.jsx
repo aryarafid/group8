@@ -20,6 +20,8 @@ import Products from "./Products";
 import { useSelector } from "react-redux";
 
 export default function ContentCashier() {
+  
+
   return (
     <>
       <Box w={{ md: "900px", lg: "1200px" }} fontFamily={"montserrat"}>
@@ -53,7 +55,7 @@ export default function ContentCashier() {
           </InputGroup>
         </Flex>
 
-        <Tabs variant='soft-rounded' colorScheme='blue'>
+        <Tabs variant='soft-rounded' colorScheme='blue' paddingLeft={'3em'}>
           <TabList>
             <Tab>Tab 1</Tab>
             <Tab>Tab 2</Tab>
