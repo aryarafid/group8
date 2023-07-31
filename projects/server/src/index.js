@@ -1,9 +1,15 @@
 require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
-const { join } = require("path");
+const {
+  join
+} = require("path");
 const db = require("../models");
-const { authRouter, adminRouter } = require("../Routers");
+const {
+  authRouter,
+  adminRouter,
+  categoryRouter
+} = require("../Routers");
 
 // db.sequelize.sync({ alter: true });
 
@@ -23,6 +29,7 @@ app.use(
 app.use(express.json());
 app.use("/mini-project/api", authRouter);
 app.use("/mini-project/api/admin", adminRouter);
+app.use("/mini-project/api/category", categoryRouter);
 
 //#region API ROUTES
 

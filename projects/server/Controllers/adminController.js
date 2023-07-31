@@ -22,7 +22,7 @@ const adminController = {
       });
     } catch (error) {
       res.status(500).json({
-        message: error.message
+        error: error.message
       });
     }
   },
@@ -48,11 +48,12 @@ const adminController = {
         }, {
           transaction: t
         });
+        res.status(200).json({
+          message: "create cashier success",
+          data: cashCreate
+        });
       });
-      res.status(200).json({
-        message: "create cashier success",
-        data: token
-      });
+
     } catch (error) {
       res.status(500).json({
         error: error.message
