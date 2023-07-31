@@ -1,24 +1,69 @@
 const db = require("../models");
 const path = require("path");
-const user = db.User;
+const product = db.Product;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({
     path: path.resolve("../.env"),
 });
+const fs = require("fs").promises;
+const sequelize = db.Sequelize;
+const {
+    Op
+} = sequelize;
 
 const productController = {
-    getCashier: async (req, res) => {
+    getProduct: async (req, res) => {
         try {
-            const userFind = await user.findAll({
-                where: {
-                    isActive: 1,
-                    role: "Cashier"
-                }
+            const {
+                page,
+                categoryId,
+                name,
+                sortByName,
+<<<<<<< HEAD
+                sortByDate,
+                size
+            } = req.query
+
+            const limitPerPage = parseInt(size) || 2;
+=======
+                sortByDate
+            } = req.query
+
+>>>>>>> 5e96549f17b2dc9fdedc5be1e131c66451da1b51
+            const whereClause = {};
+            if (categoryId) {
+                whereClause.categoryId = categoryId
+            }
+            if (name) {
+                whereClause.name = {
+                    [Op.like]: `%${name}%`
+                };
+            }
+
+            const orderClause = [];
+            if (sortByName === 'ASC') {
+                orderClause.push(['name', 'ASC']);
+            } else if (sortByName === 'DESC') {
+                orderClause.push(['name', 'DESC']);
+            }
+
+            if (sortByDate === 'ASC') {
+                orderClause.push(['createdAt', 'ASC']);
+            } else if (sortByDate === 'DESC') {
+                orderClause.push(['createdAt', 'DESC']);
+            }
+
+            const result = await product.findAndCountAll({
+                limit: 10,
+                offset: page == null || page == 1 ? 0 : 10 * (page - 1),
+                where: whereClause,
+                order: orderClause,
             });
             return res.status(200).json({
-                message: "get cashier success",
-                data: userFind
+                message: "get product success",
+                page: page == null || page == 1 ? 1 : page,
+                data: result
             });
         } catch (error) {
             res.status(500).json({
@@ -27,31 +72,40 @@ const productController = {
         }
     },
 
-    createCashier: async (req, res) => {
-        try {
-            const {
-                username,
-                email,
-                password
-            } = req.body;
+    createProduct: async (req, res) => {
+        const {
+            name,
+            categoryId,
+            // productImg,
+            modal_produk,
+            harga_produk,
+            quantity,
+            description,
+            // isActive,
+        } = req.body;
 
-            const salt = await bcrypt.genSalt(10);
-            const hashPassword = await bcrypt.hash(password, salt);
+        // aktifkan multer!!!!!
+        return res.json(req.body)
+        try {
+
 
             await db.sequelize.transaction(async (t) => {
-                const cashCreate = await user.create({
-                    username,
-                    email,
-                    password: hashPassword,
-                    role: "Cashier",
+                const productCreate = await product.create({
+                    name,
+                    categoryId,
+                    // productImg: req.file.path,
+                    modal_produk,
+                    harga_produk,
+                    quantity,
+                    description,
                     isActive: true,
                 }, {
                     transaction: t
                 });
-            });
-            res.status(200).json({
-                message: "create cashier success",
-                data: token
+                res.status(200).json({
+                    message: "create product success",
+                    data: productCreate
+                });
             });
         } catch (error) {
             res.status(500).json({
@@ -60,7 +114,53 @@ const productController = {
         }
     },
 
-    updateCashier: async (req, res) => {
+    updateProductImage: async (req, res) => {
+        try {
+            const {
+                id
+            } = req.user;
+            await db.sequelize.transaction(async (t) => {
+                const oldData = await user.findOne({
+                    where: {
+                        id
+                    }
+                });
+                const result = await user.update({
+                    img_url: req.file.path,
+                }, {
+                    where: {
+                        id
+                    }
+                }, {
+                    transaction: t
+                });
+                if (!result) {
+                    return res.status(500).json({
+                        message: "Change avatar failed",
+                        error: err.message,
+                    });
+                }
+                fs.unlink(oldData.img_url, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    console.log("Old avatar deleted successfully");
+                });
+                return res.status(200).json({
+                    message: "Change avatar Success",
+                    image: req.file.path,
+                });
+            });
+        } catch (err) {
+            return res.status(500).json({
+                message: "Change avatar failed",
+                error: err.message,
+            });
+        }
+    },
+
+    updateProduct: async (req, res) => {
         try {
             const {
                 id
@@ -108,7 +208,7 @@ const productController = {
         }
     },
 
-    deleteCashier: async (req, res) => {
+    deleteProduct: async (req, res) => {
         try {
             const {
                 id
