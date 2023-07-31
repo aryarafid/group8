@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const adminController = require("../Controllers/adminController");
+const productController = require("../Controllers/productController");
 const {
   loginValidator,
   validateRegist,
-  createCashierValidator,
+  createProductValidator
 } = require("../middleware/Validator");
 const {
   auth
@@ -13,22 +13,22 @@ const {
 router.get(
   "/",
   // auth.verifyToken,
-  adminController.getCashier
+  productController.getProduct
 );
 router.post(
   "/create",
-  createCashierValidator,
-  validateRegist,
+  // createProductValidator,
+  // validateRegist,
   // auth.verifyToken,
-  adminController.createCashier
+  productController.createProduct
 );
 router.patch(
   "/update/:id",
   // auth.verifyToken,
-  adminController.updateCashier
+  productController.updateProduct
 );
 router.patch("/delete/:id",
   // auth.verifyToken,
-  adminController.deleteCashier);
+  productController.deleteProduct);
 
 module.exports = router;
