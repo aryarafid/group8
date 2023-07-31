@@ -3,66 +3,39 @@ const path = require("path");
 const product = db.Product;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const category = db.Category;
 require("dotenv").config({
     path: path.resolve("../.env"),
 });
 const fs = require("fs").promises;
 const sequelize = db.Sequelize;
-const {
-    Op
-} = sequelize;
+const { Op } = sequelize;
 
 const productController = {
     getProduct: async (req, res) => {
-        try {
-            const {
-                page,
-                categoryId,
-                name,
-                sortByName,
-<<<<<<< HEAD
-                sortByDate,
-                size
-            } = req.query
-
+        const { page, categoryId, name, orderBy, sortByDate, size } = req.query
+            const productPage = parseInt(page) || 1;
             const limitPerPage = parseInt(size) || 2;
-=======
-                sortByDate
-            } = req.query
-
->>>>>>> 5e96549f17b2dc9fdedc5be1e131c66451da1b51
-            const whereClause = {};
-            if (categoryId) {
-                whereClause.categoryId = categoryId
-            }
-            if (name) {
-                whereClause.name = {
-                    [Op.like]: `%${name}%`
-                };
-            }
-
-            const orderClause = [];
-            if (sortByName === 'ASC') {
-                orderClause.push(['name', 'ASC']);
-            } else if (sortByName === 'DESC') {
-                orderClause.push(['name', 'DESC']);
-            }
-
-            if (sortByDate === 'ASC') {
-                orderClause.push(['createdAt', 'ASC']);
-            } else if (sortByDate === 'DESC') {
-                orderClause.push(['createdAt', 'DESC']);
-            }
-
-            const result = await product.findAndCountAll({
-                limit: 10,
-                offset: page == null || page == 1 ? 0 : 10 * (page - 1),
-                where: whereClause,
-                order: orderClause,
-            });
+            const offset = (productPage - 1) * limitPerPage
+            const findName = {name : {[Op.like] : `%${name || ""}%`}}
+            if(categoryId) findName.categoryId = categoryId
+        try {
+            const result = await product.findAll({
+                attributes : {exclude : ["categoryId"]},
+                where : findName,
+                limit: limitPerPage,
+                productPage : productPage,
+                offset,
+                include : [
+                    { model : category, attributes : {exclude : ["createdAt", "updatedAt"]} },
+                ],
+                    order : [["createdAt", orderBy || "ASC"]]
+            })
+            
             return res.status(200).json({
                 message: "get product success",
-                page: page == null || page == 1 ? 1 : page,
+                productLimit : limitPerPage,
+                productPage : productPage, 
                 data: result
             });
         } catch (error) {

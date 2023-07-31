@@ -13,15 +13,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../redux/reducer/AuthReducer";
 
 export default function SideBarsCashier() {
+  const { user } = useSelector((state) => state.AuthReducer);
+  let imgProfile;
+  if (user.imgProfile)
+    imgProfile = "http://localhost:8000/" + user.imgProfile.replace(/\\/g, "/");
+  console.log("data pada side", user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  function toProfile() {
-    navigate("/profile");
-  }
   return (
     <>
       <Box w={"100px"} h={"100vh"} bgColor={"#223256"}>
@@ -51,9 +52,10 @@ export default function SideBarsCashier() {
               w={"80px"}
               h={"100px"}
             >
-              <Avatar src={``} size={"lg"} />
+              <Avatar src={`${imgProfile}`} size={"lg"} />
             </IconButton>
             <Text>Profile</Text>
+            <Text>{user.username}</Text>
           </Link>
         </Box>
         <Link to={"/"}>

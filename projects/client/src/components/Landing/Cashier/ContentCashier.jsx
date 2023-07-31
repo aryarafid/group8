@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -16,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "./Products";
+import { useSelector } from "react-redux";
 
 export default function ContentCashier() {
   return (
@@ -50,7 +52,7 @@ export default function ContentCashier() {
           </InputGroup>
         </Flex>
 
-        <Tabs variant='soft-rounded' colorScheme='blue'>
+        <Tabs variant="soft-rounded" colorScheme="blue">
           <TabList>
             <Tab>Tab 1</Tab>
             <Tab>Tab 2</Tab>
@@ -64,10 +66,7 @@ export default function ContentCashier() {
             </TabPanel>
           </TabPanels>
         </Tabs>
-
-        {/* product */}
         <Products />
-
       </Box>
     </>
   );

@@ -11,7 +11,7 @@ const {
 } = require("../middleware/auth");
 
 router.get(
-  "/",
+  "/products",
   // auth.verifyToken,
   productController.getProduct
 );
