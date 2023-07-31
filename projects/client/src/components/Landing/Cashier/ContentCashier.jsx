@@ -34,7 +34,6 @@ export default function ContentCashier() {
             h={{ md: "100px", lg: "150px" }}
           ></Image>
           <Spacer />
-
           <InputGroup>
             <InputLeftElement>
               <AiOutlineSearch />

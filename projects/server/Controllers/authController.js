@@ -1,6 +1,7 @@
 const db = require("../models");
 const path = require("path");
 const user = db.User;
+const fs = require("fs").promises
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({
@@ -46,6 +47,28 @@ const authController = {
             res.status(500).json({
                 message: error.message
             })
+        }
+    },
+    patchChangeProfile : async(req, res) => {
+        try {
+            const {id} = req.user
+            console.log("Tujuan ?",req.file.path)
+            const oldPicture = await user.findOne({ where : {id} })
+            if(oldPicture.imgProfile){
+                fs.unlink(oldPicture.imgProfile, (err) => {
+                    return res.status(500).json({message : err.message})
+                })
+            }
+            await db.sequelize.transaction( async (t) => {
+                const result = await user.update({
+                    imgProfile : req.file.path
+                }, {
+                    where : {id}
+                }, {transaction : t})
+                return res.status(200).json({message : "Profile picture change"})
+            })
+        } catch (error) {
+            return res.status(500).json({message : error.message})
         }
     }
 };
