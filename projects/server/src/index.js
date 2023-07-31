@@ -11,10 +11,14 @@ const {
   categoryRouter
 } = require("../Routers");
 
-// db.sequelize.sync({ alter: true });
+// db.sequelize.sync({
+//   alter: true
+// });
 
 // const db = require("../models");
-// db.sequelize.sync({ alter: true });
+// db.sequelize.sync({
+//   alter: true
+// });
 
 const PORT = process.env.PORT || 8000;
 const app = express();
