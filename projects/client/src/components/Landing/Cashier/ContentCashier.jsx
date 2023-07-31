@@ -33,9 +33,9 @@ export default function ContentCashier() {
             position={"absolute"}
             ml={"600px"}
             mt={"-20px"}
-            src="eightyy.png"
+            src="ei8gthh.png"
             w={"300px"}
-            h={"100px"}
+            h={"150px"}
           ></Image>
         </Flex>
       </Box>
