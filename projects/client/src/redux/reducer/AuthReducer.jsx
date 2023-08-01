@@ -68,10 +68,6 @@ export const loginAuth = (values, setLoading, toast) => {
         duration: 3000,
         isClosable: true,
       });
-      //   setTimeout(() => {
-      //     // window.location.reload();
-      //     document.location.href = "/";
-      //   }, 350);
     } catch (error) {
       console.log("ini error", error);
       toast({
@@ -83,6 +79,52 @@ export const loginAuth = (values, setLoading, toast) => {
       });
     } finally {
       setLoading(true);
+    }
+  };
+};
+
+export const changeProfile = (photo) => {
+  return async () => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("imgProfile", photo);
+    try {
+      const respon = await axios.patch(
+        "http://localhost:8000/mini-project/api/auth/changePicture",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(respon);
+      alert("Profile picture change");
+    } catch (error) {
+      console.log(error);
+      alert("Failed");
+    }
+  };
+};
+
+export const keepLogin = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      const respon = await axios.get(
+        "http://localhost:8000/mini-project/api/auth/keepLogin",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("keeplogin", respon);
+      dispatch(setUser(respon.data.findUser));
+      dispatch(userLogin());
+      // dispatch(userKeepLogin(respon.findUser));
+    } catch (error) {
+      console.log(error);
     }
   };
 };
