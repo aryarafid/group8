@@ -11,13 +11,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export default function Products() {
+export default function Products({product}) {
   return (
     <>
       <Flex wrap={"wrap"} ml={"30px"} gap={"20px"}>
         <Card maxW={"500px"} maxH={"350px"}>
           <CardBody>
-            <Box bgImage={"miegorengjawa.jpeg"} w={"200px"} h={"180px"}></Box>
+            <Box bgImage={product.productImg} w={"200px"} h={"180px"}></Box>
             <Text>Mie Goreng Jawa</Text>
             <Text>Rp.2 Juta</Text>
           </CardBody>

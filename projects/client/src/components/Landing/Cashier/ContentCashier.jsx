@@ -2,6 +2,9 @@ import {
   Avatar,
   Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
   Flex,
   Image,
   Input,
@@ -17,10 +20,60 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "./Products";
-import { useSelector } from "react-redux";
+import useSelector from "react-redux";
+import { useState, useEffect } from "react";
+import axios from "axios"
+
 
 export default function ContentCashier() {
-  
+  const [page, setPage] = useState(1)
+  const [name, setName] = useState("")
+  const [categoryId, setCategoryId] = useState("")
+  const [orderByName, setOrderByName] = useState("")
+  const [orderByPrice, setOrderByPrice] = useState("")
+  const [size, setSize] = useState("")
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const url = `http://localhost:8000/mini-project/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
+      const response = await axios.get(url);
+      console.log(response.data);
+      setPage(response.data.page);
+      setProducts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      const url = `http://localhost:8000/mini-project/api/category/`;
+      const response = await axios.get(url);
+      console.log(response.data);
+      // setPage(response.data.page);
+      setCategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCategory()
+  }, [])
+
+  useEffect(() => {
+    fetchData();
+  }, [categoryId, orderByName, orderByPrice, page]);
+
+  const handleCategoryFilter = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  const filteredProducts = selectedCategory ? products.filter((product) => product.categoryId === selectedCategory) : products;
+  console.log(filteredProducts);
 
   return (
     <>
@@ -55,23 +108,45 @@ export default function ContentCashier() {
           </InputGroup>
         </Flex>
 
-        <Tabs variant='soft-rounded' colorScheme='blue' paddingLeft={'3em'}>
+        {/* tab */}
+        <Tabs variant='soft-rounded' colorScheme='blue' paddingLeft={'4em'}>
+
           <TabList>
-            <Tab>Tab 1</Tab>
-            <Tab>Tab 2</Tab>
+            {category.map((category) =>
+              <Tab key={category.id} onClick={() => setSelectedCategory(category.id)}>
+                {category.name}
+              </Tab>
+            )}
           </TabList>
+
           <TabPanels>
             <TabPanel>
-              <p>one!</p>
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
+              {/* product */}
+              <Flex wrap={"wrap"} ml={"4em"} mt={'1em'} gap={"20px"} >
+                {filteredProducts.map((product) =>
+                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                    <CardBody>
+                      <Box
+                        // bgImage={ }
+                        w={"200px"} h={"180px"}></Box>
+                      <Text>
+                        {product.name}
+                      </Text>
+                      <Text>
+                        {product.harga_produk}
+                      </Text>
+                    </CardBody>
+                    <CardFooter>
+                      <Button variant={"unstyled"}>Add to cart</Button>
+                    </CardFooter>
+                  </Card>
+                )}
+              </Flex>
             </TabPanel>
           </TabPanels>
         </Tabs>
 
-        {/* product */}
-        <Products />
+
 
       </Box>
     </>

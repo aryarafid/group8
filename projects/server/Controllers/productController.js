@@ -13,29 +13,33 @@ const { Op } = sequelize;
 
 const productController = {
     getProduct: async (req, res) => {
-        const { page, categoryId, name, orderBy, sortByDate, size } = req.query
-            const productPage = parseInt(page) || 1;
-            const limitPerPage = parseInt(size) || 2;
-            const offset = (productPage - 1) * limitPerPage
-            const findName = {name : {[Op.like] : `%${name || ""}%`}}
-            if(categoryId) findName.categoryId = categoryId
+        const { page, categoryId, name, orderByName, orderByPrice, size } = req.query
+        const productPage = parseInt(page) || 1;
+        // const limitPerPage = parseInt(size) || 2;
+        const limitPerPage = parseInt(size) || 10;
+        const offset = (productPage - 1) * limitPerPage
+        const findName = { name: { [Op.like]: `%${name || ""}%` } }
+        if (categoryId) findName.categoryId = categoryId
         try {
             const result = await product.findAll({
-                attributes : {exclude : ["categoryId"]},
-                where : findName,
+                attributes: { exclude: ["categoryId"] },
+                where: findName,
                 limit: limitPerPage,
-                productPage : productPage,
+                productPage: productPage,
                 offset,
-                include : [
-                    { model : category, attributes : {exclude : ["createdAt", "updatedAt"]} },
+                include: [
+                    { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
                 ],
-                    order : [["createdAt", orderBy || "ASC"]]
+                order: [
+                    ["name", orderByName || "ASC"],
+                    ["harga_produk", orderByPrice || "ASC"],
+                ]
             })
-            
+
             return res.status(200).json({
                 message: "get product success",
-                productLimit : limitPerPage,
-                productPage : productPage, 
+                productLimit: limitPerPage,
+                productPage: productPage,
                 data: result
             });
         } catch (error) {
