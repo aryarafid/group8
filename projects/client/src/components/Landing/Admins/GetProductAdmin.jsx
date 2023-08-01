@@ -19,19 +19,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
-import Products from "./Products";
+import Products from "../Cashier/Products";
 import useSelector from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios"
 
 
-export default function ContentCashier() {
+export default function GetProductAdmin() {
   const [page, setPage] = useState(1)
   const [name, setName] = useState("")
   const [categoryId, setCategoryId] = useState("")
   const [orderByName, setOrderByName] = useState("")
   const [orderByPrice, setOrderByPrice] = useState("")
-  const [size, setSize] = useState("")
+  const [size, setSize] = useState(10)
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -77,9 +77,9 @@ export default function ContentCashier() {
 
   return (
     <>
-      <Box w={{ md: "900px", lg: "1200px" }} fontFamily={"montserrat"}>
+      <Box mt={'5em'} w={{ md: "900px", lg: "1200px" }} fontFamily={"montserrat"}>
         {/* <Box className="nav" bgColor={"white"} pt={"10px"}> */}
-        <Flex justify={"space-around"} m={"20px 20px"}>
+        {/* <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             // position={"absolute"}
             // ml={{ base: "200px", sm: "300px", md: "400px", lg: "600px" }}
@@ -106,7 +106,7 @@ export default function ContentCashier() {
               color={"#223256"}
             ></Input>
           </InputGroup>
-        </Flex>
+        </Flex> */}
 
         {/* tab */}
         <Tabs variant='soft-rounded' colorScheme='blue' paddingLeft={'4em'}>
@@ -148,7 +148,7 @@ export default function ContentCashier() {
 
 
 
-      </Box>
+      </Box >
     </>
   );
 }

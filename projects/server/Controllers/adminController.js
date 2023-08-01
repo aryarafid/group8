@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config({
   path: path.resolve("../.env"),
 });
+const { multerUpload } = require("../middleware/multer");
 
 const adminController = {
   getCashier: async (req, res) => {
@@ -31,8 +32,11 @@ const adminController = {
       const {
         username,
         email,
-        password
+        password,
+        imgProfile
       } = req.body;
+
+      return res.json(req.body)
 
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
@@ -43,6 +47,7 @@ const adminController = {
           email,
           password: hashPassword,
           role: "Cashier",
+          imgProfile: req.file,
           isActive: true,
         }, {
           transaction: t
