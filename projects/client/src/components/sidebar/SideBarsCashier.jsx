@@ -25,7 +25,7 @@ export default function SideBarsCashier() {
   const dispatch = useDispatch();
   return (
     <>
-      <Box w={"100px"} h={"100vh"} bgColor={"#223256"}>
+      <Box w={"100px"} h={"100vh"} bgColor={"#223256"} pos={"sticky"}>
         <Link to={"/category"}>
           <Box
             textAlign={"center"}

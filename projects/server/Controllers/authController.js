@@ -74,10 +74,10 @@ const authController = {
     patchChangeProfile : async(req, res) => {
         try {
             const {id} = req.user
-            console.log("Tujuan ?",req.file.path)
+            console.log("Tujuan ?",req.file)
             const oldPicture = await user.findOne({ where : {id} })
             if(oldPicture.imgProfile){
-                fs.unlink(oldPicture.imgProfile, (err) => {
+                fs.unlink(path.resolve(__dirname, `../src/${oldPicture.imgProfile}`), (err) => {
                     return res.status(500).json({message : err.message})
                 })
             }
@@ -91,6 +91,16 @@ const authController = {
             })
         } catch (error) {
             return res.status(500).json({message : error.message})
+        }
+    },
+    userKeepLogin : async(req, res) => {
+        try {
+            const {id} = req.user
+            const findUser = await user.findOne({where : {id}})
+            return res.status(200).json({message : "Still Login", findUser})
+        } catch (error) {
+            return res.status(500).json({message : error.message})
+            
         }
     }
 };

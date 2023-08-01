@@ -12,5 +12,6 @@ router.patch("/auth/resetPassword", verifyToken, resetPasswordValidator, validat
 router.patch("/auth/changePicture", verifyToken,multerUpload.single("imgProfile") ,authController.patchChangeProfile)
 router.get("/auth/account", authController.getAccount)
 router.get("/auth/account/:id", authController.getAccountById)
+router.get("/auth/keepLogin", verifyToken, authController.userKeepLogin)
 
 module.exports = router
