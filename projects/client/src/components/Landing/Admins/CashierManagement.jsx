@@ -11,9 +11,23 @@ import {
   FormErrorMessage,
   FormHelperText,
   Button,
-  TableContainer,
   Avatar,
-  useDisclosure, useToast
+  useDisclosure, useToast,
+  TableCaption,
+  TableContainer,
+  Container,
+  Modal,
+  Editable,
+  EditableInput,
+  EditableTextarea,
+  EditablePreview,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useColorModeValue, IconButton, Input, useEditableControls, ButtonGroup, SlideFade, Tooltip
 } from "@chakra-ui/react";
 
 import SideBarAdmin from "./SideBarAdmin";
@@ -23,6 +37,9 @@ import { Link, useParams } from "react-router-dom";
 import EditCashier from "./EditCashier";
 import DeleteCashier from "./DeleteCashier";
 import AddCashier from "./AddCashier";
+import ContentCashier from "../Cashier/ContentCashier";
+import SideBarsCashier from "../../sidebar/SideBarsCashier";
+import TransactionCashier from "../Cashier/TransactionCashier";
 
 export default function CashierManagement() {
   const [cashierData, setCashierData] = useState([])
@@ -35,6 +52,32 @@ export default function CashierManagement() {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [data, setData] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure() //add
+  const [isOpenModal1, setIsOpenModal1] = useState(false);
+  const [isOpenModal2, setIsOpenModal2] = useState(false);
+  const [isOpenModal3, setIsOpenModal3] = useState(false);
+
+  const openModal1 = () => {
+    setIsOpenModal1(true);
+  };
+
+  const closeModal1 = () => {
+    setIsOpenModal1(false);
+  };
+
+  const openModal2 = () => {
+    setIsOpenModal2(true);
+  };
+
+  const closeModal2 = () => {
+    setIsOpenModal2(false);
+  };
+  const openModal3 = () => {
+    setIsOpenModal3(true);
+  };
+
+  const closeModal3 = () => {
+    setIsOpenModal3(false);
+  };
 
   const handleAddData = (newData) => {
     // Update your data array with the new data
@@ -167,23 +210,25 @@ export default function CashierManagement() {
                           <Button colorScheme="green">Edit</Button>
                         </Link>
 
-                        {cashierData.isActive === true ?
-                          <Button ml={'0.5em'} colorScheme="red"
-                            onClick={() => deleteCashier(cashierData.id)}
-                          >Delete</Button>
-                          :
-                          <Button ml={'0.5em'} colorScheme="blue"
-                            onClick={() => undeleteCashier(cashierData.id)}
-                          >Undelete</Button>
+                        {
+                          cashierData.isActive === true ?
+                            <Button ml={'0.5em'} colorScheme="red"
+                              onClick={() => deleteCashier(cashierData.id)}
+                            >Delete</Button>
+                            :
+                            <Button ml={'0.5em'} colorScheme="blue"
+                              onClick={() => undeleteCashier(cashierData.id)}
+                            >Undelete</Button>
                         }
-                      </Td>
-                    </Tr>
-                  )}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </Box>
-        </Box>
+                      </Td >
+                    </Tr >
+                  )
+                  }
+                </Tbody >
+              </Table >
+            </TableContainer >
+          </Box >
+        </Box >
       </Flex >
     </>
   );
