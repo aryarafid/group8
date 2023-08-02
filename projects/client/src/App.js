@@ -14,6 +14,7 @@ import ProfileCashier from "./components/Landing/Cashier/ProfileCashier";
 import CategoryProduct from "./components/Landing/Cashier/CategoryProduct";
 import UserAuth from "./components/UserAuth";
 import ProductAdmin from "./components/Landing/Admins/ProductAdmin";
+import EditCashier from "./components/Landing/Admins/EditCashier";
 import CashierManagement from "./components/Landing/Admins/CashierManagement";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         {/* admin */}
         <Route path="/productAdmin" element={<ProductAdmin />} />
         <Route path="/cashierAdmin" element={<CashierManagement />} />
+        <Route path="/editCashier/:id" element={<EditCashier />} />
 
         {/* <Route path="/login" element={<Login/>}></Route> */}
         <Route path="/login" element={<Login />}></Route>

@@ -1,7 +1,11 @@
 import React from 'react'
+import { useState, useEffect } from "react";
+import axios from "axios"
+import { useNavigate, useParams } from "react-router-dom";
 import {
     Flex, Text, Heading, Box, Table,
     Thead,
+    useToast,
     Tbody,
     Image,
     Tr,
@@ -25,16 +29,28 @@ import {
     ModalBody,
     ModalCloseButton,
     useDisclosure,
-    IconButton, Input, ButtonGroup, SlideFade, Tooltip, InputGroup, InputRightElement, useToast
+    IconButton, Input, ButtonGroup, SlideFade, Tooltip, InputGroup, InputRightElement
 } from "@chakra-ui/react";
+import SideBarAdmin from "./SideBarAdmin";
 
-export default function EditCashier({ isOpen, onClose, cashierData, onSave }) {
+
+export default function EditCashier() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [formData, setFormData] = useState(cashierData);
+    const toast = useToast()
+    const { id } = useParams();
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const navigate = useNavigate();
+
+    const getUserById = async () => {
+        const response = await axios.get(`http://localhost:8000/mini-project/api/cashier/${id}`);
+        setUsername(response.data.data.username)
+        setEmail(response.data.data.email)
+    };
 
     useEffect(() => {
-        setFormData(cashierData);
-    }, [cashierData]);
+        getUserById();
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -45,11 +61,11 @@ export default function EditCashier({ isOpen, onClose, cashierData, onSave }) {
             email: document.getElementById("email").value,
         };
 
-        // console.log(data);
+        console.log(data);
 
         try {
-            const respon = await axios.post(
-                `http://localhost:8000/mini-project/api/cashier/update/${}`,
+            const respon = await axios.patch(
+                `http://localhost:8000/mini-project/api/cashier/update/${id}`,
                 data,
                 {
                     headers: {
@@ -78,56 +94,42 @@ export default function EditCashier({ isOpen, onClose, cashierData, onSave }) {
     };
 
     return <>
-        <Button colorScheme="green"
-            onClick={isOpen}
-        >Edit</Button>
+        <Flex>
+            <SideBarAdmin />
+            <Box m={'2em'}>
+                <Heading mb={'1em'}>Edit Form Cashier #{id}</Heading>
+                <form onSubmit={handleSubmit}>
+                    {/* <Lorem count={2} /> */}
+                    <FormControl isRequired>
+                        <FormLabel>Username</FormLabel>
+                        <Input
+                            defaultValue={username}
+                            id='username'
+                            name='username'
+                            onChange={(e) => setUsername(e.target.value)}
+                            mb={'0.5em'}
+                            type='username'
+                        />
+                    </FormControl>
 
-        <Modal isOpen={onOpen} onClose={onClose}>
-            <form onSubmit={handleSubmit}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>ID #{cashierData.id}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        {/* <Lorem count={2} /> */}
-                        <Text>Username</Text>
-                        <Editable defaultValue={cashierData.username}>
-                            <EditablePreview />
-                            <EditableInput />
-                        </Editable>
+                    <FormControl isRequired>
+                        <FormLabel>Email</FormLabel>
+                        <Input
+                            defaultValue={email}
+                            id='email'
+                            name='email'
+                            onChange={(e) => setEmail(e.target.value)}
+                            mb={'0.5em'}
+                            type='email'
+                        />
+                    </FormControl>
 
-                        <Text>Avatar</Text>
-                        {cashierData.imgProfile === null ? <Avatar></Avatar> :
-                            <Image src={cashierData.imgProfile}>
-                            </Image>
-                        }
-                        <Text >Email</Text>
-                        <Editable defaultValue={cashierData.email}>
-                            <EditablePreview />
-                            <EditableInput />
-                        </Editable>
-
-                        <Text>Role</Text>
-                        <Editable defaultValue={cashierData.role}>
-                            <EditablePreview />
-                            <EditableInput />
-                        </Editable>
-
-                        <Text>Status</Text>
-                        <Editable defaultValue={cashierData.isActive}>
-                            <EditablePreview />
-                            <EditableInput />
-                        </Editable>
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button colorScheme='green' mr={3}>Submit Edit</Button>
-                    </ModalFooter>
-                </ModalContent>
-            </form>
-        </Modal>
+                    <Button colorScheme='blue' mr={3} onClick={() => navigate(-1)} >
+                        Close
+                    </Button>
+                    <Button colorScheme='green' mr={3} type='submit'>Submit Edit</Button>
+                </form>
+            </Box >
+        </Flex >
     </>
 }

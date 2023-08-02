@@ -27,6 +27,26 @@ const adminController = {
     }
   },
 
+  getCashierById: async (req, res) => {
+    try {
+      const { id } = req.params
+      const userFind = await user.findOne({
+        where: {
+          id: id,
+          role: "Cashier",
+        }
+      });
+      return res.status(200).json({
+        message: "get cashier success",
+        data: userFind
+      });
+    } catch (error) {
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  },
+
   createCashier: async (req, res) => {
     try {
       const {
@@ -79,13 +99,6 @@ const adminController = {
       if (userFind2) {
         if (username) userFind2.username = username;
         if (email) userFind2.email = email;
-        if (password) {
-          const salt = await bcrypt.genSalt(10);
-          password = await bcrypt.hash(password, salt);
-          userFind2.password = password
-        }
-        if (role) userFind2.role = role;
-        if (isActive) userFind2.isActive = isActive
         await db.sequelize.transaction(async (t) => {
           await userFind2.save({
             transaction: t
@@ -127,6 +140,38 @@ const adminController = {
             .status(200)
             .json({
               message: "delete cashier success",
+              data: userFind
+            });
+        })
+      } else {
+        res.status(404).json({
+          message: "user not found"
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: error.message
+      });
+    }
+  },
+
+  undeleteCashier: async (req, res) => {
+    try {
+      const {
+        id
+      } = req.params;
+
+      const userFind = await user.findByPk(id);
+      if (userFind) {
+        await db.sequelize.transaction(async (t) => {
+          userFind.isActive = true
+          await userFind.save({
+            transaction: t
+          })
+          return res
+            .status(200)
+            .json({
+              message: "undelete cashier success",
               data: userFind
             });
         })

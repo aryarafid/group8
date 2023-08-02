@@ -13,32 +13,16 @@ import {
   Button,
   TableContainer,
   Avatar,
-  Modal,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  IconButton, Input, ButtonGroup, SlideFade, Tooltip, InputGroup, InputRightElement, useToast
+  useDisclosure, useToast
 } from "@chakra-ui/react";
 
 import SideBarAdmin from "./SideBarAdmin";
 import { useState, useEffect } from "react";
 import axios from "axios"
-import ContentCashier from "../Cashier/ContentCashier";
-import SideBarsCashier from "../../sidebar/SideBarsCashier";
-import TransactionCashier from "../Cashier/TransactionCashier";
-import { useParams } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 import EditCashier from "./EditCashier";
 import DeleteCashier from "./DeleteCashier";
 import AddCashier from "./AddCashier";
-
 
 export default function CashierManagement() {
   const [cashierData, setCashierData] = useState([])
@@ -50,19 +34,12 @@ export default function CashierManagement() {
   const toast = useToast()
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [data, setData] = useState([])
-
-  const handleEditButtonClick = (id) => {
-    setSelectedItemId(id);
-    setShowModal1(true);
-  };
+  const { isOpen, onOpen, onClose } = useDisclosure() //add
 
   const handleAddData = (newData) => {
     // Update your data array with the new data
     setData((prevData) => [...prevData, newData]);
   };
-
-
-  const { isOpen, onOpen, onClose } = useDisclosure() //add
 
   const fetchData = async () => {
     try {
@@ -75,10 +52,74 @@ export default function CashierManagement() {
     }
   };
 
+  const deleteCashier = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/mini-project/api/cashier/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Delete cashier succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/cashierAdmin";
+      }, 2500);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+  const undeleteCashier = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/mini-project/api/cashier/undelete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Undelete cashier succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        document.location.href = "/cashierAdmin";
+      }, 2500);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
-
 
   return (
     <>
@@ -106,7 +147,7 @@ export default function CashierManagement() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {cashierData.map((cashierData, key2) =>
+                  {cashierData.map((cashierData) =>
                     <Tr>
                       <Td>{cashierData.id}</Td>
                       <Td>
@@ -122,14 +163,19 @@ export default function CashierManagement() {
                       <Td>{cashierData.email}</Td>
                       <Td>{cashierData.isActive === true ? "Active" : "Inactive"}</Td>
                       <Td>
-                        <Button colorScheme="blue"
-                          onClick={() => handleEditButtonClick(cashierData.id)}
-                        >Detail</Button>
+                        <Link to={`/editCashier/${cashierData.id}`}>
+                          <Button colorScheme="green">Edit</Button>
+                        </Link>
 
-                        <Button ml={'0.5em'} colorScheme="red"
-                          onClick={() => DeleteCashier(cashierData.id)
-                          }
-                        >Delete</Button>
+                        {cashierData.isActive === true ?
+                          <Button ml={'0.5em'} colorScheme="red"
+                            onClick={() => deleteCashier(cashierData.id)}
+                          >Delete</Button>
+                          :
+                          <Button ml={'0.5em'} colorScheme="blue"
+                            onClick={() => undeleteCashier(cashierData.id)}
+                          >Undelete</Button>
+                        }
                       </Td>
                     </Tr>
                   )}
@@ -139,7 +185,6 @@ export default function CashierManagement() {
           </Box>
         </Box>
       </Flex >
-
     </>
   );
 }
