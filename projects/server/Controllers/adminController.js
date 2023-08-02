@@ -36,7 +36,7 @@ const adminController = {
         imgProfile
       } = req.body;
 
-      return res.json(req.body)
+      // return res.json(req.body)
 
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
@@ -47,7 +47,7 @@ const adminController = {
           email,
           password: hashPassword,
           role: "Cashier",
-          imgProfile: req.file,
+          imgProfile: req.file.path,
           isActive: true,
         }, {
           transaction: t
@@ -73,9 +73,6 @@ const adminController = {
       let {
         username,
         email,
-        password,
-        role,
-        isActive
       } = req.body;
 
       let userFind2 = await user.findByPk(id);

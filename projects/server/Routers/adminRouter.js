@@ -7,7 +7,7 @@ const {
   createCashierValidator,
 } = require("../middleware/Validator");
 const {
-  auth
+  auth, verifyToken
 } = require("../middleware/auth");
 const { multerUpload } = require("../middleware/multer");
 
@@ -18,10 +18,10 @@ router.get(
 );
 router.post(
   "/create",
+  multerUpload.single("imgProfile"),
   createCashierValidator,
   validateRegist,
-  multerUpload.single("imgProfile"),
-  // auth.verifyToken,
+  verifyToken,
   adminController.createCashier
 );
 router.patch(

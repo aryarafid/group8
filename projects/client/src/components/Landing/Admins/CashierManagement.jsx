@@ -6,15 +6,16 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
   Button,
   TableContainer,
-  Container,
   Avatar,
   Modal,
   Editable,
   EditableInput,
-  EditableTextarea,
   EditablePreview,
   ModalOverlay,
   ModalContent,
@@ -23,45 +24,45 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  useColorModeValue, IconButton, Input, useEditableControls, ButtonGroup, SlideFade, Tooltip
+  IconButton, Input, ButtonGroup, SlideFade, Tooltip, InputGroup, InputRightElement, useToast
 } from "@chakra-ui/react";
+
 import SideBarAdmin from "./SideBarAdmin";
 import { useState, useEffect } from "react";
 import axios from "axios"
 import ContentCashier from "../Cashier/ContentCashier";
 import SideBarsCashier from "../../sidebar/SideBarsCashier";
 import TransactionCashier from "../Cashier/TransactionCashier";
+import { useParams } from "react-router-dom";
+
+import EditCashier from "./EditCashier";
+import DeleteCashier from "./DeleteCashier";
+import AddCashier from "./AddCashier";
+
 
 export default function CashierManagement() {
   const [cashierData, setCashierData] = useState([])
-  const [isOpenModal1, setIsOpenModal1] = useState(false);
-  const [isOpenModal2, setIsOpenModal2] = useState(false);
-  const [isOpenModal3, setIsOpenModal3] = useState(false);
-  const openModal1 = () => {
-    setIsOpenModal1(true);
+  const [showModal1, setShowModal1] = useState(false); //edit
+  const [showModal2, setShowModal2] = useState(false); //delete
+  const [showModalAdd, setShowModalAdd] = useState(false); //add
+  const [pwShow, setpwShow] = useState(false)
+  const handleClick = () => setpwShow(!pwShow)
+  const toast = useToast()
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [data, setData] = useState([])
+
+  const handleEditButtonClick = (id) => {
+    setSelectedItemId(id);
+    setShowModal1(true);
   };
 
-  const closeModal1 = () => {
-    setIsOpenModal1(false);
+  const handleAddData = (newData) => {
+    // Update your data array with the new data
+    setData((prevData) => [...prevData, newData]);
   };
 
-  const openModal2 = () => {
-    setIsOpenModal2(true);
-  };
 
-  const closeModal2 = () => {
-    setIsOpenModal2(false);
-  };
-  const openModal3 = () => {
-    setIsOpenModal3(true);
-  };
-
-  const closeModal3 = () => {
-    setIsOpenModal3(false);
-  };
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  // const { isOpen2, onOpen2, onClose2 } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure() //add
 
   const fetchData = async () => {
     try {
@@ -78,7 +79,6 @@ export default function CashierManagement() {
     fetchData();
   }, []);
 
-  let no = 1
 
   return (
     <>
@@ -89,38 +89,8 @@ export default function CashierManagement() {
           <Heading as="h1" size={"xl"}>
             Cashier Management
           </Heading>
-          <Button colorScheme="blue" mt={'2em'} mb={'1em'} onClick={openModal3}>
-            Add New Cashier
-          </Button>
 
-          <Modal isOpen={isOpenModal3} onClose={closeModal3}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Add New Cashier</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                {/* <Lorem count={2} /> */}
-                <Text>Username</Text>
-                <Input placeholder='Uname' />
-
-                <Text>Avatar</Text>
-                <Input placeholder='uplod image' />
-
-                <Text >Email</Text>
-                <Input placeholder='Basic usage' />
-
-                <Text >Password</Text>
-                <Input placeholder='Basic usage' />
-              </ModalBody>
-
-              <ModalFooter>
-                <Button mr={3} onClick={onClose}>
-                  Close
-                </Button>
-                <Button colorScheme='blue' mr={3}>Submit</Button>
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+          <AddCashier onAdd={handleAddData} />
 
           <Box mt={'1em'} w={'100%'}>
             <TableContainer >
@@ -136,83 +106,31 @@ export default function CashierManagement() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {cashierData.map((cashierData) =>
+                  {cashierData.map((cashierData, key2) =>
                     <Tr>
-                      <Td>{no++}</Td>
+                      <Td>{cashierData.id}</Td>
                       <Td>
                         {cashierData.imgProfile === null ?
-                          <Avatar></Avatar> : cashierData.imgProfile
+                          <Avatar></Avatar> :
+                          /* <Image src={`http://localhost:8000/image/${(cashierData.imgProfile)}`}></Image> */
+                          <Image
+                            maxW={'100px'}
+                            src={`http://localhost:8000/${(cashierData.imgProfile)}`}></Image>
                         }
                       </Td>
                       <Td>{cashierData.username}</Td>
                       <Td>{cashierData.email}</Td>
                       <Td>{cashierData.isActive === true ? "Active" : "Inactive"}</Td>
                       <Td>
-                        <Button colorScheme="blue" onClick={openModal1}>Detail</Button>
-                        <Button ml={'0.5em'} colorScheme="red" onClick={openModal2}>Delete</Button>
+                        <Button colorScheme="blue"
+                          onClick={() => handleEditButtonClick(cashierData.id)}
+                        >Detail</Button>
+
+                        <Button ml={'0.5em'} colorScheme="red"
+                          onClick={() => DeleteCashier(cashierData.id)
+                          }
+                        >Delete</Button>
                       </Td>
-
-                      <Modal isOpen={isOpenModal1} onClose={closeModal1}>
-                        <ModalOverlay />
-                        <ModalContent>
-                          <ModalHeader>ID #{cashierData.id}</ModalHeader>
-                          <ModalCloseButton />
-                          <ModalBody>
-                            {/* <Lorem count={2} /> */}
-                            <Text>Username</Text>
-                            <Editable defaultValue={cashierData.username}>
-                              <EditablePreview />
-                              <EditableInput />
-                            </Editable>
-
-                            <Text>Avatar</Text>
-                            {cashierData.imgProfile === null ? <Avatar></Avatar> :
-                              <Image>
-                                {cashierData.imgProfile}
-                              </Image>
-                            }
-                            <Text >Email</Text>
-                            <Editable defaultValue={cashierData.email}>
-                              <EditablePreview />
-                              <EditableInput />
-                            </Editable>
-
-                            <Text>Role</Text>
-                            <Editable defaultValue={cashierData.role}>
-                              <EditablePreview />
-                              <EditableInput />
-                            </Editable>
-
-                            <Text>Status</Text>
-                            <Editable defaultValue={cashierData.isActive}>
-                              <EditablePreview />
-                              <EditableInput />
-                            </Editable>
-                          </ModalBody>
-
-                          <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>
-                              Close
-                            </Button>
-                            <Button colorScheme='green' mr={3}>Edit</Button>
-                          </ModalFooter>
-                        </ModalContent>
-                      </Modal>
-
-                      <Modal isOpen={isOpenModal2} onClose={closeModal2}>
-                        <ModalOverlay />
-                        <ModalContent>
-                          <ModalHeader>Yakin menghapus Cashier ID #{cashierData.id}?</ModalHeader>
-                          <ModalCloseButton />
-
-                          <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>
-                              Cancel
-                            </Button>
-                            <Button colorScheme='red' mr={3}>Delete</Button>
-                          </ModalFooter>
-                        </ModalContent>
-                      </Modal>
                     </Tr>
                   )}
                 </Tbody>
