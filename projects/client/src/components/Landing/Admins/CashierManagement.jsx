@@ -182,7 +182,7 @@ export default function CashierManagement() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {cashierData.map((cashierData, key2) =>
+                  {cashierData.map((cashierData) =>
                     <Tr>
                       <Td>{cashierData.id}</Td>
                       <Td>
