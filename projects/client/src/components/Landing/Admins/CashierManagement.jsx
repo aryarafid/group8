@@ -19,7 +19,6 @@ import {
   Modal,
   Editable,
   EditableInput,
-  EditableTextarea,
   EditablePreview,
   ModalOverlay,
   ModalContent,
@@ -60,13 +59,11 @@ export default function CashierManagement() {
     setIsOpenModal1(true);
   };
 
-  const closeModal1 = () => {
-    setIsOpenModal1(false);
+  const handleAddData = (newData) => {
+    // Update your data array with the new data
+    setData((prevData) => [...prevData, newData]);
   };
 
-  const openModal2 = () => {
-    setIsOpenModal2(true);
-  };
 
   const closeModal2 = () => {
     setIsOpenModal2(false);
@@ -77,11 +74,6 @@ export default function CashierManagement() {
 
   const closeModal3 = () => {
     setIsOpenModal3(false);
-  };
-
-  const handleAddData = (newData) => {
-    // Update your data array with the new data
-    setData((prevData) => [...prevData, newData]);
   };
 
   const fetchData = async () => {
@@ -190,7 +182,7 @@ export default function CashierManagement() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {cashierData.map((cashierData) =>
+                  {cashierData.map((cashierData, key2) =>
                     <Tr>
                       <Td>{cashierData.id}</Td>
                       <Td>
