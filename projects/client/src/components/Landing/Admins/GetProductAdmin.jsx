@@ -34,7 +34,7 @@ export default function GetProductAdmin() {
   const [size, setSize] = useState(10)
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(0);
 
   const fetchData = async () => {
     try {

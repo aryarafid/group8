@@ -65,9 +65,9 @@ export default function TransactionCashier() {
                       <IconButton
                         icon={<BsFillTrash3Fill size={"sm"} />}
                         pos={"absolute"}
-                        variant={"solid"}
+                        variant={"unstyled"}
                         size={"sm"}
-                        ml={{ md: "120px", lg: "250px" }}
+                        ml={{ md: "130px", lg: "250px" }}
                         mt={"-60px"}
                         onClick={() => dispatch(deleteCart(item))}
                       ></IconButton>
@@ -75,8 +75,8 @@ export default function TransactionCashier() {
                         pos={"absolute"}
                         color={"red"}
                         size={"sm"}
-                        ml={{ md: "120px", lg: "250px" }}
-                        mt={"-20px"}
+                        ml={{ md: "130px", lg: "250px" }}
+                        mt={"-10px"}
                         onClick={() => dispatch(deleteFromCart(item))}
                         icon={<AiFillMinusCircle size={"sm"} />}
                         variant={"unstyled"}
@@ -87,7 +87,7 @@ export default function TransactionCashier() {
               </Card>
             </Box>
           ))}
-          <Box pos={"absolute"} mt={"700px"} ml={{ md: "40px", lg: "100px" }}>
+          <Box pos={"absolute"} mt={"700px"} ml={{ md: "20px", lg: "100px" }}>
             <Text>Total Harga : Rp. {totalHarga}</Text>
             <ButtonTransaction />
           </Box>
