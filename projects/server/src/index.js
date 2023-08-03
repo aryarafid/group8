@@ -10,7 +10,8 @@ const {
   authRouter,
   adminRouter,
   categoryRouter,
-  productRouter
+  productRouter,
+  transactionRouter,
 } = require("../Routers");
 
 // db.sequelize.sync({
@@ -32,11 +33,11 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/mini-project/api", authRouter);
+app.use("/auth-management/api", authRouter, transactionRouter);
 app.use("/mini-project/api/cashier", adminRouter);
 app.use("/mini-project/api/category", categoryRouter);
 app.use("/mini-project/api/product", productRouter);
-app.use("/public", express.static(path.resolve(__dirname, "../public")))
+app.use("/public", express.static(path.resolve(__dirname, "./public")))
 // app.use("/public", express.static(path.resolve(__dirname, "./public")))
 //#region API ROUTES
 

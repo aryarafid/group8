@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Flex,
   FormControl,
   FormErrorMessage,
   Input,
@@ -15,7 +13,6 @@ import {
   ModalOverlay,
   Spinner,
   Stack,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -37,7 +34,7 @@ export default function ForgetPassword({ isOpen, onClose }) {
     try {
       setLoading(true);
       const respon = await axios.put(
-        `http://localhost:8000/mini-project/api/auth/forgotPassword`,
+        `http://localhost:8000/auth-management/api/auth/forgotPassword`,
         {
           email: values.email,
           FE_URL: "http://localhost:3000",

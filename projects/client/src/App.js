@@ -30,6 +30,8 @@ function App() {
   // }, []);
   return (
     <>
+    <UserAuth>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<ProfileCashier />} />
@@ -44,6 +46,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
+    </UserAuth>
     </>
   );
 }
