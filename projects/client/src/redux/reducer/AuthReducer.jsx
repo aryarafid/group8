@@ -81,12 +81,13 @@ export const loginAuth = (values, setLoading, toast) => {
   };
 };
 
-export const changeProfile = (photo, toast) => {
+export const changeProfile = (photo, toast, setLoading) => {
   return async () => {
     const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("imgProfile", photo);
     try {
+      setLoading(true)
       const respon = await axios.patch(
         "http://localhost:8000/auth-management/api/auth/changePicture",
         formData,
@@ -97,7 +98,6 @@ export const changeProfile = (photo, toast) => {
         }
       );
       console.log(respon);
-
       toast({
         title: "Change Profile Picture Success",
         status: "success",
@@ -115,6 +115,8 @@ export const changeProfile = (photo, toast) => {
         duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setLoading(true)
     }
   };
 };

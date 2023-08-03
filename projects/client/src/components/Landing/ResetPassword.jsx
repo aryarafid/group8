@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   Stack,
   Text,
   useToast,
@@ -30,6 +31,7 @@ const resetSchema = Yup.object().shape({
 });
 
 export default function ResetPassword() {
+  const [isLoading, setLoading] = useState(false);
   const toast = useToast();
   const [show, setShow] = useState(false);
   const handleClick = () => {
@@ -39,6 +41,7 @@ export default function ResetPassword() {
     const url = window.location.href.split("/");
     const token = url.pop();
     try {
+      setLoading(true);
       const respon = await axios.patch(
         "http://localhost:8000/auth-management/api/auth/resetPassword",
         {
@@ -59,8 +62,13 @@ export default function ResetPassword() {
         duration: 3000,
         isClosable: true,
       });
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 2500);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   const formik = useFormik({
@@ -236,7 +244,7 @@ export default function ResetPassword() {
                   _hover={{ bgColor: "green" }}
                   type="submit"
                 >
-                  Submit
+                  {isLoading ? <Spinner /> : "Submit"}
                 </Button>
               </Box>
             </form>

@@ -18,10 +18,10 @@ export default function ButtonTransaction() {
       <Button
         colorScheme="green"
         mt={"10px"}
-        w={{ md: "180px", lg: "200px" }}
+        w={{ md: "200px", lg: "220px" }}
         onClick={onOpen}
       >
-        Bayar
+        Payment
       </Button>
       <ModalTransaction isOpen={isOpen} onClose={onClose} />
     </>
