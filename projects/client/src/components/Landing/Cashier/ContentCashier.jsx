@@ -14,7 +14,10 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "./Products";
-import { useSelector } from "react-redux";
+import useSelector from "react-redux";
+import { useState, useEffect } from "react";
+import axios from "axios"
+
 
 export default function ContentCashier() {
   const { user } = useSelector((state) => state.AuthReducer);
@@ -49,22 +52,47 @@ export default function ContentCashier() {
             ></Image>
           </Box>
         </Flex>
-        <Box mt={"20px"} ml={"10px"}>
-          <Tabs variant="soft-rounded" colorScheme="blue">
-            <TabList>
-              <Tab>Makanan</Tab>
-              <Tab>Minuman</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Products />
-              </TabPanel>
-              <TabPanel>
-                <p>Minuman</p>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </Box>
+
+        {/* tab */}
+        <Tabs variant='soft-rounded' colorScheme='blue' paddingLeft={'4em'}>
+
+          <TabList>
+            {category.map((category) =>
+              <Tab key={category.id} onClick={() => setSelectedCategory(category.id)}>
+                {category.name}
+              </Tab>
+            )}
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              {/* product */}
+              <Flex wrap={"wrap"} ml={"4em"} mt={'1em'} gap={"20px"} >
+                {filteredProducts.map((product) =>
+                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                    <CardBody>
+                      <Box
+                        // bgImage={ }
+                        w={"200px"} h={"180px"}></Box>
+                      <Text>
+                        {product.name}
+                      </Text>
+                      <Text>
+                        {product.harga_produk}
+                      </Text>
+                    </CardBody>
+                    <CardFooter>
+                      <Button variant={"unstyled"}>Add to cart</Button>
+                    </CardFooter>
+                  </Card>
+                )}
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
+
+
       </Box>
     </>
   );
