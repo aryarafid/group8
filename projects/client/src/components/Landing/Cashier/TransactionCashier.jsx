@@ -26,7 +26,7 @@ export default function TransactionCashier() {
       <Box
         // bgColor={"#223256"}
         bgColor={"#1a202c"}
-        w={{ sm: "250px", md: "280px", lg: "380px" }}
+        w={{ sm: "250px", md: "280px", lg: "350px" }}
         fontFamily={"montserrat"}
         color={"white"}
         position={"sticky"}
@@ -42,7 +42,7 @@ export default function TransactionCashier() {
           {cart.map((item) => (
             <Box>
               <Card
-                w={{ md: "200px", lg: "350px" }}
+                w={{ md: "200px", lg: "320px" }}
                 h={"100px"}
                 m={"5px auto"}
                 key={item.id}
@@ -65,15 +65,17 @@ export default function TransactionCashier() {
                       <IconButton
                         icon={<BsFillTrash3Fill size={"sm"} />}
                         pos={"absolute"}
-                        variant={"unstyled"}
-                        ml={{ md: "120px", lg: "280px" }}
+                        variant={"solid"}
+                        size={"sm"}
+                        ml={{ md: "120px", lg: "250px" }}
                         mt={"-60px"}
                         onClick={() => dispatch(deleteCart(item))}
                       ></IconButton>
                       <IconButton
                         pos={"absolute"}
                         color={"red"}
-                        ml={{ md: "120px", lg: "280px" }}
+                        size={"sm"}
+                        ml={{ md: "120px", lg: "250px" }}
                         mt={"-20px"}
                         onClick={() => dispatch(deleteFromCart(item))}
                         icon={<AiFillMinusCircle size={"sm"} />}
