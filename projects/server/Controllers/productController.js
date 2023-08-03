@@ -13,16 +13,18 @@ const { Op } = sequelize;
 
 const productController = {
     getProduct: async (req, res) => {
-        const { page, categoryId, name, orderBy, sortByDate, size } = req.query
+        const { page, categoryId, name, orderBy, sortByDate, size,quantity } = req.query
             const productPage = parseInt(page) || 1;
             const limitPerPage = parseInt(size) || 2;
             const offset = (productPage - 1) * limitPerPage
             const findName = {name : {[Op.like] : `%${name || ""}%`}}
+            const findQuantity = {quantity : {[Op.like] : `%${quantity || ""}%`}}
             if(categoryId) findName.categoryId = categoryId
+            if(categoryId) findQuantity.categoryId = categoryId;
         try {
             const result = await product.findAll({
                 attributes : {exclude : ["categoryId"]},
-                where : findName,
+                where : [findName,findQuantity],
                 limit: limitPerPage,
                 productPage : productPage,
                 offset,

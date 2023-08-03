@@ -26,25 +26,12 @@ export default function SideBarsCashier() {
   return (
     <>
       <Box w={"100px"} h={"100vh"} bgColor={"#223256"} pos={"sticky"}>
-        <Link to={"/category"}>
-          <Box
-            textAlign={"center"}
-            color={"white"}
-            fontFamily={"montserrat"}
-            mt={"100px"}
-          >
-            <IconButton
-              as="button"
-              color={"white"}
-              variant={"unstyled"}
-              w={"80px"}
-              h={"100px"}
-              icon={<BiSolidCategory size={"2xl"} />}
-            ></IconButton>
-            <Text>Category</Text>
-          </Box>
-        </Link>
-        <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
+        <Box
+          textAlign={"center"}
+          color={"white"}
+          fontFamily={"montserrat"}
+          mt={"100px"}
+        >
           <Link to={"/profile"}>
             <IconButton
               as={"button"}
@@ -55,7 +42,6 @@ export default function SideBarsCashier() {
               <Avatar src={`${imgProfile}`} size={"lg"} />
             </IconButton>
             <Text>Profile</Text>
-            <Text>{user.username}</Text>
           </Link>
         </Box>
         <Link to={"/"}>

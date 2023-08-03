@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 import axios from "axios";
-import { Form, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
@@ -40,7 +40,7 @@ export default function ResetPassword() {
     const token = url.pop();
     try {
       const respon = await axios.patch(
-        "http://localhost:8000/mini-project/api/auth/resetPassword",
+        "http://localhost:8000/auth-management/api/auth/resetPassword",
         {
           newPassword: values.newPassword,
           confirmPassword: values.confirmPassword,

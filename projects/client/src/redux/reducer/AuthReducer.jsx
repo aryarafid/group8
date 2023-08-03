@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react";
 
 const initialState = {
   user: {
@@ -49,7 +48,7 @@ export const loginAuth = (values, setLoading, toast) => {
       setLoading(false);
       console.log("=>", values);
       const respon = await axios.post(
-        "http://localhost:8000/mini-project/api/auth/login",
+        "http://localhost:8000/auth-management/api/auth/login",
         {
           username: values.username,
           password: values.password,
@@ -83,14 +82,14 @@ export const loginAuth = (values, setLoading, toast) => {
   };
 };
 
-export const changeProfile = (photo) => {
+export const changeProfile = (photo, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("imgProfile", photo);
     try {
       const respon = await axios.patch(
-        "http://localhost:8000/mini-project/api/auth/changePicture",
+        "http://localhost:8000/auth-management/api/auth/changePicture",
         formData,
         {
           headers: {
@@ -99,10 +98,24 @@ export const changeProfile = (photo) => {
         }
       );
       console.log(respon);
-      alert("Profile picture change");
+
+      toast({
+        title: "Change Profile Picture Success",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error) {
       console.log(error);
-      alert("Failed");
+      toast({
+        title: "Failed",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 };
@@ -112,7 +125,7 @@ export const keepLogin = () => {
     const token = localStorage.getItem("token");
     try {
       const respon = await axios.get(
-        "http://localhost:8000/mini-project/api/auth/keepLogin",
+        "http://localhost:8000/auth-management/api/auth/keepLogin",
         {
           headers: {
             Authorization: `Bearer ${token}`,

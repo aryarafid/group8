@@ -1,4 +1,12 @@
-import { Avatar, Box, Button, Flex, Input, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import SideBarsCashier from "../../sidebar/SideBarsCashier";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -6,6 +14,7 @@ import { changeProfile } from "../../../redux/reducer/AuthReducer";
 
 export default function ProfileCashier() {
   const { user } = useSelector((state) => state.AuthReducer);
+  const toast = useToast();
   const dispatch = useDispatch();
   const [image, setImage] = useState();
   let imgProfile;
@@ -19,12 +28,13 @@ export default function ProfileCashier() {
   }
   function handleSubmit() {
     const file = document.getElementById("file").files[0];
-    dispatch(changeProfile(file));
+    dispatch(changeProfile(file, toast));
   }
   return (
     <>
       <Flex>
         <SideBarsCashier />
+
         <Box fontFamily={"montserrat"} color={"black"} fontSize={"32px"}>
           <Box m={"100px 50px"}>
             <Text>Change Profile Picture</Text>

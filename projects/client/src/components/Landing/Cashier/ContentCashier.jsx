@@ -1,13 +1,10 @@
 import {
-  Avatar,
   Box,
-  Button,
   Flex,
   Image,
   Input,
   InputGroup,
   InputLeftElement,
-  Spacer,
   Tab,
   TabList,
   TabPanel,
@@ -20,22 +17,15 @@ import Products from "./Products";
 import { useSelector } from "react-redux";
 
 export default function ContentCashier() {
+  const { user } = useSelector((state) => state.AuthReducer);
   return (
     <>
-      <Box w={{ md: "900px", lg: "1200px" }} fontFamily={"montserrat"}>
-        {/* <Box className="nav" bgColor={"white"} pt={"10px"}> */}
+      <Box
+        w={{ md: "600px", lg: "960px" }}
+        // bgColor={"brown"}
+        fontFamily={"montserrat"}
+      >
         <Flex justify={"space-around"} m={"20px 20px"}>
-          <Image
-            // position={"absolute"}
-            // ml={{ base: "200px", sm: "300px", md: "400px", lg: "600px" }}
-            mt={{ md: "-20px", lg: "-40px" }}
-            ml={{ sm: "5px", md: "5px", lg: "10px" }}
-            // ml={{ sm: "10px", md: "10px" }}
-            src="ei8gthh.png"
-            w={{ md: "200px", lg: "300px" }}
-            h={{ md: "100px", lg: "150px" }}
-          ></Image>
-          <Spacer />
           <InputGroup>
             <InputLeftElement>
               <AiOutlineSearch />
@@ -50,23 +40,31 @@ export default function ContentCashier() {
               color={"#223256"}
             ></Input>
           </InputGroup>
+          <Box mr={"10px"} w={"300px"}>
+            <Text ml={"60px"}>Welcome, {user.username}</Text>
+            <Image
+              src="ei8gthh.png"
+              w={{ md: "200px", lg: "300px" }}
+              h={{ md: "100px", lg: "150px" }}
+            ></Image>
+          </Box>
         </Flex>
-
-        <Tabs variant="soft-rounded" colorScheme="blue">
-          <TabList>
-            <Tab>Tab 1</Tab>
-            <Tab>Tab 2</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <p>one!</p>
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <Products />
+        <Box mt={"20px"} ml={"10px"}>
+          <Tabs variant="soft-rounded" colorScheme="blue">
+            <TabList>
+              <Tab>Makanan</Tab>
+              <Tab>Minuman</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Products />
+              </TabPanel>
+              <TabPanel>
+                <p>Minuman</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
       </Box>
     </>
   );
