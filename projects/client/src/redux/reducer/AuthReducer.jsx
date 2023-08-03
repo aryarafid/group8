@@ -89,7 +89,7 @@ export const changeProfile = (photo, toast, setLoading) => {
     try {
       setLoading(true)
       const respon = await axios.patch(
-        "http://localhost:8000/auth-management/api/auth/changePicture",
+        "http://localhost:8000/auth-management/api/auth/profile",
         formData,
         {
           headers: {
