@@ -68,10 +68,9 @@ export const loginAuth = (values, setLoading, toast) => {
         isClosable: true,
       });
     } catch (error) {
-      console.log("ini error", error);
       toast({
         title: "Login Failed",
-        description: "Account Not Verify",
+        description: "Account Not Found",
         status: "error",
         duration: 3000,
         isClosable: true,

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   product: [],
@@ -36,6 +37,38 @@ export const ProductReducer = createSlice({
     },
   },
 });
+
+export const payment = (totalPrice, toast) => {
+  return async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const respon = await axios.post(
+        "http://localhost:8000/auth-management/api/transaction",
+        { totalPrice },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Transaction Success",
+        status: "success",
+        description: "Data has been save in database",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+};
 
 export const { addToCart, deleteFromCart, deleteCart } = ProductReducer.actions;
 export default ProductReducer.reducer;

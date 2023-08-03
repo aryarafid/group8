@@ -14,6 +14,7 @@ import { BiLogOut } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { BiSolidCategory, BiSolidHome, BiUser } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import { userLogout } from "../../../redux/reducer/AuthReducer";
 export default function SideBarAdmin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,7 +50,6 @@ export default function SideBarAdmin() {
               h={"100px"}
               icon={<BiUser size={"2xl"} />}
             >
-              {/* <Avatar src={``} size={"lg"} /> */}
             </IconButton>
             <Text>Cashier</Text>
           </Link>
@@ -75,6 +75,7 @@ export default function SideBarAdmin() {
             variant={"unstyled"}
             w={"80px"}
             h={"100px"}
+            onClick={() => dispatch(userLogout())}
             icon={<BiLogOut size={"2xl"} />}
           ></IconButton>
           <Text>Logout</Text>
