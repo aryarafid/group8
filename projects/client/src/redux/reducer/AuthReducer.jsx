@@ -135,7 +135,6 @@ export const keepLogin = () => {
       console.log("keeplogin", respon);
       dispatch(setUser(respon.data.findUser));
       dispatch(userLogin());
-      // dispatch(userKeepLogin(respon.findUser));
     } catch (error) {
       console.log(error);
     }
