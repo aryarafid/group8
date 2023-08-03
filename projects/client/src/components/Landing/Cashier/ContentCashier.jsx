@@ -38,6 +38,7 @@ export default function ContentCashier() {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  // const { user } = useSelector((state) => state.AuthReducer);
 
   const fetchData = async () => {
     try {
