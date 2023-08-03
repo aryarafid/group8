@@ -7,19 +7,26 @@ const {
   createCashierValidator,
 } = require("../middleware/Validator");
 const {
-  auth
+  auth, verifyToken
 } = require("../middleware/auth");
+const { multerUpload } = require("../middleware/multer");
 
 router.get(
   "/",
   // auth.verifyToken,
   adminController.getCashier
 );
+router.get(
+  "/:id",
+  // auth.verifyToken,
+  adminController.getCashierById
+);
 router.post(
   "/create",
+  multerUpload.single("imgProfile"),
   createCashierValidator,
   validateRegist,
-  // auth.verifyToken,
+  verifyToken,
   adminController.createCashier
 );
 router.patch(
@@ -30,5 +37,8 @@ router.patch(
 router.patch("/delete/:id",
   // auth.verifyToken,
   adminController.deleteCashier);
+router.patch("/undelete/:id",
+  // auth.verifyToken,
+  adminController.undeleteCashier);
 
 module.exports = router;

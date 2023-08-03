@@ -27,7 +27,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000"
+      "http://localhost:3000", "http://192.168.20.197:3000"
     ],
   })
 );
@@ -36,7 +36,8 @@ app.use("/mini-project/api", authRouter);
 app.use("/mini-project/api/cashier", adminRouter);
 app.use("/mini-project/api/category", categoryRouter);
 app.use("/mini-project/api/product", productRouter);
-app.use("/public", express.static(path.resolve(__dirname, "./public")))
+app.use("/public", express.static(path.resolve(__dirname, "../public")))
+// app.use("/public", express.static(path.resolve(__dirname, "./public")))
 //#region API ROUTES
 
 // ===========================
