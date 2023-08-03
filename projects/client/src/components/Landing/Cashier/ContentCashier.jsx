@@ -20,14 +20,14 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "./Products";
-import useSelector, { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { addToCart } from "../../../redux/reducer/ProductReducer";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export default function ContentCashier() {
-  // const { user } = useSelector((state) => state.AuthReducer);
+  const { user } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [name, setName] = useState("");
