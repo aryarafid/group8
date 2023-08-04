@@ -26,7 +26,7 @@ export default function TransactionCashier() {
       <Box
         // bgColor={"#223256"}
         bgColor={"#1a202c"}
-        w={{ sm: "250px", md: "280px", lg: "350px" }}
+        w={{ sm: "250px", md: "300px", lg: "360px" }}
         fontFamily={"montserrat"}
         color={"white"}
         position={"sticky"}
@@ -42,7 +42,7 @@ export default function TransactionCashier() {
           {cart.map((item) => (
             <Box>
               <Card
-                w={{ md: "200px", lg: "320px" }}
+                w={{ md: "250px", lg: "320px" }}
                 h={"100px"}
                 m={"5px auto"}
                 key={item.id}
@@ -55,7 +55,7 @@ export default function TransactionCashier() {
                     <Text fontSize={{ md: "8px", lg: "12px" }}>
                       {item.description}
                     </Text>
-                    <Text>Rp.{item.harga_produk}</Text>
+                    <Text>Rp. {item.harga_produk}</Text>
                   </Box>
                   <Box textAlign={"center"}>
                     <Flex>
@@ -67,15 +67,15 @@ export default function TransactionCashier() {
                         pos={"absolute"}
                         variant={"unstyled"}
                         size={"sm"}
-                        ml={{ md: "130px", lg: "250px" }}
-                        mt={"-60px"}
+                        ml={{ md: "190px", lg: "250px" }}
+                        mt={{ md: "-50px", lg: "-60px" }}
                         onClick={() => dispatch(deleteCart(item))}
                       ></IconButton>
                       <IconButton
                         pos={"absolute"}
                         color={"red"}
                         size={"sm"}
-                        ml={{ md: "130px", lg: "250px" }}
+                        ml={{ md: "190px", lg: "250px" }}
                         mt={"-10px"}
                         onClick={() => dispatch(deleteFromCart(item))}
                         icon={<AiFillMinusCircle size={"sm"} />}
@@ -87,7 +87,11 @@ export default function TransactionCashier() {
               </Card>
             </Box>
           ))}
-          <Box pos={"absolute"} mt={"700px"} ml={{ md: "20px", lg: "100px" }}>
+          <Box
+            pos={"absolute"}
+            mt={"700px"}
+            ml={{ md: "50px", lg: "80px" }}
+          >
             <Text>Total Harga : Rp. {totalHarga}</Text>
             <ButtonTransaction />
           </Box>

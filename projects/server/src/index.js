@@ -32,17 +32,19 @@ app.use(
     ],
   })
 );
+// ===========================
+// NOTE : Add your routes here
+
 app.use(express.json());
-app.use("/auth-management/api", authRouter, transactionRouter);
+app.use("/auth-management/api", authRouter);
+app.use("/transaction-management/api",transactionRouter)
 app.use("/mini-project/api/cashier", adminRouter);
 app.use("/mini-project/api/category", categoryRouter);
 app.use("/mini-project/api/product", productRouter);
 app.use("/public", express.static(path.resolve(__dirname, "./public")))
-// app.use("/public", express.static(path.resolve(__dirname, "./public")))
 //#region API ROUTES
 
-// ===========================
-// NOTE : Add your routes here
+
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);

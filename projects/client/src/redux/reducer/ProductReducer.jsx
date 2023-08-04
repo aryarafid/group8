@@ -43,7 +43,7 @@ export const payment = (totalPrice, toast) => {
     const token = localStorage.getItem("token");
     try {
       const respon = await axios.post(
-        "http://localhost:8000/auth-management/api/transaction",
+        "http://localhost:8000/transaction-management/api/transaction",
         { totalPrice },
         {
           headers: {

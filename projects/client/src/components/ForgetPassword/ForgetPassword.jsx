@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineMail } from "react-icons/ai";
 import { useState } from "react";
+import { BsArrowUpRight } from "react-icons/bs";
 
 const ResetSchema = Yup.object().shape({
   email: Yup.string()
@@ -72,10 +73,10 @@ export default function ForgetPassword({ isOpen, onClose }) {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay backdropFilter="blur(10px) hue-rotate(20deg)" />
         <ModalContent
           h={"200px"}
-          w={{ base: "200px", sm: "250px", md: "300", lg: "400px" }}
+          w={{ base: "200px", sm: "300px", md: "350px", lg: "400px" }}
         >
           <ModalHeader>Reset Password</ModalHeader>
           <ModalCloseButton />
@@ -111,6 +112,7 @@ export default function ForgetPassword({ isOpen, onClose }) {
                     mt={{ base: "10px", sm: "10px", md: "15px", lg: "20px" }}
                     w={{ base: "50px", sm: "100px", md: "150px", lg: "200px" }}
                     type="submit"
+                    borderRadius={"10px"}
                     colorScheme="teal"
                     fontSize={{
                       base: "12px",
@@ -118,6 +120,7 @@ export default function ForgetPassword({ isOpen, onClose }) {
                       md: "14px",
                       lg: "20px",
                     }}
+                    rightIcon={<BsArrowUpRight />}
                   >
                     {isLoading ? <Spinner /> : "Get link"}
                   </Button>

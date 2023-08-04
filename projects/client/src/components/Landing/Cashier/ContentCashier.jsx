@@ -83,7 +83,7 @@ export default function ContentCashier() {
 
   return (
     <>
-      <Box w={{ md: "900px", lg: "990px" }} fontFamily={"montserrat"}>
+      <Box w={{ md: "600px", lg: "980px" }} fontFamily={"montserrat"}>
         {/* <Box className="nav" bgColor={"white"} pt={"10px"}> */}
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
@@ -112,7 +112,7 @@ export default function ContentCashier() {
         </Flex>
 
         {/* tab */}
-        <Tabs variant="soft-rounded" colorScheme="blue" paddingLeft={"4em"}>
+        <Tabs variant="soft-rounded" colorScheme="blue" paddingLeft={"1em"}>
           <TabList>
             {category.map((category) => (
               <Tab
@@ -127,12 +127,21 @@ export default function ContentCashier() {
           <TabPanels>
             <TabPanel>
               {/* product */}
-              <Flex wrap={"wrap"} ml={"4em"} mt={"1em"} gap={"20px"}>
+              <Flex
+                wrap={"wrap"}
+                ml={{ md: "1px", lg: "4em" }}
+                mt={"1em"}
+                gap={"20px"}
+              >
                 {filteredProducts.map((product) => (
-                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                  <Card
+                    key={product.id}
+                    maxW={"500px"}
+                    maxH={"350px"}
+                    shadow={"lg"}
+                  >
                     <CardBody>
                       <Box
-                        // bgImage={ }
                         w={"200px"}
                         h={"180px"}
                       ></Box>

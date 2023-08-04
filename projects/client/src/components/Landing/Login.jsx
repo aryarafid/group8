@@ -4,6 +4,7 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -82,7 +83,6 @@ export default function Login() {
               <Box
                 w={{ base: "200px", sm: "250px", md: "350px", lg: "400px" }}
                 m={"24px auto"}
-                // bgColor={"red"}
               >
                 <FormControl
                   isInvalid={formik.touched.username && formik.errors.username}
