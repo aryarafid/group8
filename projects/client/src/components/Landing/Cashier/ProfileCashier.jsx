@@ -9,7 +9,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import SideBarsCashier from "../../sidebar/SideBarsCashier";
+import SideBarsCashier from "./SideBarsCashier";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { changeProfile } from "../../../redux/reducer/AuthReducer";

@@ -64,9 +64,16 @@ export default function ResetPassword() {
       });
       setTimeout(() => {
         document.location.href = "/";
-      }, 2500);
+      }, 2000);
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Failed",
+        description: error?.response?.data?.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setLoading(false);
     }

@@ -1,7 +1,7 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
 import TransactionCashier from "./TransactionCashier";
 import ContentCashier from "./ContentCashier";
-import SideBarsCashier from "../../sidebar/SideBarsCashier";
+import SideBarsCashier from "./SideBarsCashier";
 
 export default function DashBoardCashier() {
   return (

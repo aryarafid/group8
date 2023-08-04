@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
-import { BsFillPersonFill } from "react-icons/bs";
 import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../redux/reducer/AuthReducer";
+import { userLogout } from "../../../redux/reducer/AuthReducer";
+import { AiOutlineShop } from "react-icons/ai";
 
 export default function SideBarsCashier() {
   const { user } = useSelector((state) => state.AuthReducer);
@@ -25,13 +25,20 @@ export default function SideBarsCashier() {
   const dispatch = useDispatch();
   return (
     <>
-      <Box w={"100px"} h={"100vh"} bgColor={"#223256"} pos={"sticky"}>
-        <Box
-          textAlign={"center"}
-          color={"white"}
-          fontFamily={"montserrat"}
-          mt={"100px"}
-        >
+      <Box
+        w={"100px"}
+        h={"100vh"}
+        bgColor={"#223256"}
+        color={"white"}
+        pos={"sticky"}
+        fontFamily={"montserrat"}
+      >
+        <Box textAlign={"center"} w={"80px"} h={"100px"} ml={"10px"}>
+          <AiOutlineShop size={"lg"} />
+          <Text fontSize={"12px"}>Stay Honest</Text>
+          <Text>{user.role}</Text>
+        </Box>
+        <Box textAlign={"center"} mt={"100px"}>
           <Link to={"/profile"}>
             <IconButton
               as={"button"}
@@ -45,10 +52,9 @@ export default function SideBarsCashier() {
           </Link>
         </Box>
         <Link to={"/"}>
-          <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
+          <Box textAlign={"center"}>
             <IconButton
               as="button"
-              color={"white"}
               variant={"unstyled"}
               w={"80px"}
               h={"100px"}
@@ -57,10 +63,9 @@ export default function SideBarsCashier() {
             <Text>Home</Text>
           </Box>
         </Link>
-        <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
+        <Box textAlign={"center"}>
           <IconButton
             as="button"
-            color={"white"}
             variant={"unstyled"}
             w={"80px"}
             h={"100px"}

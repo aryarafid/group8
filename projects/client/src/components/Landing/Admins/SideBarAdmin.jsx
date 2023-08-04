@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
-import { BsFillPersonFill } from "react-icons/bs";
 import { BiSolidCategory, BiSolidHome, BiUser } from "react-icons/bi";
+import { AiOutlineShop } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../redux/reducer/AuthReducer";
 export default function SideBarAdmin() {
@@ -27,10 +27,15 @@ export default function SideBarAdmin() {
         bgColor={"teal"}
         position={"sticky"}
         color={"white"}
+        fontFamily={"montserrat"}
       >
-        <Text>{user.role}</Text>
+        <Box textAlign={"center"}>
+          <AiOutlineShop size={"sm"} />
+          <Text>Welcome</Text>
+          <Text>{user.role}</Text>
+        </Box>
         <Link to={"/productAdmin"}>
-          <Box textAlign={"center"} fontFamily={"montserrat"} mt={"100px"}>
+          <Box textAlign={"center"} mt={"20px"}>
             <IconButton
               as="button"
               color={"white"}
