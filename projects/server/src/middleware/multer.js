@@ -4,14 +4,10 @@ const fs = require("fs");
 
 // let defaultPath = path.resolve(__dirname, "../public/images");
 let defaultPath = "public/images"
-// let defaultPath = "public/images"
-console.log(defaultPath);
 const storage = multer.diskStorage({
-    // destination: (req, file, cb) => {
-    //     cb(null, defaultPath);
-    // },
     destination: async (req, file, cb) => {
         const isDirectoryExist = fs.existsSync(path.resolve(__dirname, `${defaultPath}/${file.fieldname}`));
+        console.log("path multer",isDirectoryExist)
         if (!isDirectoryExist) {
             await fs.promises.mkdir(path.resolve(__dirname, `${defaultPath}/${file.fieldname}`), {
                 recursive: true,

@@ -1,4 +1,4 @@
-const db = require("../models")
+const db = require("../../models");
 const path = require("path")
 const ts = db.Transaction;
 

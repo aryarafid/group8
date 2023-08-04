@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../../models");
 const path = require("path");
 const user = db.User;
 const fs = require("fs").promises
@@ -85,7 +85,7 @@ const authController = {
             console.log("Tujuan ?",req.file)
             const oldPicture = await user.findOne({ where : {id} })
             if(oldPicture.imgProfile){
-                fs.unlink(path.resolve(__dirname, `../src/${oldPicture.imgProfile}`), (err) => {
+                fs.unlink(path.resolve(__dirname, `../../${oldPicture.imgProfile}`), (err) => {
                     return res.status(500).json({message : err.message})
                 })
             }

@@ -13,22 +13,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { BiSolidCategory, BiSolidHome, BiUser } from "react-icons/bi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../redux/reducer/AuthReducer";
 export default function SideBarAdmin() {
+  const { user } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <>
-      <Box w={"100px"} h={"100vh"} bgColor={"#223256"} position={"sticky"}>
-
+      <Box
+        w={"100px"}
+        h={"100vh"}
+        bgColor={"teal"}
+        position={"sticky"}
+        color={"white"}
+      >
+        <Text>{user.role}</Text>
         <Link to={"/productAdmin"}>
-          <Box
-            textAlign={"center"}
-            color={"white"}
-            fontFamily={"montserrat"}
-            mt={"100px"}
-          >
+          <Box textAlign={"center"} fontFamily={"montserrat"} mt={"100px"}>
             <IconButton
               as="button"
               color={"white"}
@@ -49,9 +51,8 @@ export default function SideBarAdmin() {
               w={"80px"}
               h={"100px"}
               icon={<BiUser size={"2xl"} />}
-            >
-            </IconButton>
-            <Text>Cashier</Text>
+            ></IconButton>
+            <Text fontSize={"12px"}>Cashier Management</Text>
           </Link>
         </Box>
 
@@ -80,8 +81,7 @@ export default function SideBarAdmin() {
           ></IconButton>
           <Text>Logout</Text>
         </Box>
-
-      </Box >
+      </Box>
     </>
   );
 }

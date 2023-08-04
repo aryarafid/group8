@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../../models");
 const path = require("path");
 const category = db.Category;
 const bcrypt = require("bcrypt");
