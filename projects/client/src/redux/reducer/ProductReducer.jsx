@@ -34,6 +34,7 @@ export const ProductReducer = createSlice({
     },
     deleteCart: (state, action) => {
       state.cart = [];
+      state.totalHarga = 0;
     },
   },
 });
