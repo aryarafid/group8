@@ -75,7 +75,7 @@ const authController = {
             })
         } catch (error) {
             res.status(500).json({
-                message: error.message
+                message: error.message, checkPassword : checckPassword
             })
         }
     },

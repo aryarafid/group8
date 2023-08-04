@@ -108,22 +108,50 @@ export default function ForgetPassword({ isOpen, onClose }) {
                   {formik.touched.email && formik.errors.email && (
                     <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                   )}
-                  <Button
-                    mt={{ base: "10px", sm: "10px", md: "15px", lg: "20px" }}
-                    w={{ base: "50px", sm: "100px", md: "150px", lg: "200px" }}
-                    type="submit"
-                    borderRadius={"10px"}
-                    colorScheme="teal"
-                    fontSize={{
-                      base: "12px",
-                      sm: "12px",
-                      md: "14px",
-                      lg: "20px",
-                    }}
-                    rightIcon={<BsArrowUpRight />}
-                  >
-                    {isLoading ? <Spinner /> : "Get link"}
-                  </Button>
+                  {isLoading ? (
+                    <Button
+                      mt={{ base: "10px", sm: "10px", md: "15px", lg: "20px" }}
+                      w={{
+                        base: "50px",
+                        sm: "100px",
+                        md: "150px",
+                        lg: "200px",
+                      }}
+                      type="submit"
+                      borderRadius={"10px"}
+                      colorScheme="teal"
+                      fontSize={{
+                        base: "12px",
+                        sm: "12px",
+                        md: "14px",
+                        lg: "20px",
+                      }}
+                    >
+                      <Spinner />
+                    </Button>
+                  ) : (
+                    <Button
+                      mt={{ base: "10px", sm: "10px", md: "15px", lg: "20px" }}
+                      w={{
+                        base: "50px",
+                        sm: "100px",
+                        md: "150px",
+                        lg: "200px",
+                      }}
+                      type="submit"
+                      borderRadius={"10px"}
+                      colorScheme="teal"
+                      fontSize={{
+                        base: "12px",
+                        sm: "12px",
+                        md: "14px",
+                        lg: "20px",
+                      }}
+                      rightIcon={<BsArrowUpRight />}
+                    >
+                      Get link
+                    </Button>
+                  )}
                 </FormControl>
               </form>
             </Stack>

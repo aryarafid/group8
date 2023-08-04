@@ -70,7 +70,7 @@ export const loginAuth = (values, setLoading, toast) => {
     } catch (error) {
       toast({
         title: "Login Failed",
-        description: "Account Not Found",
+        description: "Account not found",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -87,7 +87,7 @@ export const changeProfile = (photo, toast, setLoading) => {
     const formData = new FormData();
     formData.append("imgProfile", photo);
     try {
-      setLoading(true)
+      setLoading(true);
       const respon = await axios.patch(
         "http://localhost:8000/auth-management/api/auth/profile",
         formData,
@@ -116,7 +116,7 @@ export const changeProfile = (photo, toast, setLoading) => {
         isClosable: true,
       });
     } finally {
-      setLoading(true)
+      setLoading(true);
     }
   };
 };
