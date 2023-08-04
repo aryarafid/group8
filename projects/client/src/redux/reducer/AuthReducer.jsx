@@ -70,7 +70,7 @@ export const loginAuth = (values, setLoading, toast) => {
     } catch (error) {
       toast({
         title: "Login Failed",
-        description: "Account not found",
+        description: error?.response?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,

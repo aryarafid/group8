@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const db = require("../models")
+const db = require("../../models");
 const user = db.User
 const bcrypt = require("bcrypt")
 const { check } = require("express-validator")
