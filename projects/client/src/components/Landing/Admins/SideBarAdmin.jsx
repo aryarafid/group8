@@ -44,7 +44,7 @@ export default function SideBarAdmin() {
               h={"100px"}
               icon={<BiSolidCategory size={"2xl"} />}
             ></IconButton>
-            <Text>Product</Text>
+            <Text>Product & Category</Text>
           </Box>
         </Link>
 
