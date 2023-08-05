@@ -17,6 +17,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const resetSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -43,7 +44,7 @@ export default function ResetPassword() {
     try {
       setLoading(true);
       const respon = await axios.patch(
-        "http://localhost:8000/auth-management/api/auth/resetPassword",
+        `${URL_API}/auth-management/auth/resetPassword`,
         {
           newPassword: values.newPassword,
           confirmPassword: values.confirmPassword,

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const initialState = {
   user: {
@@ -47,13 +48,10 @@ export const loginAuth = (values, setLoading, toast) => {
     try {
       setLoading(false);
       console.log("=>", values);
-      const respon = await axios.post(
-        "http://localhost:8000/auth-management/api/auth/login",
-        {
-          username: values.username,
-          password: values.password,
-        }
-      );
+      const respon = await axios.post(`${URL_API}/auth-management/auth/login`, {
+        username: values.username,
+        password: values.password,
+      });
       console.log("ini datanya =>", respon);
       const token = respon.data.token;
       console.log("data user", respon.data.isAccountExist);
@@ -89,7 +87,7 @@ export const changeProfile = (photo, toast, setLoading) => {
     try {
       setLoading(true);
       const respon = await axios.patch(
-        "http://localhost:8000/auth-management/api/auth/profile",
+        `${URL_API}/auth-management/auth/profile`,
         formData,
         {
           headers: {
@@ -126,7 +124,7 @@ export const keepLogin = () => {
     const token = localStorage.getItem("token");
     try {
       const respon = await axios.get(
-        "http://localhost:8000/auth-management/api/auth/keepLogin",
+        `${URL_API}/auth-management/auth/keepLogin`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

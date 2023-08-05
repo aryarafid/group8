@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const initialState = {
   product: [],
@@ -44,7 +45,7 @@ export const payment = (totalPrice, toast) => {
     const token = localStorage.getItem("token");
     try {
       const respon = await axios.post(
-        "http://localhost:8000/transaction-management/api/transaction",
+        `${URL_API}/transaction-management/transaction`,
         { totalPrice },
         {
           headers: {
@@ -59,6 +60,9 @@ export const payment = (totalPrice, toast) => {
         duration: 3000,
         isClosable: true,
       });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.log(error);
       toast({
