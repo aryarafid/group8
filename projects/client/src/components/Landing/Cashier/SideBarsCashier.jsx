@@ -9,9 +9,9 @@ import {
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
-import { BiSolidCategory, BiSolidHome } from "react-icons/bi";
+import { BiSolidHome } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../redux/reducer/AuthReducer";
 import { AiOutlineShop } from "react-icons/ai";

@@ -21,6 +21,7 @@ import * as Yup from "yup";
 import { AiOutlineMail } from "react-icons/ai";
 import { useState } from "react";
 import { BsArrowUpRight } from "react-icons/bs";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const ResetSchema = Yup.object().shape({
   email: Yup.string()
@@ -35,7 +36,7 @@ export default function ForgetPassword({ isOpen, onClose }) {
     try {
       setLoading(true);
       const respon = await axios.put(
-        `http://localhost:8000/auth-management/api/auth/forgotPassword`,
+        `${URL_API}/auth-management/auth/forgotPassword`,
         {
           email: values.email,
           FE_URL: "http://localhost:3000",
