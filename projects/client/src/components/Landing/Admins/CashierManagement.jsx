@@ -129,6 +129,7 @@ export default function CashierManagement() {
       });
     }
   };
+  
   const undeleteCashier = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
