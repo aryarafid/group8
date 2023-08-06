@@ -26,7 +26,8 @@ import {
   useToast,
   Text,
   IconButton,
-  HStack
+  HStack,
+  Wrap, WrapItem
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "../Cashier/Products";
@@ -37,6 +38,7 @@ import EditableField from "./EditableField";
 import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import AddProduct from "./AddProduct";
 
 export default function ProductAndCatAdmin() {
   const [page, setPage] = useState(1)
@@ -96,10 +98,10 @@ export default function ProductAndCatAdmin() {
     fetchData();
   }, [categoryId, orderByName, orderByPrice, page]);
 
-  const handleAddData = (newData) => {
-    // Update your data array with the new data
-    setData((prevData) => [...prevData, newData]);
-  };
+  // const handleAddData = (newData) => {
+  //   // Update your data array with the new data
+  //   setData((prevData) => [...prevData, newData]);
+  // };
 
   const handleSubmitEdit = async (id) => {
     // event.preventDefault();
@@ -183,7 +185,9 @@ export default function ProductAndCatAdmin() {
       <Box w={'25%'}>
         <Stack spacing='4' m={'2em'}>
           <Heading mb={'1em'}> Category</Heading>
+
           <AddCategory />
+
           {category.map((category) => (
             <Card key={category.id}>
               <CardBody>
@@ -208,28 +212,61 @@ export default function ProductAndCatAdmin() {
       {/* products */}
       <Box>
         {/* product */}
-        <Flex wrap={"wrap"} ml={"4em"} mt={'1em'} gap={"20px"} >
-          <Heading> Products </Heading>
-          {/* <Stack> */}
-          {filteredProducts.map((product) =>
-            <Card key={product.id} maxW={"500px"} maxH={"350px"}>
-              <CardBody>
-                <Box
-                  // bgImage={ }
-                  w={"200px"} h={"180px"}></Box>
-                <Text>
-                  {product.name}
-                </Text>
-                <Text>
-                  {product.harga_produk}
-                </Text>
-              </CardBody>
-              <CardFooter>
-                <Button variant={"unstyled"}>Add to cart</Button>
-              </CardFooter>
-            </Card>
-          )}
-          {/* </Stack> */}
+        <Flex wrap={"wrap"} ml={"4em"} mt={'2em'} gap={"20px"}>
+          <Box>
+            <Heading mb={'1em'}> Products </Heading>
+          </Box>
+          {/* tombol */}
+          <AddProduct mt={'1em'}
+            // onAdd={handleAddData} 
+            category={category} />
+          <Box>
+            <Wrap>
+              {filteredProducts.map((product) =>
+                <WrapItem>
+                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                    <CardBody>
+                      <Box
+                        // bgImage={ }
+                        w={"200px"} h={"180px"}></Box>
+                      <Stack>
+                        <Text as='b'>
+                          {product.name}
+                        </Text>
+                        <Text>
+                          {product.description}
+                        </Text>
+                        <Text>
+                          {product.harga_produk}
+                        </Text>
+                      </Stack>
+                      <HStack mt={'10px'}>
+                        <Spacer></Spacer>
+                        <IconButton icon={<FaEdit />}
+                        //  onClick={onOpen}
+                        />
+
+                        <IconButton icon={<FaTrashAlt />} ml={'0.5em'} />
+                      </HStack>
+                    </CardBody>
+                    {/* 
+                    <CardFooter>
+                      <IconButton icon={<FaEdit />}
+                      //  onClick={onOpen}
+                      />
+
+                      <IconButton icon={<FaTrashAlt />} ml={'0.5em'}
+                      // onClick={() => deleteCategory(category.id)} 
+                      />
+
+                    </CardFooter> */}
+                  </Card>
+
+                </WrapItem>
+              )}
+            </Wrap>
+          </Box>
+
         </Flex>
 
       </Box>

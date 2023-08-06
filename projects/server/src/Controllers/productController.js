@@ -10,34 +10,35 @@ require("dotenv").config({
 const fs = require("fs").promises;
 const sequelize = db.Sequelize;
 const { Op } = sequelize;
+const { multerUpload } = require("../middleware/multer");
 
 const productController = {
     getProduct: async (req, res) => {
-        const { page, categoryId, name, orderBy, sortByDate, size,quantity } = req.query
-            const productPage = parseInt(page) || 1;
-            const limitPerPage = parseInt(size) || 2;
-            const offset = (productPage - 1) * limitPerPage
-            const findName = {name : {[Op.like] : `%${name || ""}%`}}
-            const findQuantity = {quantity : {[Op.like] : `%${quantity || ""}%`}}
-            if(categoryId) findName.categoryId = categoryId
-            if(categoryId) findQuantity.categoryId = categoryId;
+        const { page, categoryId, name, orderBy, sortByDate, size, quantity } = req.query
+        const productPage = parseInt(page) || 1;
+        const limitPerPage = parseInt(size) || 2;
+        const offset = (productPage - 1) * limitPerPage
+        const findName = { name: { [Op.like]: `%${name || ""}%` } }
+        const findQuantity = { quantity: { [Op.like]: `%${quantity || ""}%` } }
+        if (categoryId) findName.categoryId = categoryId
+        if (categoryId) findQuantity.categoryId = categoryId;
         try {
             const result = await product.findAll({
-                attributes : {exclude : ["categoryId"]},
-                where : [findName,findQuantity],
+                attributes: { exclude: ["categoryId"] },
+                where: [findName, findQuantity],
                 limit: limitPerPage,
-                productPage : productPage,
+                productPage: productPage,
                 offset,
-                include : [
-                    { model : category, attributes : {exclude : ["createdAt", "updatedAt"]} },
+                include: [
+                    { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
                 ],
-                    order : [["createdAt", orderBy || "ASC"]]
+                order: [["createdAt", orderBy || "ASC"]]
             })
-            
+
             return res.status(200).json({
                 message: "get product success",
-                productLimit : limitPerPage,
-                productPage : productPage, 
+                productLimit: limitPerPage,
+                productPage: productPage,
                 data: result
             });
         } catch (error) {
@@ -48,27 +49,21 @@ const productController = {
     },
 
     createProduct: async (req, res) => {
-        const {
-            name,
-            categoryId,
-            // productImg,
-            modal_produk,
-            harga_produk,
-            quantity,
-            description,
-            // isActive,
-        } = req.body;
-
-        // aktifkan multer!!!!!
-        return res.json(req.body)
         try {
-
-
+            const {
+                name,
+                categoryId,
+                productImg,
+                modal_produk,
+                harga_produk,
+                quantity,
+                description,
+            } = req.body;
             await db.sequelize.transaction(async (t) => {
                 const productCreate = await product.create({
                     name,
                     categoryId,
-                    // productImg: req.file.path,
+                    productImg: req.file.path,
                     modal_produk,
                     harga_produk,
                     quantity,

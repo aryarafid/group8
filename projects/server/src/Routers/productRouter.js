@@ -7,8 +7,8 @@ const {
   createProductValidator
 } = require("../middleware/Validator");
 const {
-  auth
-} = require("../middleware/auth");
+  auth, verifyToken} = require("../middleware/auth");
+const { multerUpload } = require("../middleware/multer");
 
 router.get(
   "/products",
@@ -17,9 +17,10 @@ router.get(
 );
 router.post(
   "/create",
-  // createProductValidator,
-  // validateRegist,
-  // auth.verifyToken,
+  multerUpload.single("productImg"),
+  createProductValidator,
+  validateRegist,
+  verifyToken,
   productController.createProduct
 );
 router.patch(
