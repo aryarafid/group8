@@ -89,7 +89,7 @@ export default function TransactionCashier() {
           ))}
           <Box
             pos={"absolute"}
-            mt={"700px"}
+            mt={"680px"}
             ml={{ md: "50px", lg: "80px" }}
           >
             <Text>Total Harga : Rp. {totalHarga}</Text>
