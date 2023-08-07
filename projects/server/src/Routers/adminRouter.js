@@ -18,7 +18,7 @@ router.get(
 );
 router.get(
   "/:id",
-  // auth.verifyToken,
+  verifyToken,
   adminController.getCashierById
 );
 router.post(
@@ -31,14 +31,14 @@ router.post(
 );
 router.patch(
   "/update/:id",
-  // auth.verifyToken,
+  verifyToken,
   adminController.updateCashier
 );
 router.patch("/delete/:id",
-  // auth.verifyToken,
+  verifyToken,
   adminController.deleteCashier);
 router.patch("/undelete/:id",
-  // auth.verifyToken,
+  verifyToken,
   adminController.undeleteCashier);
 
 module.exports = router;

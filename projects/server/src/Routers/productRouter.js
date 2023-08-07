@@ -12,7 +12,7 @@ const { multerUpload } = require("../middleware/multer");
 
 router.get(
   "/products",
-  // auth.verifyToken,
+  verifyToken,
   productController.getProduct
 );
 router.post(
