@@ -37,7 +37,7 @@ app.use(
 
 app.use(express.json());
 app.use("/api/auth-management", authRouter);
-app.use("/api/transaction-management", transactionRouter)
+app.use("/api/transaction-management",transactionRouter)
 app.use("/mini-project/api/cashier", adminRouter);
 app.use("/mini-project/api/category", categoryRouter);
 app.use("/mini-project/api/product", productRouter);

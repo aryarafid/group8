@@ -4,6 +4,7 @@ import {
   CardBody,
   Flex,
   IconButton,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -43,7 +44,6 @@ export default function TransactionCashier() {
             <Box>
               <Card
                 w={{ md: "250px", lg: "320px" }}
-                h={"100px"}
                 m={"5px auto"}
                 key={item.id}
               >
@@ -62,36 +62,32 @@ export default function TransactionCashier() {
                       <Text fontSize={{ md: "12px", lg: "12px" }}>
                         Qty : {item.quantity}
                       </Text>
-                      <IconButton
-                        icon={<BsFillTrash3Fill size={"sm"} />}
+                      <Box
+                        ml={{ md: "80px", lg: "200px" }}
                         pos={"absolute"}
-                        variant={"unstyled"}
-                        size={"sm"}
-                        ml={{ md: "190px", lg: "250px" }}
-                        mt={{ md: "-50px", lg: "-60px" }}
-                        onClick={() => dispatch(deleteCart(item))}
-                      ></IconButton>
-                      <IconButton
-                        pos={"absolute"}
-                        color={"red"}
-                        size={"sm"}
-                        ml={{ md: "190px", lg: "250px" }}
-                        mt={"-10px"}
-                        onClick={() => dispatch(deleteFromCart(item))}
-                        icon={<AiFillMinusCircle size={"sm"} />}
-                        variant={"unstyled"}
-                      ></IconButton>
+                      >
+                        <IconButton
+                          color={"red"}
+                          size={"sm"}
+                          onClick={() => dispatch(deleteFromCart(item))}
+                          icon={<AiFillMinusCircle size={"sm"} />}
+                          variant={"unstyled"}
+                        ></IconButton>
+                        <IconButton
+                          icon={<BsFillTrash3Fill size={"sm"} />}
+                          variant={"unstyled"}
+                          size={"sm"}
+                          ml={"20px"}
+                          onClick={() => dispatch(deleteCart(item))}
+                        ></IconButton>
+                      </Box>
                     </Flex>
                   </Box>
                 </CardBody>
               </Card>
             </Box>
           ))}
-          <Box
-            pos={"absolute"}
-            mt={"680px"}
-            ml={{ md: "50px", lg: "80px" }}
-          >
+          <Box pos={"absolute"} mt={"680px"} ml={{ md: "50px", lg: "80px" }}>
             <Text>Total Harga : Rp. {totalHarga}</Text>
             <ButtonTransaction />
           </Box>
