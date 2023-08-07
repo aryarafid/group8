@@ -9,10 +9,12 @@ import {
     Th,
     NumberInput,
     NumberInputField,
-    NumberInputStepper,
+    TableCaption,
     Td,
+    NumberInputStepper,
     FormControl,
     FormLabel,
+    Tabs, TabList, TabPanels, Tab, TabPanel,
     FormErrorMessage,
     FormHelperText,
     Button,
@@ -116,68 +118,132 @@ export default function DetailProduct({ data, category }) {
             {/* <Button colorScheme="teal" mt={'2em'} mb={'1em'} onClick={onOpen}>Add New Product</Button> */}
             <IconButton icon={<FaEye />} onClick={onOpen} />
             <Modal isOpen={isOpen} onClose={onClose}>
-                <form onSubmit={handleSubmit}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Edit Data #{data.id}</ModalHeader>
-                        <ModalCloseButton />
 
-                        <ModalBody>
-                            {/* <Lorem count={2} /> */}
-                            <FormControl isRequired>
-                                <FormLabel>Product Name</FormLabel>
-                                <Input id='name' name='name' type='name' defaultValue={data.name} />
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Product Category</FormLabel>
-                                {/* <Input id='categoryId' name='categoryId' type='categoryId' /> */}
-                                <Select placeholder='Select category' name="categoryId" id="categoryId">
-                                </Select>
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Product Image</FormLabel>
-                                <Input id='productImg' name='productImg' type='file' />
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Harga Modal Produk</FormLabel>
-                                <Input id='modal_produk' name='modal_produk' type="number" defaultValue={data.modal_produk} />
-                                {/* <NumberInput id='modal_produk' name='modal_produk'> */}
-                                {/* <NumberInputField /> */}
-                                {/* </NumberInput> */}
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Harga Jual Produk</FormLabel>
-                                {/* <NumberInput id='harga_produk' name='harga_produk'> */}
-                                {/* <NumberInputField /> */}
-                                {/* </NumberInput> */}
-                                <Input id='harga_produk' name='harga_produk' type="number"
-                                    defaultValue={data.harga_produk} />
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Produk #{data.id}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Tabs>
+                            <TabList>
+                                <Tab>Detail Produk</Tab>
+                                <Tab>Edit Produk</Tab>
+                            </TabList>
 
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Quantity</FormLabel>
-                                {/* <NumberInput id='quantity' name='quantity'>
+                            <TabPanels>
+                                <TabPanel>
+
+                                    <TableContainer>
+                                        <Table>
+                                            <Tbody>
+                                                <Tr>
+                                                    <Td>Product Name</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.name}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Product Category</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.categoryId}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Product Image</Td>
+                                                    <Td>:</Td>
+                                                    <Td></Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Harga Modal Produk</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.modal_produk}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Harga Jual Produk</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.harga_produk}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Quantity</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.quantity}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Quantity</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{data.description}</Td>
+                                                </Tr>
+                                                <Tr>
+                                                    <Td>Status</Td>
+                                                    <Td>:</Td>
+                                                    <Td>{
+                                                        data.isActive === true ? "Active" : "Inactive"
+                                                    }</Td>
+                                                </Tr>
+
+
+                                            </Tbody>
+                                        </Table>
+                                    </TableContainer>
+
+                                </TabPanel>
+
+                                <TabPanel>
+                                    <form onSubmit={handleSubmit}>
+                                        <FormControl isRequired>
+                                            <FormLabel>Product Name</FormLabel>
+                                            <Input id='name' name='name' type='name' defaultValue={data.name} />
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>Product Category</FormLabel>
+                                            <Select placeholder='Select category' name="categoryId" id="categoryId">
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl>
+                                            <FormLabel>Product Image</FormLabel>
+                                            <Input id='productImg' name='productImg' type='file' />
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>Harga Modal Produk</FormLabel>
+                                            <Input id='modal_produk' name='modal_produk' type="number" defaultValue={data.modal_produk} />
+                                            {/* <NumberInput id='modal_produk' name='modal_produk'> */}
+                                            {/* <NumberInputField /> */}
+                                            {/* </NumberInput> */}
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>Harga Jual Produk</FormLabel>
+                                            {/* <NumberInput id='harga_produk' name='harga_produk'> */}
+                                            {/* <NumberInputField /> */}
+                                            {/* </NumberInput> */}
+                                            <Input id='harga_produk' name='harga_produk' type="number"
+                                                defaultValue={data.harga_produk} />
+
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>Quantity</FormLabel>
+                                            {/* <NumberInput id='quantity' name='quantity'>
                                     <NumberInputField />
                                 </NumberInput> */}
-                                <Input id='quantity' name='quantity' type="number"
-                                    defaultValue={data.quantity} />
-                            </FormControl>
-                            <FormControl isRequired>
-                                <FormLabel>Description</FormLabel>
-                                <Textarea id='description' name='description'
-                                    defaultValue={data.description} />
+                                            <Input id='quantity' name='quantity' type="number"
+                                                defaultValue={data.quantity} />
+                                        </FormControl>
+                                        <FormControl isRequired>
+                                            <FormLabel>Description</FormLabel>
+                                            <Textarea id='description' name='description'
+                                                defaultValue={data.description} />
 
-                            </FormControl>
-                        </ModalBody>
+                                        </FormControl>
 
-                        <ModalFooter>
-                            <Button mr={3} onClick={onClose}>
-                                Close
-                            </Button>
-                            <Button colorScheme='blue' mr={3} type='submit'>Submit</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </form>
+                                        <ModalFooter>
+                                            <Button mr={3} onClick={onClose}>
+                                                Close
+                                            </Button>
+                                            <Button colorScheme='blue' mr={3} type='submit'>Submit</Button>
+                                        </ModalFooter>
+                                    </form>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
+                    </ModalBody>
+                </ModalContent>
             </Modal>
         </>
     )
