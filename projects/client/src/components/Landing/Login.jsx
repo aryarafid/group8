@@ -4,6 +4,7 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -60,7 +61,13 @@ export default function Login() {
 
   return (
     <>
-      <Box w={"100%"} h={"100vh"} bgImage={"Wave2.svg"} bgPos={"center"}>
+      <Box
+        w={"100%"}
+        h={"100vh"}
+        bgImage={"Wave2.svg"}
+        bgPos={"center"}
+        bgSize={"cover"}
+      >
         <Stack>
           <Box
             w={{ base: "250px", sm: "380px", md: "450px", lg: "600px" }}
@@ -82,7 +89,6 @@ export default function Login() {
               <Box
                 w={{ base: "200px", sm: "250px", md: "350px", lg: "400px" }}
                 m={"24px auto"}
-                // bgColor={"red"}
               >
                 <FormControl
                   isInvalid={formik.touched.username && formik.errors.username}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
-import { useState } from "react";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const initialState = {
   user: {
@@ -48,13 +48,10 @@ export const loginAuth = (values, setLoading, toast) => {
     try {
       setLoading(false);
       console.log("=>", values);
-      const respon = await axios.post(
-        "http://localhost:8000/mini-project/api/auth/login",
-        {
-          username: values.username,
-          password: values.password,
-        }
-      );
+      const respon = await axios.post(`${URL_API}/auth-management/auth/login`, {
+        username: values.username,
+        password: values.password,
+      });
       console.log("ini datanya =>", respon);
       const token = respon.data.token;
       console.log("data user", respon.data.isAccountExist);
@@ -68,21 +65,77 @@ export const loginAuth = (values, setLoading, toast) => {
         duration: 3000,
         isClosable: true,
       });
-      //   setTimeout(() => {
-      //     // window.location.reload();
-      //     document.location.href = "/";
-      //   }, 350);
     } catch (error) {
-      console.log("ini error", error);
       toast({
         title: "Login Failed",
-        description: "Account Not Verify",
+        description: error?.response?.data?.message,
         status: "error",
         duration: 3000,
         isClosable: true,
       });
     } finally {
       setLoading(true);
+    }
+  };
+};
+
+export const changeProfile = (photo, toast, setLoading) => {
+  return async () => {
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("imgProfile", photo);
+    try {
+      setLoading(true);
+      const respon = await axios.patch(
+        `${URL_API}/auth-management/auth/profile`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(respon);
+      toast({
+        title: "Change Profile Picture Success",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(true);
+    }
+  };
+};
+
+export const keepLogin = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      const respon = await axios.get(
+        `${URL_API}/auth-management/auth/keepLogin`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("keeplogin", respon);
+      dispatch(setUser(respon.data.findUser));
+      dispatch(userLogin());
+    } catch (error) {
+      console.log(error);
     }
   };
 };

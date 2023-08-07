@@ -1,3 +1,4 @@
+const path = require("path");
 require("dotenv/config");
 const express = require("express");
 const cors = require("cors");
@@ -9,8 +10,9 @@ const {
   authRouter,
   adminRouter,
   categoryRouter,
-  productRouter
-} = require("../Routers");
+  productRouter,
+  transactionRouter,
+} = require("./Routers");
 
 // db.sequelize.sync({
 //   alter: true
@@ -26,21 +28,21 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:3000"
+      "http://localhost:3000", "http://192.168.20.197:3000"
     ],
   })
 );
-
-app.use(express.json());
-app.use("/mini-project/api", authRouter);
-app.use("/mini-project/api/cashier", adminRouter);
-app.use("/mini-project/api/category", categoryRouter);
-app.use("/mini-project/api/product", productRouter);
-
-//#region API ROUTES
-
 // ===========================
 // NOTE : Add your routes here
+
+app.use(express.json());
+app.use("/api/auth-management", authRouter);
+app.use("/api/transaction-management", transactionRouter)
+app.use("/api/cashier", adminRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/product", productRouter);
+app.use("/public", express.static(path.resolve(__dirname, "../public")))
+//#region API ROUTES
 
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
@@ -76,7 +78,7 @@ app.use((err, req, res, next) => {
 //#endregion
 
 //#region CLIENT
-const clientPath = "../../client/build";
+const clientPath = "../../client/public";
 app.use(express.static(join(__dirname, clientPath)));
 
 // Serve the HTML page

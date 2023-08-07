@@ -6,16 +6,18 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Spinner,
   Stack,
   Text,
   useToast,
 } from "@chakra-ui/react";
 
 import axios from "axios";
-import { Form, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import * as Yup from "yup";
+const URL_API = process.env.REACT_APP_API_BASE_URL;
 
 const resetSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -30,6 +32,7 @@ const resetSchema = Yup.object().shape({
 });
 
 export default function ResetPassword() {
+  const [isLoading, setLoading] = useState(false);
   const toast = useToast();
   const [show, setShow] = useState(false);
   const handleClick = () => {
@@ -39,8 +42,9 @@ export default function ResetPassword() {
     const url = window.location.href.split("/");
     const token = url.pop();
     try {
+      setLoading(true);
       const respon = await axios.patch(
-        "http://localhost:8000/mini-project/api/auth/resetPassword",
+        `${URL_API}/auth-management/auth/resetPassword`,
         {
           newPassword: values.newPassword,
           confirmPassword: values.confirmPassword,
@@ -59,8 +63,20 @@ export default function ResetPassword() {
         duration: 3000,
         isClosable: true,
       });
+      setTimeout(() => {
+        document.location.href = "/";
+      }, 2000);
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Failed",
+        description: error?.response?.data?.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
     }
   };
   const formik = useFormik({
@@ -236,7 +252,7 @@ export default function ResetPassword() {
                   _hover={{ bgColor: "green" }}
                   type="submit"
                 >
-                  Submit
+                  {isLoading ? <Spinner /> : "Submit"}
                 </Button>
               </Box>
             </form>
