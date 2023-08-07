@@ -47,6 +47,8 @@ import { Link, useParams } from "react-router-dom";
 import EditCashier from "./EditCashier";
 import DeleteCashier from "./DeleteCashier";
 import AddCashier from "./AddCashier";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+
 import ContentCashier from "../Cashier/ContentCashier";
 import SideBarsCashier from "../Cashier/SideBarsCashier";
 import TransactionCashier from "../Cashier/TransactionCashier";
@@ -129,7 +131,7 @@ export default function CashierManagement() {
       });
     }
   };
-  
+
   const undeleteCashier = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
@@ -214,26 +216,29 @@ export default function CashierManagement() {
                       </Td>
                       <Td>
                         <Link to={`/editCashier/${cashierData.id}`}>
-                          <Button colorScheme="green">Edit</Button>
+                          {/* <Button colorScheme="green">Edit</Button> */}
+                          <IconButton icon={<FaEdit />} />
                         </Link>
 
                         {cashierData.isActive === true ? (
                           <Button
                             ml={"0.5em"}
-                            colorScheme="red"
+                            // colorScheme="grey"
                             onClick={() => deleteCashier(cashierData.id)}
                           >
                             Delete
                           </Button>
+                          /* <IconButton icon={<FaTrashAlt />} ml={'0.5em'} /> */
                         ) : (
                           <Button
                             ml={"0.5em"}
-                            colorScheme="blue"
+                            colorScheme="teal"
                             onClick={() => undeleteCashier(cashierData.id)}
                           >
                             Undelete
                           </Button>
-                        )}
+                        )
+                        }
                       </Td>
                     </Tr>
                   ))}
@@ -242,7 +247,7 @@ export default function CashierManagement() {
             </TableContainer>
           </Box>
         </Box>
-      </Flex>
+      </Flex >
     </>
   );
 }

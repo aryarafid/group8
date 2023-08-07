@@ -44,8 +44,6 @@ app.use("/mini-project/api/product", productRouter);
 app.use("/public", express.static(path.resolve(__dirname, "../public")))
 //#region API ROUTES
 
-
-
 app.get("/api", (req, res) => {
   res.send(`Hello, this is my API`);
 });
