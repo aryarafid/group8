@@ -112,7 +112,7 @@ export default function AddCashier({ onAdd }) {
 
   return (
     <>
-      <Button colorScheme="blue" mt={"2em"} mb={"1em"} onClick={onOpen}>
+      <Button colorScheme="teal" mt={"2em"} mb={"1em"} onClick={onOpen}>
         Add New Cashier
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>

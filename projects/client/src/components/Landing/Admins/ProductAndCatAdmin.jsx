@@ -39,6 +39,7 @@ import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import AddProduct from "./AddProduct";
+import DetailProduct from "./DetailProduct";
 
 export default function ProductAndCatAdmin() {
   const [page, setPage] = useState(1)
@@ -215,20 +216,25 @@ export default function ProductAndCatAdmin() {
         <Flex wrap={"wrap"} ml={"4em"} mt={'2em'} gap={"20px"}>
           <Box>
             <Heading mb={'1em'}> Products </Heading>
+            <AddProduct
+              category={category} />
           </Box>
           {/* tombol */}
-          <AddProduct mt={'1em'}
-            // onAdd={handleAddData} 
-            category={category} />
+
           <Box>
             <Wrap>
               {filteredProducts.map((product) =>
                 <WrapItem>
                   <Card key={product.id} maxW={"500px"} maxH={"350px"}>
                     <CardBody>
-                      <Box
-                        // bgImage={ }
-                        w={"200px"} h={"180px"}></Box>
+                      {product.productImg ?
+                        <Image
+                          w={'200px'} h={'180px'}
+                          src={`http://localhost:8000/${product.productImg}`}
+                        ></Image> : <Avatar
+                          w={'200px'} h={'180px'}
+                        />
+                      }
                       <Stack>
                         <Text as='b'>
                           {product.name}
@@ -236,15 +242,11 @@ export default function ProductAndCatAdmin() {
                         <Text>
                           {product.description}
                         </Text>
-                        <Text>
-                          {product.harga_produk}
-                        </Text>
                       </Stack>
                       <HStack mt={'10px'}>
                         <Spacer></Spacer>
-                        <IconButton icon={<FaEdit />}
-                        //  onClick={onOpen}
-                        />
+
+                        <DetailProduct data={product} category={category}/>
 
                         <IconButton icon={<FaTrashAlt />} ml={'0.5em'} />
                       </HStack>

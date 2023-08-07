@@ -39,12 +39,13 @@ import axios from "axios"
 import ContentCashier from "../Cashier/ContentCashier";
 import SideBarsCashier from "../Cashier/SideBarsCashier";
 import TransactionCashier from "../Cashier/TransactionCashier";
+import { FaEye } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
 import DeleteCashier from "./DeleteCashier";
 
-export default function AddProduct({ onAdd, category }) {
+export default function DetailProduct({ data, category }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [pwShow, setpwShow] = useState(false)
     const handleClick = () => setpwShow(!pwShow)
@@ -61,7 +62,6 @@ export default function AddProduct({ onAdd, category }) {
         harga_produk: "",
         quantity: "",
         description: "",
-
     };
     const [formData, setFormData] = useState(initialFormData);
 
@@ -113,26 +113,25 @@ export default function AddProduct({ onAdd, category }) {
 
     return (
         <>
-            <Button colorScheme="teal" mt={'2em'} mb={'1em'} onClick={onOpen}>Add New Product</Button>
+            {/* <Button colorScheme="teal" mt={'2em'} mb={'1em'} onClick={onOpen}>Add New Product</Button> */}
+            <IconButton icon={<FaEye />} onClick={onOpen} />
             <Modal isOpen={isOpen} onClose={onClose}>
                 <form onSubmit={handleSubmit}>
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>Add New Product</ModalHeader>
+                        <ModalHeader>Edit Data #{data.id}</ModalHeader>
                         <ModalCloseButton />
+
                         <ModalBody>
                             {/* <Lorem count={2} /> */}
                             <FormControl isRequired>
                                 <FormLabel>Product Name</FormLabel>
-                                <Input id='name' name='name' type='name' placeholder="product name" />
+                                <Input id='name' name='name' type='name' defaultValue={data.name} />
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Product Category</FormLabel>
                                 {/* <Input id='categoryId' name='categoryId' type='categoryId' /> */}
                                 <Select placeholder='Select category' name="categoryId" id="categoryId">
-                                    {category.map((category) =>
-                                        <option value={category.id}>{category.name}</option>
-                                    )}
                                 </Select>
                             </FormControl>
                             <FormControl isRequired>
@@ -141,7 +140,7 @@ export default function AddProduct({ onAdd, category }) {
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Harga Modal Produk</FormLabel>
-                                <Input id='modal_produk' name='modal_produk' type="number" />
+                                <Input id='modal_produk' name='modal_produk' type="number" defaultValue={data.modal_produk} />
                                 {/* <NumberInput id='modal_produk' name='modal_produk'> */}
                                 {/* <NumberInputField /> */}
                                 {/* </NumberInput> */}
@@ -151,7 +150,8 @@ export default function AddProduct({ onAdd, category }) {
                                 {/* <NumberInput id='harga_produk' name='harga_produk'> */}
                                 {/* <NumberInputField /> */}
                                 {/* </NumberInput> */}
-                                <Input id='harga_produk' name='harga_produk' type="number" />
+                                <Input id='harga_produk' name='harga_produk' type="number"
+                                    defaultValue={data.harga_produk} />
 
                             </FormControl>
                             <FormControl isRequired>
@@ -159,12 +159,14 @@ export default function AddProduct({ onAdd, category }) {
                                 {/* <NumberInput id='quantity' name='quantity'>
                                     <NumberInputField />
                                 </NumberInput> */}
-                                <Input id='quantity' name='quantity' type="number" />
-
+                                <Input id='quantity' name='quantity' type="number"
+                                    defaultValue={data.quantity} />
                             </FormControl>
                             <FormControl isRequired>
                                 <FormLabel>Description</FormLabel>
-                                <Textarea id='description' name='description' placeholder="deskripsi produk" />
+                                <Textarea id='description' name='description'
+                                    defaultValue={data.description} />
+
                             </FormControl>
                         </ModalBody>
 

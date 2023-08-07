@@ -7,7 +7,7 @@ const {
   createProductValidator
 } = require("../middleware/Validator");
 const {
-  auth, verifyToken} = require("../middleware/auth");
+  auth, verifyToken } = require("../middleware/auth");
 const { multerUpload } = require("../middleware/multer");
 
 router.get(
@@ -25,11 +25,19 @@ router.post(
 );
 router.patch(
   "/update/:id",
-  // auth.verifyToken,
+  multerUpload.single("productImg"),
+  // createProductValidator,
+  // validateRegist,
+  verifyToken,
   productController.updateProduct
 );
 router.patch("/delete/:id",
-  // auth.verifyToken,
-  productController.deleteProduct);
+  verifyToken,
+  productController.deleteProduct
+);
+router.patch("/activate/:id",
+  verifyToken,
+  productController.activateProduct
+);
 
 module.exports = router;

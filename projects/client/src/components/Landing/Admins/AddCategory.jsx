@@ -85,7 +85,7 @@ export default function AddCategory({ onAdd }) {
 
     return (
         <>
-            <Button colorScheme="blue" mt={'2em'} mb={'1em'} onClick={onOpen}>Add New Category</Button>
+            <Button colorScheme="teal" mt={'2em'} mb={'1em'} onClick={onOpen}>Add New Category</Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <form onSubmit={handleSubmit}>
                     <ModalOverlay />
