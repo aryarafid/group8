@@ -153,28 +153,27 @@ const productController = {
                 if (harga_produk) productFind.harga_produk = harga_produk;
                 if (quantity) productFind.quantity = quantity;
                 if (description) productFind.description = description;
-                if (productImg) {
-                    const result = await product.update({
-                        img_url: req.file.path,
-                    }, {
-                        where: {
-                            id
-                        }
-                    }, {
-                        transaction: t
-                    });
-                    if (!result) {
-                        return res.status(500).json({
-                            message: "Change avatar failed",
-                            error: err.message,
-                        });
-                    }
-                    fs.unlink(oldData.img_url, (err) => {
+                if (req.file) {
+                    // const result = await product.update({
+                    //     img_url: req.file.path,
+                    // }, {
+                    //     where: {
+                    //         id
+                    //     }
+                    // }, {
+                    //     transaction: t
+                    // });
+                    // if (!result) {
+                    //     return res.status(500).json({
+                    //         message: "Change avatar failed",
+                    //         error: err.message,
+                    //     });
+                    // }
+                    fs.unlink(productFind.productImg, (err) => {
                         if (err) {
-                            console.error(err);
+                            res.status(500).json({ error: "ubah gambar error" })
                             return;
                         }
-                        console.log("Old avatar deleted successfully");
                     });
                 }
 
@@ -191,7 +190,7 @@ const productController = {
                 })
             } else {
                 res.status(404).json({
-                    message: "product not found"
+                    error: "product not found"
                 });
             }
         } catch (error) {

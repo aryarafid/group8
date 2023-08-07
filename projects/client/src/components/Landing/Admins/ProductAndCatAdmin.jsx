@@ -16,6 +16,13 @@ import {
   EditableInput,
   EditableTextarea,
   EditablePreview,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Tab,
   TabList,
   TabPanel, CardHeader,
@@ -27,7 +34,7 @@ import {
   Text,
   IconButton,
   HStack,
-  Wrap, WrapItem
+  Wrap, WrapItem, useDisclosure
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "../Cashier/Products";
@@ -53,7 +60,7 @@ export default function ProductAndCatAdmin() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [edit, setEdit] = useState("")
   const [data, setData] = useState([])
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState('');
 
@@ -80,14 +87,6 @@ export default function ProductAndCatAdmin() {
       setCategory(response.data.data);
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  const addNewCategory = async () => {
-    try {
-
-    } catch (error) {
-
     }
   }
 
@@ -163,9 +162,10 @@ export default function ProductAndCatAdmin() {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        document.location.href = "/productAdmin";
-      }, 2500);
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
     } catch (error) {
       console.log(error);
       toast({
@@ -198,7 +198,24 @@ export default function ProductAndCatAdmin() {
                   {/* <IconButton icon={<FaEdit />} /> */}
                   <EditCategory categoryId={category.id} defVal={category.name} />
                   {/* edit button */}
-                  <IconButton icon={<FaTrashAlt />} ml={'0.5em'} onClick={() => deleteCategory(category.id)} />
+                  <IconButton icon={<FaTrashAlt />} ml={'0.5em'} onClick={onOpen} />
+
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Yakin ingin menghapus data ini?</ModalHeader>
+                      <ModalBody>
+                        <Text>Data tidak dapat kembali.</Text>
+                      </ModalBody>
+                      <ModalCloseButton />
+                      <ModalFooter>
+                        <Button variant={'ghost'} mr={3} onClick={onClose}>
+                          Close
+                        </Button>
+                        <Button colorScheme='red' onClick={() => deleteCategory(category.id)}>Delete</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
                   {/* trash button */}
                 </HStack>
                 {/* </Container> */}
@@ -225,7 +242,7 @@ export default function ProductAndCatAdmin() {
             <Wrap>
               {filteredProducts.map((product) =>
                 <WrapItem>
-                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                  <Card key={product.id} maxW={"240px"} maxH={"360px"}>
                     <CardBody>
                       {product.productImg ?
                         <Image
@@ -246,22 +263,11 @@ export default function ProductAndCatAdmin() {
                       <HStack mt={'10px'}>
                         <Spacer></Spacer>
 
-                        <DetailProduct data={product} category={category}/>
+                        <DetailProduct data={product} category={category} />
 
-                        <IconButton icon={<FaTrashAlt />} ml={'0.5em'} />
+                        <IconButton icon={<FaTrashAlt />} ml={'0.5em'} colorScheme={'red'} />
                       </HStack>
                     </CardBody>
-                    {/* 
-                    <CardFooter>
-                      <IconButton icon={<FaEdit />}
-                      //  onClick={onOpen}
-                      />
-
-                      <IconButton icon={<FaTrashAlt />} ml={'0.5em'}
-                      // onClick={() => deleteCategory(category.id)} 
-                      />
-
-                    </CardFooter> */}
                   </Card>
 
                 </WrapItem>
