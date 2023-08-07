@@ -40,12 +40,14 @@ export default function EditCashier() {
     const { id } = useParams();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
+    const [imgProfile, setImgProfile] = useState("");
     const navigate = useNavigate();
 
     const getUserById = async () => {
-        const response = await axios.get(`http://localhost:8000/mini-project/api/cashier/${id}`);
+        const response = await axios.get(`http://localhost:8000/api/cashier/${id}`);
         setUsername(response.data.data.username)
         setEmail(response.data.data.email)
+        setImgProfile(response.data.data.imgProfile)
     };
 
     useEffect(() => {
@@ -55,18 +57,19 @@ export default function EditCashier() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem("token");
+        const imgProfile = document.getElementById("imgProfile").files[0];
 
-        const data = {
-            username: document.getElementById("username").value,
-            email: document.getElementById("email").value,
-        };
+        const formData = new FormData();
+        formData.append("username", document.getElementById("username").value);
+        formData.append("email", document.getElementById("email").value);
+        formData.append("imgProfile", imgProfile);
 
-        console.log(data);
+        console.log(formData);
 
         try {
             const respon = await axios.patch(
-                `http://localhost:8000/mini-project/api/cashier/update/${id}`,
-                data,
+                `http://localhost:8000/api/cashier/update/${id}`,
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -100,7 +103,7 @@ export default function EditCashier() {
                 <Heading mb={'1em'}>Edit Form Cashier #{id}</Heading>
                 <form onSubmit={handleSubmit}>
                     {/* <Lorem count={2} /> */}
-                    <FormControl isRequired>
+                    <FormControl>
                         <FormLabel>Username</FormLabel>
                         <Input
                             defaultValue={username}
@@ -112,7 +115,7 @@ export default function EditCashier() {
                         />
                     </FormControl>
 
-                    <FormControl isRequired>
+                    <FormControl>
                         <FormLabel>Email</FormLabel>
                         <Input
                             defaultValue={email}
@@ -121,6 +124,17 @@ export default function EditCashier() {
                             onChange={(e) => setEmail(e.target.value)}
                             mb={'0.5em'}
                             type='email'
+                        />
+                    </FormControl>
+
+                    <FormControl>
+                        <FormLabel>Avatar</FormLabel>
+                        <Input
+                            defaultValue={imgProfile}
+                            id='imgProfile'
+                            name='imgProfile'
+                            mb={'0.5em'}
+                            type='file'
                         />
                     </FormControl>
 

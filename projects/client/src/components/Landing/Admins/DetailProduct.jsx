@@ -85,7 +85,7 @@ export default function DetailProduct({ data, category }) {
 
         try {
             const respon = await axios.patch(
-                `http://localhost:8000/mini-project/api/product/update/${data.id}`,
+                `http://localhost:8000/api/product/update/${data.id}`,
                 formData,
                 {
                     headers: {

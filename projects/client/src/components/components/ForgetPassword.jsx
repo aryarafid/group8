@@ -21,7 +21,7 @@ export default function ForgetPassword() {
   const resetPassword = async (values) => {
     try {
       const respon = await axios.put(
-        `http://localhost:8000/mini-project/api/auth/forgotPassword`,
+        `http://localhost:8000/api/auth/forgotPassword`,
         {
           email: values.email,
           FE_URL: "http://localhost:3000",

@@ -68,7 +68,7 @@ export default function ProductAndCatAdmin() {
 
   const fetchData = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
+      const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
       console.log(response.data);
       setPage(response.data.page);
@@ -80,7 +80,7 @@ export default function ProductAndCatAdmin() {
 
   const fetchCategory = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/category/`;
+      const url = `http://localhost:8000/api/category/`;
       const response = await axios.get(url);
       console.log(response.data);
       // setPage(response.data.page);
@@ -111,7 +111,7 @@ export default function ProductAndCatAdmin() {
 
     try {
       const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/cashier/update/${id}`,
+        `http://localhost:8000/api/cashier/update/${id}`,
         name,
         {
           headers: {
@@ -149,7 +149,7 @@ export default function ProductAndCatAdmin() {
 
     try {
       const respon = await axios.delete(
-        `http://localhost:8000/mini-project/api/category/delete/${id}`,
+        `http://localhost:8000/api/category/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -180,10 +180,10 @@ export default function ProductAndCatAdmin() {
   const deleteProduct = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
-
+    // console.log(token)
     try {
       const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/product/delete/${id}`,
+        `http://localhost:8000/api/product/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -217,7 +217,7 @@ export default function ProductAndCatAdmin() {
 
     try {
       const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/product/activate/${id}`,
+        `http://localhost:8000/api/product/activate/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

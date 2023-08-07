@@ -90,7 +90,7 @@ export default function CashierManagement() {
 
   const fetchData = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/cashier`;
+      const url = `http://localhost:8000/api/cashier`;
       const response = await axios.get(url);
       console.log(response.data);
       setCashierData(response.data.data);
@@ -105,7 +105,7 @@ export default function CashierManagement() {
 
     try {
       const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/cashier/delete/${id}`,
+        `http://localhost:8000/api/cashier/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,9 +118,10 @@ export default function CashierManagement() {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        document.location.href = "/cashierAdmin";
-      }, 2500);
+      // setTimeout(() => {
+      //   document.location.href = "/cashierAdmin";
+      // }, 2500);
+      window.location.reload()
     } catch (error) {
       console.log(error);
       toast({
@@ -132,13 +133,13 @@ export default function CashierManagement() {
     }
   };
 
-  const undeleteCashier = async (id) => {
+  const activateCashier = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
       const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/cashier/undelete/${id}`,
+        `http://localhost:8000/api/cashier/activate/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -146,14 +147,15 @@ export default function CashierManagement() {
         }
       );
       toast({
-        title: "Undelete cashier succeeded",
+        title: "activate cashier succeeded",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        document.location.href = "/cashierAdmin";
-      }, 2500);
+      // setTimeout(() => {
+      //   document.location.href = "/cashierAdmin";
+      // }, 2500);
+      window.location.reload()
     } catch (error) {
       console.log(error);
       toast({
@@ -197,7 +199,7 @@ export default function CashierManagement() {
                 <Tbody>
                   {cashierData.map((cashierData) => (
                     <Tr>
-                      <Td>{cashierData.id}</Td>
+                      <Td key={cashierData.id}>{cashierData.id}</Td>
                       <Td>
                         {cashierData.imgProfile === null ? (
                           <Avatar></Avatar>
@@ -233,9 +235,9 @@ export default function CashierManagement() {
                           <Button
                             ml={"0.5em"}
                             colorScheme="teal"
-                            onClick={() => undeleteCashier(cashierData.id)}
+                            onClick={() => activateCashier(cashierData.id)}
                           >
-                            Undelete
+                            activate
                           </Button>
                         )
                         }

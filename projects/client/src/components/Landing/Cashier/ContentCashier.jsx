@@ -42,7 +42,7 @@ export default function ContentCashier() {
 
   const fetchData = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
+      const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
       console.log(response.data);
       setPage(response.data.page);
@@ -54,7 +54,7 @@ export default function ContentCashier() {
 
   const fetchCategory = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/category/`;
+      const url = `http://localhost:8000/`;
       const response = await axios.get(url);
       console.log(response.data);
       // setPage(response.data.page);

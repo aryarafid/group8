@@ -11,7 +11,7 @@ const {
 
 router.get(
     "/",
-    verifyToken,
+    // verifyToken,
     categoryController.getCategory
 );
 router.post(

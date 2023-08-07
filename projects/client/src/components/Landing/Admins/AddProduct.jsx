@@ -40,9 +40,7 @@ import ContentCashier from "../Cashier/ContentCashier";
 import SideBarsCashier from "../Cashier/SideBarsCashier";
 import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
-
 import EditCashier from "./EditCashier";
-// import DeleteCashier from "./DeleteCashier";
 
 export default function AddProduct({ onAdd, category }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -83,7 +81,7 @@ export default function AddProduct({ onAdd, category }) {
 
         try {
             const respon = await axios.post(
-                "http://localhost:8000/mini-project/api/product/create",
+                "http://localhost:8000/api/product/create",
                 formData,
                 {
                     headers: {

@@ -55,7 +55,7 @@ export default function EditCategory({ categoryId, defVal }) {
 
         try {
             const respon = await axios.patch(
-                `http://localhost:8000/mini-project/api/category/update/${categoryId}`,
+                `http://localhost:8000/api/category/update/${categoryId}`,
                 { name: name },
                 {
                     headers: {

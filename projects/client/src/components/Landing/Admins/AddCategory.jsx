@@ -55,7 +55,7 @@ export default function AddCategory({ onAdd }) {
 
         try {
             const respon = await axios.post(
-                "http://localhost:8000/mini-project/api/category/create",
+                "http://localhost:8000/api/category/create",
                 { name: name },
                 {
                     headers: {

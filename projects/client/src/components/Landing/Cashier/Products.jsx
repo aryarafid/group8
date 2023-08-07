@@ -19,7 +19,7 @@ export default function Products() {
   const fetchData = async () => {
     try {
       const respon = await axios.get(
-        `http://localhost:8000/mini-project/api/product/products?page=${index}`
+        `http://localhost:8000/api/product/products?page=${index}`
       );
       setProductList(respon.data.data);
     } catch (error) {
