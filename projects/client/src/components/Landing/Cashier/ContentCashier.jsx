@@ -11,6 +11,7 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
+  Stack,
   Tab,
   TabList,
   TabPanel,
@@ -27,6 +28,7 @@ import { addToCart } from "../../../redux/reducer/ProductReducer";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export default function ContentCashier() {
+  const PUBLIC_URL = "http://localhost:8000";
   const { user } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -38,14 +40,16 @@ export default function ContentCashier() {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  // const { user } = useSelector((state) => state.AuthReducer);
+
+  const getImage = (image) => {
+    return `${PUBLIC_URL}/${image}`;
+  };
 
   const fetchData = async () => {
     try {
       const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
-      console.log(response.data);
-      setPage(response.data.page);
+      console.log("?", response.data);
       setProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -72,6 +76,15 @@ export default function ContentCashier() {
     fetchData();
   }, [categoryId, orderByName, orderByPrice, page]);
 
+  const handleNext = () => {
+    if (page) setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
   const handleCategoryFilter = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -84,7 +97,6 @@ export default function ContentCashier() {
   return (
     <>
       <Box w={{ md: "600px", lg: "980px" }} fontFamily={"montserrat"}>
-        {/* <Box className="nav" bgColor={"white"} pt={"10px"}> */}
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             mt={{ md: "-20px", lg: "-40px" }}
@@ -108,10 +120,7 @@ export default function ContentCashier() {
               color={"#223256"}
             ></Input>
           </InputGroup>
-          <Box>{/* <Text>{user.username}</Text> */}</Box>
         </Flex>
-
-        {/* tab */}
         <Tabs variant="soft-rounded" colorScheme="blue" paddingLeft={"1em"}>
           <TabList>
             {category.map((category) => (
@@ -133,21 +142,17 @@ export default function ContentCashier() {
                 mt={"1em"}
                 gap={"20px"}
               >
-                {filteredProducts.map((product) => (
-                  <Card
-                    key={product.id}
-                    maxW={"500px"}
-                    maxH={"350px"}
-                    shadow={"lg"}
-                  >
+                {products.map((product) => (
+                  <Card key={product.id} maxW={"500px"} shadow={"lg"}>
                     <CardBody>
-                      {/* <Box
+                      <Box
                         w={"200px"}
-                        h={"180px"}
-                        bgImage={product.productImg}
-                      ></Box> */}
+                        h={"80px"}
+                        bgImage={getImage(product.productImg)}
+                        // bgImage={product.productImg}
+                      ></Box>
                       <Text>{product.name}</Text>
-                      <Text>{product.harga_produk}</Text>
+                      <Text>Rp. {product.harga_produk}</Text>
                     </CardBody>
                     <CardFooter>
                       <Button
@@ -160,6 +165,33 @@ export default function ContentCashier() {
                     </CardFooter>
                   </Card>
                 ))}
+                <Stack
+                  pos={"absolute"}
+                  mt={"530px"}
+                  ml={"150px"}
+                >
+                  <Flex>
+                    <Button
+                      onClick={handlePrev}
+                      _hover={{ bgColor: "#223256", color: "white" }}
+                      bgColor={"white"}
+                      w={"100px"}
+                      h={"30px"}
+                    >
+                      Prev
+                    </Button>
+                    <Button
+                      onClick={handleNext}
+                      _hover={{ bgColor: "#223256", color: "white" }}
+                      bgColor={"white"}
+                      ml={"200px"}
+                      w={"100px"}
+                      h={"30px"}
+                    >
+                      Next
+                    </Button>
+                  </Flex>
+                </Stack>
               </Flex>
             </TabPanel>
           </TabPanels>
