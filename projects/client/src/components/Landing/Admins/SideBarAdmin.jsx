@@ -28,6 +28,7 @@ export default function SideBarAdmin() {
         position={"sticky"}
         color={"white"}
         fontFamily={"montserrat"}
+        top={0} zIndex="sticky"
       >
         <Box textAlign={"center"}>
           <AiOutlineShop size={"sm"} />
