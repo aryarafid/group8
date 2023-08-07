@@ -44,7 +44,7 @@ import axios from "axios"
 import EditableField from "./EditableField";
 import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaRegCheckSquare } from "react-icons/fa";
 import AddProduct from "./AddProduct";
 import DetailProduct from "./DetailProduct";
 
@@ -177,6 +177,74 @@ export default function ProductAndCatAdmin() {
     }
   };
 
+  const deleteProduct = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/mini-project/api/product/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Delete product succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const activateProduct = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/mini-project/api/product/activate/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Delete product succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
   const filteredProducts = selectedCategory ? products.filter((product) => product.categoryId === selectedCategory) : products;
   console.log(filteredProducts);
 
@@ -265,11 +333,17 @@ export default function ProductAndCatAdmin() {
 
                         <DetailProduct data={product} category={category} />
 
-                        <IconButton icon={<FaTrashAlt />} ml={'0.5em'} colorScheme={'red'} />
+                        {product.isActive === true ?
+                          (
+                            < IconButton icon={<FaTrashAlt />} ml={'0.5em'} colorScheme={'red'} onClick={() => deleteProduct(product.id)} />
+                          ) :
+                          (
+                            < IconButton icon={<FaRegCheckSquare />} ml={'0.5em'} colorScheme={'green'} onClick={() => activateProduct(product.id)} />
+                          )
+                        }
                       </HStack>
                     </CardBody>
                   </Card>
-
                 </WrapItem>
               )}
             </Wrap>

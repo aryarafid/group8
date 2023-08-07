@@ -84,52 +84,6 @@ const productController = {
         }
     },
 
-    updateProductImage: async (req, res) => {
-        try {
-            const {
-                id
-            } = req.user;
-            await db.sequelize.transaction(async (t) => {
-                const oldData = await user.findOne({
-                    where: {
-                        id
-                    }
-                });
-                const result = await user.update({
-                    img_url: req.file.path,
-                }, {
-                    where: {
-                        id
-                    }
-                }, {
-                    transaction: t
-                });
-                if (!result) {
-                    return res.status(500).json({
-                        message: "Change avatar failed",
-                        error: err.message,
-                    });
-                }
-                fs.unlink(oldData.img_url, (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    console.log("Old avatar deleted successfully");
-                });
-                return res.status(200).json({
-                    message: "Change avatar Success",
-                    image: req.file.path,
-                });
-            });
-        } catch (err) {
-            return res.status(500).json({
-                message: "Change avatar failed",
-                error: err.message,
-            });
-        }
-    },
-
     updateProduct: async (req, res) => {
         try {
             const {
@@ -154,27 +108,32 @@ const productController = {
                 if (quantity) productFind.quantity = quantity;
                 if (description) productFind.description = description;
                 if (req.file) {
-                    // const result = await product.update({
-                    //     img_url: req.file.path,
-                    // }, {
-                    //     where: {
-                    //         id
-                    //     }
-                    // }, {
-                    //     transaction: t
-                    // });
-                    // if (!result) {
-                    //     return res.status(500).json({
-                    //         message: "Change avatar failed",
-                    //         error: err.message,
-                    //     });
-                    // }
-                    fs.unlink(productFind.productImg, (err) => {
-                        if (err) {
-                            res.status(500).json({ error: "ubah gambar error" })
-                            return;
+                    await db.sequelize.transaction(async (t) => {
+                        const result = await product.update(
+                            {
+                                productImg: req.file.path,
+                            },
+                            {
+                                where: {
+                                    id
+                                },
+                                transaction: t // Move the transaction option here
+                            }
+                        );
+                        if (!result) {
+                            return res.status(500).json({
+                                message: "Change avatar failed",
+                                error: err.message,
+                            });
                         }
+                        fs.unlink(productFind.productImg, (err) => {
+                            if (err) {
+                                res.status(500).json({ error: "ubah gambar error" })
+                                return;
+                            }
+                        });
                     });
+                    // productFind.productImg = req.file.path
                 }
 
                 await db.sequelize.transaction(async (t) => {

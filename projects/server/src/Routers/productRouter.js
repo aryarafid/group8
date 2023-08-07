@@ -32,11 +32,11 @@ router.patch(
   productController.updateProduct
 );
 router.patch("/delete/:id",
-  verifyToken,
+  // verifyToken,
   productController.deleteProduct
 );
 router.patch("/activate/:id",
-  verifyToken,
+  // verifyToken,
   productController.activateProduct
 );
 

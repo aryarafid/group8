@@ -42,7 +42,7 @@ import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function AddProduct({ onAdd, category }) {
     const { isOpen, onOpen, onClose } = useDisclosure();

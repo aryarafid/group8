@@ -45,7 +45,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 import AddCashier from "./AddCashier";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 

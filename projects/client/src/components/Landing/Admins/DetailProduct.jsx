@@ -45,7 +45,7 @@ import { FaEye } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function DetailProduct({ data, category }) {
     const { isOpen, onOpen, onClose } = useDisclosure();

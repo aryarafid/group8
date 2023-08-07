@@ -37,7 +37,7 @@ import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function EditCategory({ categoryId, defVal }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
