@@ -132,57 +132,56 @@ export default function DetailProduct({ data, category }) {
 
                             <TabPanels>
                                 <TabPanel>
+                                    {/* <TableContainer> */}
+                                    <Table>
+                                        <Tbody>
+                                            <Tr>
+                                                <Td>Product Name</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.name}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Product Category</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.categoryId}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Product Image</Td>
+                                                <Td>:</Td>
+                                                <Td></Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Harga Modal Produk</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.modal_produk}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Harga Jual Produk</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.harga_produk}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Quantity</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.quantity}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Description</Td>
+                                                <Td>:</Td>
+                                                <Td>{data.description}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Status</Td>
+                                                <Td>:</Td>
+                                                <Td>{
+                                                    data.isActive === true ? "Active" : "Inactive"
+                                                }</Td>
+                                            </Tr>
 
-                                    <TableContainer>
-                                        <Table>
-                                            <Tbody>
-                                                <Tr>
-                                                    <Td>Product Name</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.name}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Product Category</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.categoryId}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Product Image</Td>
-                                                    <Td>:</Td>
-                                                    <Td></Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Harga Modal Produk</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.modal_produk}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Harga Jual Produk</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.harga_produk}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Quantity</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.quantity}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Quantity</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{data.description}</Td>
-                                                </Tr>
-                                                <Tr>
-                                                    <Td>Status</Td>
-                                                    <Td>:</Td>
-                                                    <Td>{
-                                                        data.isActive === true ? "Active" : "Inactive"
-                                                    }</Td>
-                                                </Tr>
 
-
-                                            </Tbody>
-                                        </Table>
-                                    </TableContainer>
+                                        </Tbody>
+                                    </Table>
+                                    {/* </TableContainer> */}
 
                                 </TabPanel>
 
