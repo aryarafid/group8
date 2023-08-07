@@ -11,6 +11,7 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
+  Stack,
   Tab,
   TabList,
   TabPanel,
@@ -119,10 +120,7 @@ export default function ContentCashier() {
               color={"#223256"}
             ></Input>
           </InputGroup>
-          <Box>{/* <Text>{user.username}</Text> */}</Box>
         </Flex>
-
-        {/* tab */}
         <Tabs variant="soft-rounded" colorScheme="blue" paddingLeft={"1em"}>
           <TabList>
             {category.map((category) => (
@@ -145,21 +143,16 @@ export default function ContentCashier() {
                 gap={"20px"}
               >
                 {products.map((product) => (
-                  <Card
-                    key={product.id}
-                    maxW={"500px"}
-                    maxH={"350px"}
-                    shadow={"lg"}
-                  >
+                  <Card key={product.id} maxW={"500px"} shadow={"lg"}>
                     <CardBody>
                       <Box
                         w={"200px"}
-                        h={"180px"}
+                        h={"80px"}
                         bgImage={getImage(product.productImg)}
                         // bgImage={product.productImg}
                       ></Box>
                       <Text>{product.name}</Text>
-                      <Text>{product.harga_produk}</Text>
+                      <Text>Rp. {product.harga_produk}</Text>
                     </CardBody>
                     <CardFooter>
                       <Button
@@ -172,24 +165,34 @@ export default function ContentCashier() {
                     </CardFooter>
                   </Card>
                 ))}
+                <Stack
+                  pos={"absolute"}
+                  mt={"530px"}
+                  ml={"150px"}
+                >
+                  <Flex>
+                    <Button
+                      onClick={handlePrev}
+                      _hover={{ bgColor: "#223256", color: "white" }}
+                      bgColor={"white"}
+                      w={"100px"}
+                      h={"30px"}
+                    >
+                      Prev
+                    </Button>
+                    <Button
+                      onClick={handleNext}
+                      _hover={{ bgColor: "#223256", color: "white" }}
+                      bgColor={"white"}
+                      ml={"200px"}
+                      w={"100px"}
+                      h={"30px"}
+                    >
+                      Next
+                    </Button>
+                  </Flex>
+                </Stack>
               </Flex>
-              <Box pos={"absolute"} mt={"50px"} ml={"300px"}>
-                <Button
-                  onClick={handlePrev}
-                  _hover={{ bgColor: "#223256", color: "white" }}
-                  bgColor={"white"}
-                >
-                  Prev
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  ml={"30px"}
-                  _hover={{ bgColor: "#223256", color: "white" }}
-                  bgColor={"white"}
-                >
-                  Next
-                </Button>
-              </Box>
             </TabPanel>
           </TabPanels>
         </Tabs>
