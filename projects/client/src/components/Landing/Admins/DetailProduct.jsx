@@ -52,9 +52,6 @@ export default function DetailProduct({ data, category }) {
     const [pwShow, setpwShow] = useState(false)
     const handleClick = () => setpwShow(!pwShow)
     const toast = useToast()
-    // const { id } = useParams();
-
-    const [catName, setCatName] = useState("")
     const navigate = useNavigate();
 
     const initialFormData = {
