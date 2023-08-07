@@ -141,10 +141,11 @@ export default function ContentCashier() {
                     shadow={"lg"}
                   >
                     <CardBody>
-                      <Box
+                      {/* <Box
                         w={"200px"}
                         h={"180px"}
-                      ></Box>
+                        bgImage={product.productImg}
+                      ></Box> */}
                       <Text>{product.name}</Text>
                       <Text>{product.harga_produk}</Text>
                     </CardBody>

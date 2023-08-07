@@ -63,7 +63,7 @@ export default function SideBarsCashier() {
             <Text>Home</Text>
           </Box>
         </Link>
-        <Box textAlign={"center"}>
+        <Box textAlign={"center"} mt={"180px"}>
           <IconButton
             as="button"
             variant={"unstyled"}
