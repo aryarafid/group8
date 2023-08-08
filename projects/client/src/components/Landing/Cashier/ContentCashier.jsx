@@ -156,6 +156,7 @@ export default function ContentCashier() {
                       ></Box>
                       <Text>{product.name}</Text>
                       <Text>Rp. {product.harga_produk}</Text>
+                      <Text>qty : {product.quantity}</Text>
                     </CardBody>
                     <CardFooter>
                       <Button
