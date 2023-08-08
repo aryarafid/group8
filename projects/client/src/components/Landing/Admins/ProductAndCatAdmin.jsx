@@ -230,9 +230,6 @@ export default function ProductAndCatAdmin() {
     }
   };
 
-  const filteredProducts = selectedCategory ? products.filter((product) => product.categoryId === selectedCategory) : products;
-  console.log(filteredProducts);
-
   return (
     <>
       <Box w={'25%'}>
