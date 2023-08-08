@@ -28,7 +28,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { addToCart } from "../../../redux/reducer/ProductReducer";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineArrowRight,
+  AiOutlineArrowLeft,
+} from "react-icons/ai";
 
 export default function ContentCashier() {
   const PUBLIC_URL = "http://localhost:8000";
