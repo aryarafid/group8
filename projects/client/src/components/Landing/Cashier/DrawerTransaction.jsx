@@ -48,7 +48,11 @@ export default function DrawerTransactions({ isOpen, onClose }) {
         {itemCart}
       </Box>
 
-      <Drawer isOpen={isOpen} onClose={onClose} size={{ md: "sm", lg: "md" }}>
+      <Drawer
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ sm: "sm", md: "sm", lg: "md" }}
+      >
         <DrawerOverlay />
         <DrawerContent
           fontFamily={"montserrat"}
@@ -62,7 +66,7 @@ export default function DrawerTransactions({ isOpen, onClose }) {
             {cart.map((item) => (
               <Box overflow={"scroll"}>
                 <Card
-                  w={{ md: "350px", lg: "400px" }}
+                  w={{ sm: "300px", md: "350px", lg: "400px" }}
                   m={"5px auto"}
                   key={item.id}
                 >

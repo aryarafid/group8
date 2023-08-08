@@ -57,7 +57,6 @@ export default function ContentCashier() {
     try {
       const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
-      console.log("?", response.data);
       setProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -235,6 +234,7 @@ export default function ContentCashier() {
                   leftIcon={<AiOutlineShoppingCart />}
                   variant={"unstyled"}
                   onClick={() => dispatch(addToCart(product))}
+                  isDisabled={product.quantity <= 5}
                 >
                   Add to cart
                 </Button>
