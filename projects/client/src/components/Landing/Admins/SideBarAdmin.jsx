@@ -75,6 +75,7 @@ export default function SideBarAdmin() {
             <Text>Home</Text>
           </Box>
         </Link>
+
         <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
           <IconButton
             as="button"
@@ -87,6 +88,7 @@ export default function SideBarAdmin() {
           ></IconButton>
           <Text>Logout</Text>
         </Box>
+
       </Box>
     </>
   );

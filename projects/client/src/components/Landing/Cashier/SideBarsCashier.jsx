@@ -32,6 +32,8 @@ export default function SideBarsCashier() {
         color={"white"}
         pos={"sticky"}
         fontFamily={"montserrat"}
+        top={0} zIndex="sticky"
+
       >
         <Box textAlign={"center"} w={"80px"} h={"100px"} ml={"10px"}>
           <AiOutlineShop size={"lg"} />
@@ -63,7 +65,8 @@ export default function SideBarsCashier() {
             <Text>Home</Text>
           </Box>
         </Link>
-        <Box textAlign={"center"} mt={"180px"}>
+
+        <Box textAlign={"center"} mt={"100px"}>
           <IconButton
             as="button"
             variant={"unstyled"}
@@ -74,6 +77,7 @@ export default function SideBarsCashier() {
           ></IconButton>
           <Text>Logout</Text>
         </Box>
+
       </Box>
     </>
   );
