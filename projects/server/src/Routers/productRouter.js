@@ -15,6 +15,11 @@ router.get(
   // verifyToken,
   productController.getProduct
 );
+router.get(
+  "/products2",
+  // verifyToken,
+  productController.getProduct2
+);
 router.post(
   "/create",
   multerUpload.single("productImg"),

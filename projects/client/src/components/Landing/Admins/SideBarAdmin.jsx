@@ -23,7 +23,7 @@ export default function SideBarAdmin() {
     <>
       <Box
         w={"100px"}
-        h={"100vh"}
+        h={"125vh"}
         bgColor={"teal"}
         position={"sticky"}
         color={"white"}

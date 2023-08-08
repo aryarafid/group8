@@ -50,6 +50,8 @@ import AddProduct from "./AddProduct";
 import DetailProduct from "./DetailProduct";
 
 export default function ProductAndCatAdmin() {
+  const token = localStorage.getItem("token");
+
   const [page, setPage] = useState(1)
   const [name, setName] = useState("")
   const [categoryId, setCategoryId] = useState("")
@@ -69,7 +71,7 @@ export default function ProductAndCatAdmin() {
 
   const fetchData = async () => {
     try {
-      const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
+      const url = `http://localhost:8000/api/product/products2?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
       console.log(response.data);
       // setPage(response.data.page);
@@ -160,12 +162,12 @@ export default function ProductAndCatAdmin() {
   };
 
   const deleteProduct = async (id) => {
+    console.log(token)
     // event.preventDefault();
-    const token = localStorage.getItem("token");
-    // console.log(token)
     try {
       const respon = await axios.patch(
         `http://localhost:8000/api/product/delete/${id}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -200,6 +202,7 @@ export default function ProductAndCatAdmin() {
     try {
       const respon = await axios.patch(
         `http://localhost:8000/api/product/activate/${id}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -346,18 +349,19 @@ export default function ProductAndCatAdmin() {
               {products.map((product) =>
                 <WrapItem>
                   <Card key={product.id}
-                    // maxW={"240px"} maxH={"360px"}
-                    maxW={"200px"} maxH={"300px"}
+                    maxW={"150px"} maxH={"300px"}
+                    minW={"150px"} minH={"300px"}
+                    shadow={"lg"}
                   >
                     <CardBody>
                       {product.productImg ?
                         <Image
-                          // w={'200px'} h={'180px'}
-                          w={'120px'} h={'108px'}
-
+                          maxW={"120px"} maxH={"120px"}
+                          minW={"120px"} minH={"120px"}
                           src={`http://localhost:8000/${product.productImg}`}
                         ></Image> : <Avatar
-                          w={'120px'} h={'108px'}
+                          maxW={"120px"} maxH={"120px"}
+                          minW={"120px"} minH={"120px"}
 
                         />
                       }
@@ -390,41 +394,42 @@ export default function ProductAndCatAdmin() {
             </Wrap>
 
 
-            <Stack
-              pos={"absolute"}
-              mt={"2em"}
-              mb={"2em"}
-              ml={"250px"}
-            >
-              <Flex>
-                <Button
-                  onClick={handlePrev}
-                  _hover={{ bgColor: "#223256", color: "white" }}
-                  bgColor={"white"}
-                  w={"100px"}
-                  h={"30px"}
-                  isDisabled={page === 1 ? true : false}
-                >
-                  Prev
-                </Button>
-                <Button
-                  onClick={handleNext}
-                  _hover={{ bgColor: "#223256", color: "white" }}
-                  bgColor={"white"}
-                  ml={"200px"}
-                  w={"100px"}
-                  h={"30px"}
-                  isDisabled={products.length < 10}
-                >
-                  Next
-                </Button>
-              </Flex>
-            </Stack>
+
           </Box>
 
 
         </Flex>
 
+        <Stack
+          pos={"absolute"}
+          mt={"2em"}
+          mb={"2em"}
+          ml={"250px"}
+        >
+          <Flex>
+            <Button
+              onClick={handlePrev}
+              _hover={{ bgColor: "#223256", color: "white" }}
+              bgColor={"white"}
+              w={"100px"}
+              h={"30px"}
+              isDisabled={page === 1 ? true : false}
+            >
+              Prev
+            </Button>
+            <Button
+              onClick={handleNext}
+              _hover={{ bgColor: "#223256", color: "white" }}
+              bgColor={"white"}
+              ml={"200px"}
+              w={"100px"}
+              h={"30px"}
+              isDisabled={products.length < 10}
+            >
+              Next
+            </Button>
+          </Flex>
+        </Stack>
       </Box>
       {/* </Flex > */}
     </>

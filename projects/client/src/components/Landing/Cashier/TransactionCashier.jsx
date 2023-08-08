@@ -35,7 +35,10 @@ export default function TransactionCashier() {
         fontFamily={"montserrat"}
         color={"white"}
         position={"sticky"}
+        top={0} zIndex="sticky"
+
       >
+
         <Stack>
           <Box m={"20px 30px"}>
             <Text
@@ -99,12 +102,12 @@ export default function TransactionCashier() {
               </Card>
             </Box>
           ))}
-          <Box pos={"absolute"} mt={"680px"} ml={{ md: "50px", lg: "80px" }}>
+          <Box pos={"absolute"} mt={"500px"} ml={{ md: "50px", lg: "80px" }}>
             <Text>Total Harga : Rp. {totalHarga}</Text>
             <ButtonTransaction />
           </Box>
         </Stack>
-        
+
       </Box>
     </>
   );
