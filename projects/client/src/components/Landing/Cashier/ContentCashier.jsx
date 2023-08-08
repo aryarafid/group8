@@ -229,6 +229,7 @@ export default function ContentCashier() {
             </Card>
           ))}
         </Flex >
+        
         <Stack
           pos={"absolute"}
           mt={"2em"}

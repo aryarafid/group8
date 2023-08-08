@@ -9,6 +9,7 @@ import {
   Flex,
   Image,
   Input,
+  Select,
   InputGroup,
   InputLeftElement,
   Spacer,
@@ -71,7 +72,7 @@ export default function ProductAndCatAdmin() {
       const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
       console.log(response.data);
-      setPage(response.data.page);
+      // setPage(response.data.page);
       setProducts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -94,9 +95,35 @@ export default function ProductAndCatAdmin() {
     fetchCategory()
   }, [])
 
+  const handleNext = () => {
+    if (page) setPage(page + 1);
+  };
+
+  const handlePrev = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleSearch = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleCategoryFilter = (event) => {
+    setCategoryId(event.target.value);
+  };
+
+  const handleOrderByName = (event) => {
+    setOrderByName(event.target.value);
+  };
+
+  const handleOrderByPrice = (event) => {
+    setOrderByPrice(event.target.value);
+  };
+
   useEffect(() => {
     fetchData();
-  }, [categoryId, orderByName, orderByPrice, page]);
+  }, [categoryId, orderByName, orderByPrice, page, name]);
 
   const deleteCategory = async (id) => {
     // event.preventDefault();
@@ -254,25 +281,84 @@ export default function ProductAndCatAdmin() {
       <Box>
         {/* product */}
         <Flex wrap={"wrap"} ml={"4em"} mt={'2em'} gap={"20px"}>
-          <Box>
-            <Heading mb={'1em'}> Products </Heading>
-            <AddProduct
-              category={category} />
-          </Box>
-          {/* tombol */}
 
+          <Heading mb={'1em'}> Products </Heading>
+          <Box>
+            <AddProduct
+              category={category}
+            // mt={'2em'}
+            />
+          </Box>
+
+          {/* Filter */}
+
+          <HStack alignContent={'center'}>
+            <InputGroup>
+              <InputLeftElement>
+                <AiOutlineSearch />
+              </InputLeftElement>
+              <Input
+                // w={{ sm: "200px", md: "280px", lg: "400px" }}
+                h={"40px"}
+                placeholder="Search Item"
+                borderColor={"#223256"}
+                focusBorderColor="green"
+                _hover={"green"}
+                color={"#223256"}
+                onChange={handleSearch}
+              ></Input>
+            </InputGroup>
+
+            <Select placeholder='Select all category' name="categoryId" id="categoryId" value={categoryId} onChange={handleCategoryFilter}>
+              {category.map((category) =>
+                <option value={category.id} >{category.name}</option>
+              )}
+            </Select>
+
+            {/* orderByName */}
+            <Select
+              placeholder='Sort by name'
+              name='orderByName'
+              id='orderByName'
+              value={orderByName}
+              onChange={handleOrderByName}
+            >
+              {/* <option value='null'>---</option> */}
+              <option value='ASC'>A-Z</option>
+              <option value='DESC'>Z-A</option>
+            </Select>
+
+            <Select
+              placeholder='Sort by price'
+              name='orderByPrice'
+              id='orderByPrice'
+              value={orderByPrice}
+              onChange={handleOrderByPrice}
+            >
+              <option value='ASC'>Terkecil-Terbesar</option>
+              <option value='DESC'>Terbesar-Terkecil</option>
+            </Select>
+          </HStack>
+
+          {/* main products */}
           <Box>
             <Wrap>
-              {filteredProducts.map((product) =>
+              {products.map((product) =>
                 <WrapItem>
-                  <Card key={product.id} maxW={"240px"} maxH={"360px"}>
+                  <Card key={product.id}
+                    // maxW={"240px"} maxH={"360px"}
+                    maxW={"200px"} maxH={"300px"}
+                  >
                     <CardBody>
                       {product.productImg ?
                         <Image
-                          w={'200px'} h={'180px'}
+                          // w={'200px'} h={'180px'}
+                          w={'120px'} h={'108px'}
+
                           src={`http://localhost:8000/${product.productImg}`}
                         ></Image> : <Avatar
-                          w={'200px'} h={'180px'}
+                          w={'120px'} h={'108px'}
+
                         />
                       }
                       <Stack>
@@ -302,7 +388,40 @@ export default function ProductAndCatAdmin() {
                 </WrapItem>
               )}
             </Wrap>
+
+
+            <Stack
+              pos={"absolute"}
+              mt={"2em"}
+              mb={"2em"}
+              ml={"250px"}
+            >
+              <Flex>
+                <Button
+                  onClick={handlePrev}
+                  _hover={{ bgColor: "#223256", color: "white" }}
+                  bgColor={"white"}
+                  w={"100px"}
+                  h={"30px"}
+                  isDisabled={page === 1 ? true : false}
+                >
+                  Prev
+                </Button>
+                <Button
+                  onClick={handleNext}
+                  _hover={{ bgColor: "#223256", color: "white" }}
+                  bgColor={"white"}
+                  ml={"200px"}
+                  w={"100px"}
+                  h={"30px"}
+                  isDisabled={products.length < 10}
+                >
+                  Next
+                </Button>
+              </Flex>
+            </Stack>
           </Box>
+
 
         </Flex>
 
