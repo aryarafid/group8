@@ -115,6 +115,7 @@ export default function ContentCashier() {
         md: "600px",
         lg: "980px"
       }} fontFamily={"montserrat"}>
+
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             mt={{ md: "-20px", lg: "-40px" }}
@@ -145,7 +146,7 @@ export default function ContentCashier() {
 
         {/* Filter */}
         <Center>
-          <HStack w={'70%'} alignContent={'center'}>
+          <HStack w={'70%'} alignContent={'center'} mt={'-20px'}>
             <Select placeholder='Select all category' name="categoryId" id="categoryId" value={categoryId} onChange={handleCategoryFilter}>
               {category.map((category) =>
                 <option value={category.id} >{category.name}</option>
@@ -189,11 +190,15 @@ export default function ContentCashier() {
           mt={"1em"}
           gap={"20px"}
         >
+
           {products.map((product) => (
             //<Card key={product.id} maxW={"240px"} maxH={"360px"} shadow={"lg"}> 
             /* 4:6 */
             /* <Card key={product.id} maxW={"120px"} maxH={"180px"} shadow={"lg"}> */
-            < Card key={product.id} maxW={"200px"} maxH={"300px"} shadow={"lg"} >
+            <Card key={product.id}
+              maxW={"150px"} maxH={"300px"}
+              minW={"150px"} minH={"300px"}
+              shadow={"lg"} >
               <CardBody>
                 {product.productImg ?
                   <Image
@@ -203,14 +208,16 @@ export default function ContentCashier() {
                     // bgImage={getImage(product.productImg)}
                     // w={'200px'} h={'180px'}
                     //w={'100px'} h={'90px'}
-                    w={'120px'} h={'108px'}
-
+                    // w={'120px'} h={'120px'}
+                    maxW={"120px"} maxH={"120px"}
+                    minW={"120px"} minH={"120px"}
                     src={getImage(product.productImg)}
                   ></Image> : <Avatar
                     // w={'200px'} h={'180px'}
                     //w={'100px'} h={'90px'}
-                    w={'120px'} h={'108px'}
-
+                    // w={'120px'} h={'108px'}
+                    maxW={"120px"} maxH={"120px"}
+                    minW={"120px"} minH={"120px"}
                   />
                 }
 
@@ -230,12 +237,14 @@ export default function ContentCashier() {
           ))}
         </Flex >
         
+
         <Stack
-          pos={"absolute"}
+          // pos={"absolute"}
           mt={"2em"}
           mb={"2em"}
           ml={"250px"}
         >
+
           <Flex>
             <Button
               onClick={handlePrev}
@@ -260,6 +269,7 @@ export default function ContentCashier() {
             </Button>
           </Flex>
         </Stack>
+
       </Box >
     </>
   );
