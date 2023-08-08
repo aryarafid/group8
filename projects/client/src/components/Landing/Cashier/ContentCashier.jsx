@@ -25,7 +25,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { addToCart } from "../../../redux/reducer/ProductReducer";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import {
+  AiOutlineShoppingCart,
+  AiOutlineArrowRight,
+  AiOutlineArrowLeft,
+} from "react-icons/ai";
 
 export default function ContentCashier() {
   const PUBLIC_URL = "http://localhost:8000";
@@ -149,7 +153,6 @@ export default function ContentCashier() {
                         w={"200px"}
                         h={"80px"}
                         bgImage={getImage(product.productImg)}
-                        // bgImage={product.productImg}
                       ></Box>
                       <Text>{product.name}</Text>
                       <Text>Rp. {product.harga_produk}</Text>
@@ -165,11 +168,7 @@ export default function ContentCashier() {
                     </CardFooter>
                   </Card>
                 ))}
-                <Stack
-                  pos={"absolute"}
-                  mt={"530px"}
-                  ml={"150px"}
-                >
+                <Stack pos={"absolute"} mt={"530px"} ml={"150px"}>
                   <Flex>
                     <Button
                       onClick={handlePrev}
@@ -177,6 +176,7 @@ export default function ContentCashier() {
                       bgColor={"white"}
                       w={"100px"}
                       h={"30px"}
+                      leftIcon={<AiOutlineArrowLeft />}
                     >
                       Prev
                     </Button>
@@ -187,6 +187,7 @@ export default function ContentCashier() {
                       ml={"200px"}
                       w={"100px"}
                       h={"30px"}
+                      rightIcon={<AiOutlineArrowRight />}
                     >
                       Next
                     </Button>
