@@ -145,7 +145,7 @@ export default function ContentCashier() {
 
         {/* Filter */}
         <Center>
-          <HStack w={'70%'} alignContent={'center'}>
+          <HStack w={'70%'} alignContent={'center'} mt={'-20px'}>
             <Select placeholder='Select all category' name="categoryId" id="categoryId" value={categoryId} onChange={handleCategoryFilter}>
               {category.map((category) =>
                 <option value={category.id} >{category.name}</option>
@@ -193,7 +193,10 @@ export default function ContentCashier() {
             //<Card key={product.id} maxW={"240px"} maxH={"360px"} shadow={"lg"}> 
             /* 4:6 */
             /* <Card key={product.id} maxW={"120px"} maxH={"180px"} shadow={"lg"}> */
-            < Card key={product.id} maxW={"200px"} maxH={"300px"} shadow={"lg"} >
+            <Card key={product.id}
+              maxW={"150px"} maxH={"300px"}
+              minW={"150px"} minH={"300px"}
+              shadow={"lg"} >
               <CardBody>
                 {product.productImg ?
                   <Image
@@ -203,14 +206,16 @@ export default function ContentCashier() {
                     // bgImage={getImage(product.productImg)}
                     // w={'200px'} h={'180px'}
                     //w={'100px'} h={'90px'}
-                    w={'120px'} h={'108px'}
-
+                    // w={'120px'} h={'120px'}
+                    maxW={"120px"} maxH={"120px"}
+                    minW={"120px"} minH={"120px"}
                     src={getImage(product.productImg)}
                   ></Image> : <Avatar
                     // w={'200px'} h={'180px'}
                     //w={'100px'} h={'90px'}
-                    w={'120px'} h={'108px'}
-
+                    // w={'120px'} h={'108px'}
+                    maxW={"120px"} maxH={"120px"}
+                    minW={"120px"} minH={"120px"}
                   />
                 }
 
@@ -228,37 +233,40 @@ export default function ContentCashier() {
               </CardFooter>
             </Card>
           ))}
+
+          <Stack
+            // pos={"absolute"}
+            mt={"2em"}
+            mb={"2em"}
+            ml={"250px"}
+          >
+            <Flex>
+              <Button
+                onClick={handlePrev}
+                _hover={{ bgColor: "#223256", color: "white" }}
+                bgColor={"white"}
+                w={"100px"}
+                h={"30px"}
+                isDisabled={page === 1 ? true : false}
+              >
+                Prev
+              </Button>
+              <Button
+                onClick={handleNext}
+                _hover={{ bgColor: "#223256", color: "white" }}
+                bgColor={"white"}
+                ml={"200px"}
+                w={"100px"}
+                h={"30px"}
+                isDisabled={products.length < 10}
+              >
+                Next
+              </Button>
+            </Flex>
+          </Stack>
+
         </Flex >
-        <Stack
-          pos={"absolute"}
-          mt={"2em"}
-          mb={"2em"}
-          ml={"250px"}
-        >
-          <Flex>
-            <Button
-              onClick={handlePrev}
-              _hover={{ bgColor: "#223256", color: "white" }}
-              bgColor={"white"}
-              w={"100px"}
-              h={"30px"}
-              isDisabled={page === 1 ? true : false}
-            >
-              Prev
-            </Button>
-            <Button
-              onClick={handleNext}
-              _hover={{ bgColor: "#223256", color: "white" }}
-              bgColor={"white"}
-              ml={"200px"}
-              w={"100px"}
-              h={"30px"}
-              isDisabled={products.length < 10}
-            >
-              Next
-            </Button>
-          </Flex>
-        </Stack>
+
       </Box >
     </>
   );
