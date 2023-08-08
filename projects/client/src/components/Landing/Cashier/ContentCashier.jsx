@@ -209,9 +209,9 @@ export default function ContentCashier() {
               <CardBody>
                 {product.productImg ? (
                   <Image
-                    maxW={"120px"}
+                    maxW={"180px"}
                     maxH={"120px"}
-                    minW={"120px"}
+                    minW={"180px"}
                     minH={"120px"}
                     src={getImage(product.productImg)}
                   ></Image>
