@@ -47,7 +47,6 @@ export default function DrawerTransactions({ isOpen, onClose }) {
       >
         {itemCart}
       </Box>
-
       <Drawer
         isOpen={isOpen}
         onClose={onClose}
