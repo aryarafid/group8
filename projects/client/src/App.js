@@ -16,6 +16,7 @@ import UserAuth from "./components/UserAuth";
 import ProductAdmin from "./components/Landing/Admins/ProductAdmin";
 import EditCashier from "./components/Landing/Admins/EditCashier";
 import CashierManagement from "./components/Landing/Admins/CashierManagement";
+import ReportDashboard from "./components/Landing/Admins/ReportDashboard";
 
 function App() {
   // const [message, setMessage] = useState("");
@@ -30,23 +31,24 @@ function App() {
   // }, []);
   return (
     <>
-    <UserAuth>
+      <UserAuth>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<ProfileCashier />} />
-        <Route path="/category" element={<CategoryProduct />} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<ProfileCashier />} />
+          <Route path="/category" element={<CategoryProduct />} />
 
-        {/* admin */}
-        <Route path="/productAdmin" element={<ProductAdmin />} />
-        <Route path="/cashierAdmin" element={<CashierManagement />} />
-        <Route path="/editCashier/:id" element={<EditCashier />} />
+          {/* admin */}
+          <Route path="/productAdmin" element={<ProductAdmin />} />
+          <Route path="/cashierAdmin" element={<CashierManagement />} />
+          <Route path="/editCashier/:id" element={<EditCashier />} />
+          <Route path="/report" element={<ReportDashboard />} />
 
-        {/* <Route path="/login" element={<Login/>}></Route> */}
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-      </Routes>
-    </UserAuth>
+          {/* <Route path="/login" element={<Login/>}></Route> */}
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+        </Routes>
+      </UserAuth>
     </>
   );
 }
