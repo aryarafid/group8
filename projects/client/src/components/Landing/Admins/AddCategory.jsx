@@ -31,9 +31,6 @@ import { useNavigate } from "react-router-dom";
 import SideBarAdmin from "./SideBarAdmin";
 import { useState, useEffect } from "react";
 import axios from "axios"
-import ContentCashier from "../Cashier/ContentCashier";
-import SideBarsCashier from "../Cashier/SideBarsCashier";
-import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";

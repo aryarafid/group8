@@ -1,5 +1,4 @@
 import { Box, Flex, Image } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import SideBarAdmin from "./SideBarAdmin";
 import ProductAndCatAdmin from "./ProductAndCatAdmin";
 
