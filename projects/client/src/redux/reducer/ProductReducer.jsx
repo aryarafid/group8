@@ -40,7 +40,7 @@ export const ProductReducer = createSlice({
   },
 });
 
-export const payment = (totalPrice, toast) => {
+export const payment = (totalPrice, carts, toast) => {
   return async () => {
     const token = localStorage.getItem("token");
     try {
@@ -53,6 +53,22 @@ export const payment = (totalPrice, toast) => {
           },
         }
       );
+      const transactionId = respon.data.result.id;
+      carts.forEach(async (item) => {
+        try {
+          const res = await axios.post(
+            `${URL_API}/transaction-management/transaction/item`,
+            { item, transactionId },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      });
       toast({
         title: "Transaction Success",
         status: "success",
@@ -60,9 +76,9 @@ export const payment = (totalPrice, toast) => {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2000);
     } catch (error) {
       console.log(error);
       toast({

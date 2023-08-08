@@ -18,6 +18,7 @@ import { payment } from "../../../redux/reducer/ProductReducer";
 export default function ModalTransaction({ isOpen, onClose }) {
   const toast = useToast();
   const [uangCustomer, setUangCustomer] = useState(0);
+  const { cart } = useSelector((state) => state.ProductReducer);
   const [kembalian, setKembalian] = useState(0);
   const { totalHarga } = useSelector((state) => state.ProductReducer);
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function ModalTransaction({ isOpen, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // const bayar = document.getElementById("totalBayar").value;
-    dispatch(payment(totalHarga, toast));
+    dispatch(payment(totalHarga, cart, toast));
   };
   function handlePay() {
     const total = uangCustomer - totalHarga;
