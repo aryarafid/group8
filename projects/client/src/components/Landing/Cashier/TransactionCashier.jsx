@@ -104,6 +104,7 @@ export default function TransactionCashier() {
             <ButtonTransaction />
           </Box>
         </Stack>
+        
       </Box>
     </>
   );
