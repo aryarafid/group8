@@ -7,6 +7,8 @@ require("dotenv").config({
   path: path.resolve("../.env"),
 });
 const { multerUpload } = require("../middleware/multer");
+const fs = require("fs").promises;
+
 
 const adminController = {
   getCashier: async (req, res) => {
@@ -93,12 +95,41 @@ const adminController = {
       let {
         username,
         email,
+        imgProfile
       } = req.body;
 
       let userFind2 = await user.findByPk(id);
       if (userFind2) {
         if (username) userFind2.username = username;
         if (email) userFind2.email = email;
+        if (req.file) {
+          await db.sequelize.transaction(async (t) => {
+            const result = await user.update(
+              {
+                imgProfile: req.file.path,
+              },
+              {
+                where: {
+                  id
+                },
+                transaction: t // Move the transaction option here
+              }
+            );
+            if (!result) {
+              return res.status(500).json({
+                message: "Change avatar failed",
+                error: err.message,
+              });
+            }
+            fs.unlink(userFind2.imgProfile, (err) => {
+              if (err) {
+                res.status(500).json({ error: "ubah gambar error" })
+                return;
+              }
+            });
+          });
+          // productFind.productImg = req.file.path
+        }
         await db.sequelize.transaction(async (t) => {
           await userFind2.save({
             transaction: t
@@ -155,7 +186,7 @@ const adminController = {
     }
   },
 
-  undeleteCashier: async (req, res) => {
+  activateCashier: async (req, res) => {
     try {
       const {
         id
@@ -171,7 +202,7 @@ const adminController = {
           return res
             .status(200)
             .json({
-              message: "undelete cashier success",
+              message: "activate cashier success",
               data: userFind
             });
         })

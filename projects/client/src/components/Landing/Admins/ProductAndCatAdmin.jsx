@@ -16,6 +16,13 @@ import {
   EditableInput,
   EditableTextarea,
   EditablePreview,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   Tab,
   TabList,
   TabPanel, CardHeader,
@@ -27,7 +34,7 @@ import {
   Text,
   IconButton,
   HStack,
-  Wrap, WrapItem
+  Wrap, WrapItem, useDisclosure
 } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import Products from "../Cashier/Products";
@@ -37,7 +44,7 @@ import axios from "axios"
 import EditableField from "./EditableField";
 import EditCategory from "./EditCategory";
 import AddCategory from "./AddCategory";
-import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaRegCheckSquare } from "react-icons/fa";
 import AddProduct from "./AddProduct";
 import DetailProduct from "./DetailProduct";
 
@@ -53,7 +60,7 @@ export default function ProductAndCatAdmin() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [edit, setEdit] = useState("")
   const [data, setData] = useState([])
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState('');
 
@@ -61,7 +68,7 @@ export default function ProductAndCatAdmin() {
 
   const fetchData = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
+      const url = `http://localhost:8000/api/product/products?page=${page}&categoryId=${categoryId}&name=${name}&orderByName=${orderByName}&orderByPrice=${orderByPrice}&size=${size}`;
       const response = await axios.get(url);
       console.log(response.data);
       setPage(response.data.page);
@@ -73,21 +80,13 @@ export default function ProductAndCatAdmin() {
 
   const fetchCategory = async () => {
     try {
-      const url = `http://localhost:8000/mini-project/api/category/`;
+      const url = `http://localhost:8000/api/category/`;
       const response = await axios.get(url);
       console.log(response.data);
       // setPage(response.data.page);
       setCategory(response.data.data);
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  const addNewCategory = async () => {
-    try {
-
-    } catch (error) {
-
     }
   }
 
@@ -99,58 +98,13 @@ export default function ProductAndCatAdmin() {
     fetchData();
   }, [categoryId, orderByName, orderByPrice, page]);
 
-  // const handleAddData = (newData) => {
-  //   // Update your data array with the new data
-  //   setData((prevData) => [...prevData, newData]);
-  // };
-
-  const handleSubmitEdit = async (id) => {
-    // event.preventDefault();
-    const token = localStorage.getItem("token");
-
-    const name = document.getElementById("name").value
-
-    try {
-      const respon = await axios.patch(
-        `http://localhost:8000/mini-project/api/cashier/update/${id}`,
-        name,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast({
-        title: "Update cashier succeeded",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setTimeout(() => {
-        document.location.href = "/cashierAdmin";
-      }, 2500);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Failed. Try again",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }
-
-  const handleCategoryFilter = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
   const deleteCategory = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
       const respon = await axios.delete(
-        `http://localhost:8000/mini-project/api/category/delete/${id}`,
+        `http://localhost:8000/api/category/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -163,9 +117,78 @@ export default function ProductAndCatAdmin() {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        document.location.href = "/productAdmin";
-      }, 2500);
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const deleteProduct = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+    // console.log(token)
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/api/product/delete/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Delete product succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed. Try again",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const activateProduct = async (id) => {
+    // event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    try {
+      const respon = await axios.patch(
+        `http://localhost:8000/api/product/activate/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast({
+        title: "Delete product succeeded",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      // setTimeout(() => {
+      //   document.location.href = "/productAdmin";
+      // }, 2500);
+      window.location.reload()
     } catch (error) {
       console.log(error);
       toast({
@@ -198,7 +221,24 @@ export default function ProductAndCatAdmin() {
                   {/* <IconButton icon={<FaEdit />} /> */}
                   <EditCategory categoryId={category.id} defVal={category.name} />
                   {/* edit button */}
-                  <IconButton icon={<FaTrashAlt />} ml={'0.5em'} onClick={() => deleteCategory(category.id)} />
+                  <IconButton icon={<FaTrashAlt />} ml={'0.5em'} onClick={onOpen} />
+
+                  <Modal isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>Yakin ingin menghapus data ini?</ModalHeader>
+                      <ModalBody>
+                        <Text>Data tidak dapat kembali.</Text>
+                      </ModalBody>
+                      <ModalCloseButton />
+                      <ModalFooter>
+                        <Button variant={'ghost'} mr={3} onClick={onClose}>
+                          Close
+                        </Button>
+                        <Button colorScheme='red' onClick={() => deleteCategory(category.id)}>Delete</Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
                   {/* trash button */}
                 </HStack>
                 {/* </Container> */}
@@ -225,7 +265,7 @@ export default function ProductAndCatAdmin() {
             <Wrap>
               {filteredProducts.map((product) =>
                 <WrapItem>
-                  <Card key={product.id} maxW={"500px"} maxH={"350px"}>
+                  <Card key={product.id} maxW={"240px"} maxH={"360px"}>
                     <CardBody>
                       {product.productImg ?
                         <Image
@@ -239,31 +279,26 @@ export default function ProductAndCatAdmin() {
                         <Text as='b'>
                           {product.name}
                         </Text>
-                        <Text>
+                        <Text noOfLines={1}>
                           {product.description}
                         </Text>
                       </Stack>
                       <HStack mt={'10px'}>
                         <Spacer></Spacer>
 
-                        <DetailProduct data={product} category={category}/>
+                        <DetailProduct data={product} category={category} />
 
-                        <IconButton icon={<FaTrashAlt />} ml={'0.5em'} />
+                        {product.isActive === true ?
+                          (
+                            < IconButton icon={<FaTrashAlt />} ml={'0.5em'} colorScheme={'red'} onClick={() => deleteProduct(product.id)} />
+                          ) :
+                          (
+                            < IconButton icon={<FaRegCheckSquare />} ml={'0.5em'} colorScheme={'green'} onClick={() => activateProduct(product.id)} />
+                          )
+                        }
                       </HStack>
                     </CardBody>
-                    {/* 
-                    <CardFooter>
-                      <IconButton icon={<FaEdit />}
-                      //  onClick={onOpen}
-                      />
-
-                      <IconButton icon={<FaTrashAlt />} ml={'0.5em'}
-                      // onClick={() => deleteCategory(category.id)} 
-                      />
-
-                    </CardFooter> */}
                   </Card>
-
                 </WrapItem>
               )}
             </Wrap>

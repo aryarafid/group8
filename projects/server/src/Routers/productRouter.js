@@ -12,7 +12,7 @@ const { multerUpload } = require("../middleware/multer");
 
 router.get(
   "/products",
-  // auth.verifyToken,
+  // verifyToken,
   productController.getProduct
 );
 router.post(
@@ -26,8 +26,6 @@ router.post(
 router.patch(
   "/update/:id",
   multerUpload.single("productImg"),
-  // createProductValidator,
-  // validateRegist,
   verifyToken,
   productController.updateProduct
 );

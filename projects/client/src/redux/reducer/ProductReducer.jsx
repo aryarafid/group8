@@ -81,9 +81,9 @@ export const payment = (totalPrice, carts, toast) => {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 2000);
     } catch (error) {
       console.log(error);
       toast({

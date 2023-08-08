@@ -13,12 +13,12 @@ const { multerUpload } = require("../middleware/multer");
 
 router.get(
   "/",
-  // auth.verifyToken,
+  // verifyToken,
   adminController.getCashier
 );
 router.get(
   "/:id",
-  // auth.verifyToken,
+  // verifyToken,
   adminController.getCashierById
 );
 router.post(
@@ -31,14 +31,15 @@ router.post(
 );
 router.patch(
   "/update/:id",
-  // auth.verifyToken,
+  multerUpload.single("imgProfile"),
+  verifyToken,
   adminController.updateCashier
 );
 router.patch("/delete/:id",
-  // auth.verifyToken,
+  // verifyToken,
   adminController.deleteCashier);
-router.patch("/undelete/:id",
-  // auth.verifyToken,
-  adminController.undeleteCashier);
+router.patch("/activate/:id",
+  // verifyToken,
+  adminController.activateCashier);
 
 module.exports = router;
