@@ -115,6 +115,7 @@ export default function ContentCashier() {
         md: "600px",
         lg: "980px"
       }} fontFamily={"montserrat"}>
+
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             mt={{ md: "-20px", lg: "-40px" }}
@@ -189,6 +190,7 @@ export default function ContentCashier() {
           mt={"1em"}
           gap={"20px"}
         >
+
           {products.map((product) => (
             //<Card key={product.id} maxW={"240px"} maxH={"360px"} shadow={"lg"}> 
             /* 4:6 */
@@ -266,6 +268,39 @@ export default function ContentCashier() {
           </Stack>
 
         </Flex >
+        
+
+        <Stack
+          // pos={"absolute"}
+          mt={"2em"}
+          mb={"2em"}
+          ml={"250px"}
+        >
+
+          <Flex>
+            <Button
+              onClick={handlePrev}
+              _hover={{ bgColor: "#223256", color: "white" }}
+              bgColor={"white"}
+              w={"100px"}
+              h={"30px"}
+              isDisabled={page === 1 ? true : false}
+            >
+              Prev
+            </Button>
+            <Button
+              onClick={handleNext}
+              _hover={{ bgColor: "#223256", color: "white" }}
+              bgColor={"white"}
+              ml={"200px"}
+              w={"100px"}
+              h={"30px"}
+              isDisabled={products.length < 10}
+            >
+              Next
+            </Button>
+          </Flex>
+        </Stack>
 
       </Box >
     </>

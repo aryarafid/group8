@@ -21,8 +21,17 @@ const productController = {
         const findName = { name: { [Op.like]: `%${name || ""}%` } }
         const findQuantity = { quantity: { [Op.like]: `%${quantity || ""}%` } }
         const isActive = { isActive: { [Op.eq]: 1 } }
-        if (categoryId) findName.categoryId = categoryId
+        if (categoryId) findName.categoryId = categoryId;
         if (categoryId) findQuantity.categoryId = categoryId;
+        let orderOptions = {};
+        if (orderByName) {
+            orderOptions = {
+                ...orderOptions,
+                order: [
+                    ["name", orderByName]
+                ]
+            }
+        }
         try {
             const result = await product.findAll({
                 attributes: { exclude: ["categoryId"] },
@@ -33,11 +42,62 @@ const productController = {
                 include: [
                     { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
                 ],
+                ...orderOptions
+                // order: [
+                //     ["name", orderByName],
+                //     // ["harga_produk", orderByPrice || 'ASC']
+                //     [sequelize.literal('harga_produk'), orderByPrice || 'ASC']
+                // ]
+            })
+
+            return res.status(200).json({
+                message: "get product success",
+                productLimit: limitPerPage,
+                productPage: productPage,
+                data: result,
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: error.message
+            });
+        }
+    },
+
+    getProduct2: async (req, res) => {
+        const { page, categoryId, name, orderByName, orderByPrice, size, quantity } = req.query
+        const productPage = parseInt(page) || 1;
+        const limitPerPage = parseInt(size) || 8;
+        const offset = (productPage - 1) * limitPerPage
+        const findName = { name: { [Op.like]: `%${name || ""}%` } }
+        const findQuantity = { quantity: { [Op.like]: `%${quantity || ""}%` } }
+        // const isActive = { isActive: { [Op.eq]: 1 } }
+        if (categoryId) findName.categoryId = categoryId;
+        if (categoryId) findQuantity.categoryId = categoryId;
+        let orderOptions = {};
+        if (orderByName) {
+            orderOptions = {
+                ...orderOptions,
                 order: [
-                    ["name", orderByName || 'ASC'],
-                    // ["harga_produk", orderByPrice || 'ASC']
-                    [sequelize.literal('harga_produk'), orderByPrice || 'ASC']
+                    ["name", orderByName]
                 ]
+            }
+        }
+        try {
+            const result = await product.findAll({
+                attributes: { exclude: ["categoryId"] },
+                where: [findName, findQuantity],
+                limit: limitPerPage,
+                productPage: productPage,
+                offset,
+                include: [
+                    { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
+                ],
+                ...orderOptions
+                // order: [
+                //     ["name", orderByName],
+                //     // ["harga_produk", orderByPrice || 'ASC']
+                //     [sequelize.literal('harga_produk'), orderByPrice || 'ASC']
+                // ]
             })
 
             return res.status(200).json({
