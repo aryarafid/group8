@@ -23,19 +23,21 @@ export default function SideBarAdmin() {
     <>
       <Box
         w={"100px"}
-        h={"100vh"}
+        h={"125vh"}
         bgColor={"teal"}
         position={"sticky"}
         color={"white"}
         fontFamily={"montserrat"}
         top={0} zIndex="sticky"
       >
+
         <Box textAlign={"center"}>
           <AiOutlineShop size={"sm"} />
           <Text>Welcome</Text>
           <Text>{user.role}</Text>
         </Box>
-        <Link to={"/productAdmin"}>
+
+        {/* <Link to={"/productAdmin"}>
           <Box textAlign={"center"} mt={"20px"}>
             <IconButton
               as="button"
@@ -47,7 +49,11 @@ export default function SideBarAdmin() {
             ></IconButton>
             <Text>Product & Category</Text>
           </Box>
-        </Link>
+        </Link> */}
+
+        <Box
+          h={'4em'}
+        ></Box>
 
         <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
           <Link to={"/cashierAdmin"}>
@@ -75,6 +81,10 @@ export default function SideBarAdmin() {
             <Text>Home</Text>
           </Box>
         </Link>
+
+        <Box
+          h={'7em'}
+        ></Box>
 
         <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
           <IconButton

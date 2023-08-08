@@ -6,6 +6,7 @@ const { check } = require("express-validator")
 
 const verifyToken = (req, res, next) => {
     let token = req.headers.authorization;
+    console.log(token)
     if (!token) {
         return res.status(500).send("Invalid Token")
     }
