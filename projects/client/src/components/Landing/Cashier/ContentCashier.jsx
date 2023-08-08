@@ -115,7 +115,6 @@ export default function ContentCashier() {
         md: "600px",
         lg: "980px"
       }} fontFamily={"montserrat"}>
-
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             mt={{ md: "-20px", lg: "-40px" }}
