@@ -45,7 +45,7 @@ import { FaEye } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function DetailProduct({ data, category }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -84,8 +84,8 @@ export default function DetailProduct({ data, category }) {
         console.log(formData);
 
         try {
-            const respon = await axios.post(
-                "http://localhost:8000/mini-project/api/product/create",
+            const respon = await axios.patch(
+                `http://localhost:8000/api/product/update/${data.id}`,
                 formData,
                 {
                     headers: {
@@ -94,14 +94,15 @@ export default function DetailProduct({ data, category }) {
                 }
             );
             toast({
-                title: "Create product  succeeded",
+                title: "Update product succeeded",
                 status: "success",
                 duration: 3000,
                 isClosable: true,
             });
-            setTimeout(() => {
-                document.location.href = "/productAdmin";
-            }, 2500);
+            // setTimeout(() => {
+            //     document.location.href = "/productAdmin";
+            // }, 2500);
+            window.location.reload()
         } catch (error) {
             console.log(error);
             toast({
@@ -120,7 +121,7 @@ export default function DetailProduct({ data, category }) {
             <Modal isOpen={isOpen} onClose={onClose}>
 
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent maxW={'600px'}>
                     <ModalHeader>Produk #{data.id}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
@@ -143,12 +144,20 @@ export default function DetailProduct({ data, category }) {
                                             <Tr>
                                                 <Td>Product Category</Td>
                                                 <Td>:</Td>
-                                                <Td>{data.categoryId}</Td>
+                                                <Td>{data.Category.name}</Td>
                                             </Tr>
                                             <Tr>
                                                 <Td>Product Image</Td>
                                                 <Td>:</Td>
-                                                <Td></Td>
+                                                <Td>
+                                                    {data.productImg ?
+                                                        <Image
+                                                            w={'200px'} h={'180px'}
+                                                            src={`http://localhost:8000/${data.productImg}`}
+                                                        ></Image> :
+                                                        "no picture"
+                                                    }
+                                                </Td>
                                             </Tr>
                                             <Tr>
                                                 <Td>Harga Modal Produk</Td>
@@ -193,7 +202,10 @@ export default function DetailProduct({ data, category }) {
                                         </FormControl>
                                         <FormControl isRequired>
                                             <FormLabel>Product Category</FormLabel>
-                                            <Select placeholder='Select category' name="categoryId" id="categoryId">
+                                            <Select placeholder='Select category' name="categoryId" id="categoryId" defaultValue={parseInt(data.Category.id)}>
+                                                {category.map((category) =>
+                                                    <option value={category.id} >{category.name}</option>
+                                                )}
                                             </Select>
                                         </FormControl>
                                         <FormControl>

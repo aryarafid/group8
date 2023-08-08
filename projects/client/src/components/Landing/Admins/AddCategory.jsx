@@ -37,7 +37,7 @@ import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function AddCategory({ onAdd }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +55,7 @@ export default function AddCategory({ onAdd }) {
 
         try {
             const respon = await axios.post(
-                "http://localhost:8000/mini-project/api/category/create",
+                "http://localhost:8000/api/category/create",
                 { name: name },
                 {
                     headers: {

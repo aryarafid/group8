@@ -47,7 +47,7 @@ import TransactionCashier from "../Cashier/TransactionCashier";
 import { useParams } from "react-router-dom";
 
 import EditCashier from "./EditCashier";
-import DeleteCashier from "./DeleteCashier";
+// import DeleteCashier from "./DeleteCashier";
 
 export default function AddCashier({ onAdd }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -82,7 +82,7 @@ export default function AddCashier({ onAdd }) {
 
     try {
       const respon = await axios.post(
-        "http://localhost:8000/mini-project/api/cashier/create",
+        "http://localhost:8000/api/cashier/create",
         formData,
         {
           headers: {
@@ -96,9 +96,10 @@ export default function AddCashier({ onAdd }) {
         duration: 3000,
         isClosable: true,
       });
-      setTimeout(() => {
-        document.location.href = "/cashierAdmin";
-      }, 2500);
+      // setTimeout(() => {
+      //   document.location.href = "/cashierAdmin";
+      // }, 2500);
+      window.location.reload()
     } catch (error) {
       console.log(error);
       toast({

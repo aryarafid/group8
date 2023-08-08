@@ -7,28 +7,27 @@ const {
     createCashierValidator,
 } = require("../middleware/Validator");
 const {
-    auth
-} = require("../middleware/auth");
+    auth, verifyToken } = require("../middleware/auth");
 
 router.get(
     "/",
-    // auth.verifyToken,
+    // verifyToken,
     categoryController.getCategory
 );
 router.post(
     "/create",
     // createCashierValidator,
     // validateRegist,
-    // auth.verifyToken,
+    verifyToken,
     categoryController.createCategory
 );
 router.patch(
     "/update/:id",
-    // auth.verifyToken,
+    verifyToken,
     categoryController.updateCategory
 );
 router.delete("/delete/:id",
-    // auth.verifyToken,
+    verifyToken,
     categoryController.deleteCategory);
 
 module.exports = router;

@@ -14,32 +14,37 @@ const { multerUpload } = require("../middleware/multer");
 
 const productController = {
     getProduct: async (req, res) => {
-        const { page, categoryId, name, orderBy, sortByDate, size, quantity } = req.query
+        const { page, categoryId, name, orderByName, orderByPrice, size, quantity } = req.query
         const productPage = parseInt(page) || 1;
-        const limitPerPage = parseInt(size) || 6;
+        const limitPerPage = parseInt(size) || 10;
         const offset = (productPage - 1) * limitPerPage
         const findName = { name: { [Op.like]: `%${name || ""}%` } }
         const findQuantity = { quantity: { [Op.like]: `%${quantity || ""}%` } }
+        const isActive = { isActive: { [Op.eq]: 1 } }
         if (categoryId) findName.categoryId = categoryId
         if (categoryId) findQuantity.categoryId = categoryId;
         try {
             const result = await product.findAll({
                 attributes: { exclude: ["categoryId"] },
-                where: [findName, findQuantity],
+                where: [findName, findQuantity, isActive],
                 limit: limitPerPage,
                 productPage: productPage,
                 offset,
                 include: [
                     { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
                 ],
-                order: [["createdAt", orderBy || "ASC"]]
+                order: [
+                    ["name", orderByName || 'ASC'],
+                    // ["harga_produk", orderByPrice || 'ASC']
+                    [sequelize.literal('harga_produk'), orderByPrice || 'ASC']
+                ]
             })
 
             return res.status(200).json({
                 message: "get product success",
                 productLimit: limitPerPage,
                 productPage: productPage,
-                data: result
+                data: result,
             });
         } catch (error) {
             res.status(500).json({
@@ -84,52 +89,6 @@ const productController = {
         }
     },
 
-    updateProductImage: async (req, res) => {
-        try {
-            const {
-                id
-            } = req.user;
-            await db.sequelize.transaction(async (t) => {
-                const oldData = await user.findOne({
-                    where: {
-                        id
-                    }
-                });
-                const result = await user.update({
-                    img_url: req.file.path,
-                }, {
-                    where: {
-                        id
-                    }
-                }, {
-                    transaction: t
-                });
-                if (!result) {
-                    return res.status(500).json({
-                        message: "Change avatar failed",
-                        error: err.message,
-                    });
-                }
-                fs.unlink(oldData.img_url, (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    console.log("Old avatar deleted successfully");
-                });
-                return res.status(200).json({
-                    message: "Change avatar Success",
-                    image: req.file.path,
-                });
-            });
-        } catch (err) {
-            return res.status(500).json({
-                message: "Change avatar failed",
-                error: err.message,
-            });
-        }
-    },
-
     updateProduct: async (req, res) => {
         try {
             const {
@@ -153,29 +112,33 @@ const productController = {
                 if (harga_produk) productFind.harga_produk = harga_produk;
                 if (quantity) productFind.quantity = quantity;
                 if (description) productFind.description = description;
-                if (productImg) {
-                    const result = await product.update({
-                        img_url: req.file.path,
-                    }, {
-                        where: {
-                            id
+                if (req.file) {
+                    await db.sequelize.transaction(async (t) => {
+                        const result = await product.update(
+                            {
+                                productImg: req.file.path,
+                            },
+                            {
+                                where: {
+                                    id
+                                },
+                                transaction: t // Move the transaction option here
+                            }
+                        );
+                        if (!result) {
+                            return res.status(500).json({
+                                message: "Change avatar failed",
+                                error: err.message,
+                            });
                         }
-                    }, {
-                        transaction: t
-                    });
-                    if (!result) {
-                        return res.status(500).json({
-                            message: "Change avatar failed",
-                            error: err.message,
+                        fs.unlink(productFind.productImg, (err) => {
+                            if (err) {
+                                res.status(500).json({ error: "ubah gambar error" })
+                                return;
+                            }
                         });
-                    }
-                    fs.unlink(oldData.img_url, (err) => {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
-                        console.log("Old avatar deleted successfully");
                     });
+                    // productFind.productImg = req.file.path
                 }
 
                 await db.sequelize.transaction(async (t) => {
@@ -191,7 +154,7 @@ const productController = {
                 })
             } else {
                 res.status(404).json({
-                    message: "product not found"
+                    error: "product not found"
                 });
             }
         } catch (error) {
