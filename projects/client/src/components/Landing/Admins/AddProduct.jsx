@@ -95,9 +95,10 @@ export default function AddProduct({ onAdd, category }) {
                 duration: 3000,
                 isClosable: true,
             });
-            setTimeout(() => {
-                document.location.href = "/productAdmin";
-            }, 2500);
+            // setTimeout(() => {
+            //     document.location.href = "/productAdmin";
+            // }, 2500);
+            window.location.reload()
         } catch (error) {
             console.log(error);
             toast({

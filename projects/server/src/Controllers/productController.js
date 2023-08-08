@@ -14,32 +14,38 @@ const { multerUpload } = require("../middleware/multer");
 
 const productController = {
     getProduct: async (req, res) => {
-        const { page, categoryId, name, orderBy, sortByDate, size, quantity } = req.query
+        const { page, categoryId, name, orderByName, orderByPrice, size, quantity } = req.query
         const productPage = parseInt(page) || 1;
-        const limitPerPage = parseInt(size) || 6;
+        const limitPerPage = parseInt(size) || 10;
         const offset = (productPage - 1) * limitPerPage
         const findName = { name: { [Op.like]: `%${name || ""}%` } }
         const findQuantity = { quantity: { [Op.like]: `%${quantity || ""}%` } }
+        const isActive = { isActive: { [Op.eq]: 1 } }
         if (categoryId) findName.categoryId = categoryId
         if (categoryId) findQuantity.categoryId = categoryId;
         try {
             const result = await product.findAll({
                 attributes: { exclude: ["categoryId"] },
-                where: [findName, findQuantity],
+                where: [findName, findQuantity, isActive],
                 limit: limitPerPage,
                 productPage: productPage,
                 offset,
                 include: [
                     { model: category, attributes: { exclude: ["createdAt", "updatedAt"] } },
                 ],
-                order: [["createdAt", orderBy || "ASC"]]
+                order: [
+                    ["name", orderByName || 'ASC'],
+                    ["harga_produk", orderByPrice || 'ASC']
+                    // [sequelize.literal('name'), orderByName || ''],
+                    // [sequelize.literal('harga_produk'), orderByPrice || ''],
+                ]
             })
 
             return res.status(200).json({
                 message: "get product success",
                 productLimit: limitPerPage,
                 productPage: productPage,
-                data: result
+                data: result,
             });
         } catch (error) {
             res.status(500).json({

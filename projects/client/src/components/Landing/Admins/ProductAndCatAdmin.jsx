@@ -98,51 +98,6 @@ export default function ProductAndCatAdmin() {
     fetchData();
   }, [categoryId, orderByName, orderByPrice, page]);
 
-  // const handleAddData = (newData) => {
-  //   // Update your data array with the new data
-  //   setData((prevData) => [...prevData, newData]);
-  // };
-
-  const handleSubmitEdit = async (id) => {
-    // event.preventDefault();
-    const token = localStorage.getItem("token");
-
-    const name = document.getElementById("name").value
-
-    try {
-      const respon = await axios.patch(
-        `http://localhost:8000/api/cashier/update/${id}`,
-        name,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast({
-        title: "Update cashier succeeded",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      setTimeout(() => {
-        document.location.href = "/cashierAdmin";
-      }, 2500);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Failed. Try again",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  }
-
-  const handleCategoryFilter = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
   const deleteCategory = async (id) => {
     // event.preventDefault();
     const token = localStorage.getItem("token");
@@ -324,7 +279,7 @@ export default function ProductAndCatAdmin() {
                         <Text as='b'>
                           {product.name}
                         </Text>
-                        <Text>
+                        <Text noOfLines={1}>
                           {product.description}
                         </Text>
                       </Stack>
