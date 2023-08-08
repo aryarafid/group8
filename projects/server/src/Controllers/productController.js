@@ -36,8 +36,6 @@ const productController = {
                 order: [
                     ["name", orderByName || 'ASC'],
                     ["harga_produk", orderByPrice || 'ASC']
-                    // [sequelize.literal('name'), orderByName || ''],
-                    // [sequelize.literal('harga_produk'), orderByPrice || ''],
                 ]
             })
 
