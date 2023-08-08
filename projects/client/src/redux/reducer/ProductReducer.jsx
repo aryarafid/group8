@@ -34,8 +34,11 @@ export const ProductReducer = createSlice({
       }
     },
     deleteCart: (state, action) => {
-      state.cart = [];
-      state.totalHarga = 0;
+      const { id } = action.payload;
+      const existCart = state.cart.findIndex((item) => item.id === id);
+      state.totalHarga -=
+        action.payload.harga_produk * state.cart[existCart].quantity;
+      state.cart.splice(existCart, 1);
     },
   },
 });
