@@ -235,7 +235,7 @@ export default function ContentCashier() {
               </CardFooter>
             </Card>
           ))}
-
+          {/* 
           <Stack
             // pos={"absolute"}
             mt={"2em"}
@@ -265,10 +265,10 @@ export default function ContentCashier() {
                 Next
               </Button>
             </Flex>
-          </Stack>
+          </Stack> */}
 
         </Flex >
-        
+
 
         <Stack
           // pos={"absolute"}
