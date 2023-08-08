@@ -235,6 +235,38 @@ export default function ContentCashier() {
               </CardFooter>
             </Card>
           ))}
+
+          <Stack
+            // pos={"absolute"}
+            mt={"2em"}
+            mb={"2em"}
+            ml={"250px"}
+          >
+            <Flex>
+              <Button
+                onClick={handlePrev}
+                _hover={{ bgColor: "#223256", color: "white" }}
+                bgColor={"white"}
+                w={"100px"}
+                h={"30px"}
+                isDisabled={page === 1 ? true : false}
+              >
+                Prev
+              </Button>
+              <Button
+                onClick={handleNext}
+                _hover={{ bgColor: "#223256", color: "white" }}
+                bgColor={"white"}
+                ml={"200px"}
+                w={"100px"}
+                h={"30px"}
+                isDisabled={products.length < 10}
+              >
+                Next
+              </Button>
+            </Flex>
+          </Stack>
+
         </Flex >
         
 
