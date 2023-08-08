@@ -33,6 +33,7 @@ import {
   AiOutlineArrowRight,
   AiOutlineArrowLeft,
 } from "react-icons/ai";
+import ButtonDrawer from "./ButtonDrawer";
 
 export default function ContentCashier() {
   const PUBLIC_URL = "http://localhost:8000";
@@ -68,7 +69,6 @@ export default function ContentCashier() {
       const url = `http://localhost:8000/api/category/`;
       const response = await axios.get(url);
       console.log(response.data);
-      // setPage(response.data.page);
       setCategory(response.data.data);
     } catch (error) {
       console.log(error);
@@ -111,13 +111,7 @@ export default function ContentCashier() {
 
   return (
     <>
-      <Box
-        w={{
-          md: "600px",
-          lg: "980px",
-        }}
-        fontFamily={"montserrat"}
-      >
+      <Box w={"100%"} fontFamily={"montserrat"}>
         <Flex justify={"space-around"} m={"20px 20px"}>
           <Image
             mt={{ md: "-20px", lg: "-40px" }}
@@ -144,6 +138,9 @@ export default function ContentCashier() {
               onChange={handleSearch}
             ></Input>
           </InputGroup>
+          <Box pos={"fixed"} zIndex={1000} top={10} right={10}>
+            <ButtonDrawer />
+          </Box>
         </Flex>
 
         {/* Filter */}
@@ -203,9 +200,9 @@ export default function ContentCashier() {
             /* <Card key={product.id} maxW={"120px"} maxH={"180px"} shadow={"lg"}> */
             <Card
               key={product.id}
-              maxW={"150px"}
+              maxW={"220px"}
               maxH={"300px"}
-              minW={"150px"}
+              minW={"220px"}
               minH={"300px"}
               shadow={"lg"}
             >
@@ -251,7 +248,7 @@ export default function ContentCashier() {
           // pos={"absolute"}
           mt={"2em"}
           mb={"2em"}
-          ml={{ md: "100px", lg: "250px" }}
+          ml={{ md: "220px", lg: "400px" }}
         >
           <Flex>
             <Button
@@ -259,7 +256,7 @@ export default function ContentCashier() {
               _hover={{ bgColor: "#223256", color: "white" }}
               bgColor={"white"}
               w={"100px"}
-              h={"30px"}
+              h={"35px"}
               isDisabled={page === 1 ? true : false}
             >
               Prev
@@ -270,7 +267,7 @@ export default function ContentCashier() {
               bgColor={"white"}
               ml={{ md: "150px", lg: "200px" }}
               w={"100px"}
-              h={"30px"}
+              h={"35px"}
               isDisabled={products.length < 10}
             >
               Next

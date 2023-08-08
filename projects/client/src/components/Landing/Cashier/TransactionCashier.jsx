@@ -37,6 +37,7 @@ export default function TransactionCashier() {
         position={"sticky"}
         top={0}
         zIndex="sticky"
+        overflow={"scroll"}
       >
         <Stack>
           <Box m={"20px 30px"}>
@@ -47,7 +48,7 @@ export default function TransactionCashier() {
             </Text>
           </Box>
           {cart.map((item) => (
-            <Box>
+            <Box overflow={"scroll"} bgColor={"red"}>
               <Card
                 w={{ md: "250px", lg: "320px" }}
                 m={"5px auto"}
