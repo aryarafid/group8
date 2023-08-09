@@ -264,6 +264,9 @@ const Report = () => {
                                         <Tr>
                                             <Th>Date</Th>
                                             <Th>Total Sales</Th>
+                                            {/* <Th>Item sold</Th>
+                                            <Th>Qty</Th>
+                                            <Th>Price</Th> */}
                                         </Tr>
                                     </Thead>
                                     <Tbody>

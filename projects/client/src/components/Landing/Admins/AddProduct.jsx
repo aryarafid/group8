@@ -46,6 +46,11 @@ export default function AddProduct({ onAdd, category }) {
     const handleClick = () => setpwShow(!pwShow)
     const toast = useToast()
     const navigate = useNavigate();
+    const [selectedCategoryId, setSelectedCategoryId] = useState('');
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategoryId(event.target.value);
+    };
 
     const initialFormData = {
         // Initialize with empty fields for your data structure
@@ -68,7 +73,7 @@ export default function AddProduct({ onAdd, category }) {
         const formData = new FormData();
 
         formData.append("name", document.getElementById("name").value);
-        formData.append("categoryId", document.getElementById("categoryId").value);
+        formData.append("categoryId", selectedCategoryId);
         formData.append("modal_produk", document.getElementById("modal_produk").value);
         formData.append("harga_produk", document.getElementById("harga_produk").value);
         formData.append("quantity", document.getElementById("quantity").value);
@@ -126,7 +131,9 @@ export default function AddProduct({ onAdd, category }) {
                             <FormControl isRequired>
                                 <FormLabel>Product Category</FormLabel>
                                 {/* <Input id='categoryId' name='categoryId' type='categoryId' /> */}
-                                <Select placeholder='Select category' name="categoryId" id="categoryId">
+                                <Select placeholder='Select category' name="categoryId" id="categoryId"
+                                    value={selectedCategoryId} onChange={handleCategoryChange}
+                                >
                                     {category.map((category) =>
                                         <option value={category.id}>{category.name}</option>
                                     )}

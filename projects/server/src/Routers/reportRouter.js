@@ -25,6 +25,11 @@ router.post(
     // verifyToken,
     reportController.salesReport
 );
+router.post(
+    "/sales-report2",
+    // verifyToken,
+    reportController.salesReport2
+);
 
 
 module.exports = router;
