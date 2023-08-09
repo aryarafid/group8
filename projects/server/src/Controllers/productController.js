@@ -173,7 +173,17 @@ const productController = {
                 if (quantity) productFind.quantity = quantity;
                 if (description) productFind.description = description;
                 if (req.file) {
+                    if (productFind.productImg) {
+                        // fs.unlink(productFind.productImg, (err) => {
+                        fs.unlink(path.resolve(__dirname, `../../${productFind.productImg}`), (err) => {
+                            if (err) {
+                                res.status(500).json({ error: "ubah gambar error" })
+                                return;
+                            }
+                        });
+                    }
                     await db.sequelize.transaction(async (t) => {
+                        // IF GA ADA GAMBAR GAUSAH UNLINK. DI ATAS SUDAH CUKUP
                         const result = await product.update(
                             {
                                 productImg: req.file.path,
@@ -191,12 +201,6 @@ const productController = {
                                 error: err.message,
                             });
                         }
-                        fs.unlink(productFind.productImg, (err) => {
-                            if (err) {
-                                res.status(500).json({ error: "ubah gambar error" })
-                                return;
-                            }
-                        });
                     });
                     // productFind.productImg = req.file.path
                 }

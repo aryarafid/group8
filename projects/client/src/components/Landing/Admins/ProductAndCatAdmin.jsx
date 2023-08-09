@@ -230,12 +230,8 @@ export default function ProductAndCatAdmin() {
     }
   };
 
-  const filteredProducts = selectedCategory ? products.filter((product) => product.categoryId === selectedCategory) : products;
-  console.log(filteredProducts);
-
   return (
     <>
-      {/* category */}
       <Box w={'25%'}>
         <Stack spacing='4' m={'2em'}>
           <Heading mb={'1em'}> Category</Heading>
@@ -280,7 +276,6 @@ export default function ProductAndCatAdmin() {
 
       <Divider orientation='vertical' />
 
-      {/* products */}
       <Box>
         {/* product */}
         <Flex wrap={"wrap"} ml={"4em"} mt={'2em'} gap={"20px"}>
@@ -431,7 +426,6 @@ export default function ProductAndCatAdmin() {
           </Flex>
         </Stack>
       </Box>
-      {/* </Flex > */}
     </>
   );
 }
