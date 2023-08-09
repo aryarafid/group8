@@ -8,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { payment } from "../../../redux/reducer/ProductReducer";
 
 export default function ModalTransaction({ isOpen, onClose }) {
+  const [isLoading, setLoading] = useState(false);
   const toast = useToast();
   const [uangCustomer, setUangCustomer] = useState(0);
   const { cart } = useSelector((state) => state.ProductReducer);
@@ -26,7 +28,7 @@ export default function ModalTransaction({ isOpen, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // const bayar = document.getElementById("totalBayar").value;
-    dispatch(payment(totalHarga, cart, toast));
+    dispatch(payment(totalHarga, cart, toast, setLoading));
   };
   function handlePay() {
     const total = uangCustomer - totalHarga;
@@ -56,7 +58,7 @@ export default function ModalTransaction({ isOpen, onClose }) {
 
             <ModalFooter gap={"10px"}>
               <Button type="submit" onClick={handlePay} colorScheme="green">
-                Process
+                {isLoading ? <Spinner /> : "Process"}
               </Button>
               <Button mr={3} onClick={reset}>
                 Reset

@@ -149,6 +149,7 @@ export default function ContentCashier() {
               placeholder="Select all category"
               name="categoryId"
               id="categoryId"
+              w={{ md: "700px" }}
               value={categoryId}
               onChange={handleCategoryFilter}
             >
@@ -187,8 +188,8 @@ export default function ContentCashier() {
         <Flex
           wrap={"wrap"}
           ml={{
-            md: "2.5em",
-            lg: "2.5em",
+            md: "5em",
+            lg: "5em",
           }}
           mt={"1em"}
           gap={"20px"}
@@ -248,7 +249,7 @@ export default function ContentCashier() {
           // pos={"absolute"}
           mt={"2em"}
           mb={"2em"}
-          ml={{ md: "220px", lg: "400px" }}
+          ml={{ md: "220px", lg: "450px" }}
         >
           <Flex>
             <Button
