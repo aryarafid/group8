@@ -11,14 +11,14 @@ const {
 const { multerUpload } = require("../middleware/multer");
 
 router.get(
-    "/products",
+    "/history",
     // verifyToken,
-    reportController.getProductInTransaction
+    reportController.salesHistory
 );
 router.get(
-    "/aggregate",
+    "/graph",
     // verifyToken,
-    reportController.dayAggregate
+    reportController.salesGraph
 );
 router.post(
     "/sales-report",

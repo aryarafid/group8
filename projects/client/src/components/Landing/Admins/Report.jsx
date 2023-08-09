@@ -69,7 +69,7 @@ import {
 
 const Report = () => {
     const [products, setProducts] = useState([])
-    const [aggregate, setAggregate] = useState([])
+    const [graph, setGraph] = useState([])
     const [salesReport, setSalesReport] = useState([])
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
@@ -77,21 +77,22 @@ const Report = () => {
 
     const fetchProdInTr = async () => {
         try {
-            const url = `http://localhost:8000/api/report/products/`;
+            const url = `http://localhost:8000/api/report/history/`;
             const response = await axios.get(url);
-            console.log(response.data);
+            // console.log(response.data);
             setProducts(response.data.data);
+            console.log('products', products);
         } catch (error) {
             console.log(error);
         }
     };
 
-    const fetchDayAggregate = async () => {
+    const fetchGraph = async () => {
         try {
-            const url = `http://localhost:8000/api/report/aggregate/`;
+            const url = `http://localhost:8000/api/report/graph/`;
             const response = await axios.get(url);
-            setAggregate(response.data.data);
-            console.log(aggregate)
+            setGraph(response.data.data);
+            console.log(graph)
         } catch (error) {
             console.log(error);
         }
@@ -119,7 +120,7 @@ const Report = () => {
     }, []);
 
     useEffect(() => {
-        fetchDayAggregate();
+        fetchGraph();
     }, []);
 
     ChartJS.register(
@@ -132,8 +133,8 @@ const Report = () => {
         Legend
     );
 
-    const days = aggregate.map((data) => data.day);
-    const totalSales = aggregate.map((data) => parseInt(data.totalSales)); // Convert totalSales to numbers
+    const days = graph.map((data) => data.day);
+    const totalSales = graph.map((data) => parseInt(data.totalSales)); // Convert totalSales to numbers
 
     const chartData = {
         labels: days,
@@ -188,27 +189,32 @@ const Report = () => {
                                 {products.map((products) =>
                                     <AccordionItem>
                                         <h2>
-                                            <AccordionButton>
+                                            <AccordionButton key={products.id}>
                                                 <Box as="span" flex='1' textAlign='left'>
-                                                    Transaction number {products.id} at {Date(products.createdAt)}
+                                                    Transaction number {products.id}
                                                 </Box>
                                                 <AccordionIcon />
                                             </AccordionButton>
                                         </h2>
                                         <AccordionPanel pb={4}>
+                                            <p>Date: {Date(products.createdAt)}</p>
                                             <p>Cashier ID and username: {products.userId}. {products.User.username}</p>
                                             <p>Total Price: Rp {products.totalPrice}</p>
-
+                                            <Text>
+                                                Items:
+                                            </Text>
                                             {/* Display TransactionItems */}
                                             {products.TransactionItems.map((transactionItem) => (
-                                                <UnorderedList key={transactionItem.id}>
-                                                    <ListItem>Item: {transactionItem.Product.name}</ListItem>
-                                                    <ListItem>Price: {transactionItem.price}</ListItem>
-                                                </UnorderedList>
-                                                /* <div key={transactionItem.id}>
-                                                    <p>Item: {transactionItem.Product.name}</p>
-                                                    <p>Price: {transactionItem.price}</p>
-                                                </div> */
+                                                <Box key={transactionItem.id}>
+                                                    <UnorderedList>
+                                                        <ListItem>{transactionItem.Product.name}
+                                                            <UnorderedList>
+                                                                <ListItem>Quantity: {transactionItem.quantity}</ListItem>
+                                                                <ListItem>Price: Rp {transactionItem.price}</ListItem>
+                                                            </UnorderedList></ListItem>
+                                                    </UnorderedList>
+
+                                                </Box>
                                             ))}
                                         </AccordionPanel>
                                     </AccordionItem>

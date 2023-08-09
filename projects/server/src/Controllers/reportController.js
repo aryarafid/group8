@@ -15,7 +15,7 @@ const sequelize = db.Sequelize;
 const { Op } = sequelize;
 
 const reportController = {
-    getProductInTransaction: async (req, res) => {
+    salesHistory: async (req, res) => {
         try {
             const data = await transaction.findAll({
                 include: [
@@ -30,6 +30,7 @@ const reportController = {
                     //     model: product,
                     // },
                 ],
+                order: [['createdAt', 'DESC']], // Sort by createdAt column in descending order (newest first)
             });
             return res.status(200).json({
                 message: "get data success",
@@ -42,7 +43,7 @@ const reportController = {
         }
     },
 
-    dayAggregate: async (req, res) => {
+    salesGraph: async (req, res) => {
         try {
             let {
                 date
