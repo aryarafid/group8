@@ -198,7 +198,7 @@ const Report = () => {
                                         </h2>
                                         <AccordionPanel pb={4}>
                                             <p>Date: {Date(products.createdAt)}</p>
-                                            <p>Cashier ID and username: {products.userId}. {products.User.username}</p>
+                                            <p>Cashier ID and username: {products.userId}. {products.User?.username}</p>
                                             <p>Total Price: Rp {products.totalPrice}</p>
                                             <Text>
                                                 Items:
