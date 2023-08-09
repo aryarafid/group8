@@ -197,7 +197,7 @@ const Report = () => {
                                             </AccordionButton>
                                         </h2>
                                         <AccordionPanel pb={4}>
-                                            <p>Date: {Date(products.createdAt)}</p>
+                                            <p>Date: {products.createdAt}</p>
                                             <p>Cashier ID and username: {products.userId}. {products.User.username}</p>
                                             <p>Total Price: Rp {products.totalPrice}</p>
                                             <Text>
@@ -264,6 +264,9 @@ const Report = () => {
                                         <Tr>
                                             <Th>Date</Th>
                                             <Th>Total Sales</Th>
+                                            {/* <Th>Item sold</Th>
+                                            <Th>Qty</Th>
+                                            <Th>Price</Th> */}
                                         </Tr>
                                     </Thead>
                                     <Tbody>
