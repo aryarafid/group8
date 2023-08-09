@@ -2,6 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
 import {
     Flex,
     Text,
@@ -52,39 +63,104 @@ import {
     useEditableControls,
     ButtonGroup,
     SlideFade,
-    Tooltip,
+    HStack,
+    // Tooltip,
 } from "@chakra-ui/react";
 
 const Report = () => {
     const [products, setProducts] = useState([])
+    const [aggregate, setAggregate] = useState([])
+    const [salesReport, setSalesReport] = useState([])
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+
 
     const fetchProdInTr = async () => {
         try {
             const url = `http://localhost:8000/api/report/products/`;
             const response = await axios.get(url);
             console.log(response.data);
-            // setPage(response.data.page);
             setProducts(response.data.data);
-
-
-            for (const transaction of products) {
-                const transactionItems = transaction.TransactionItems;
-
-                // Now you can work with the transactionItems array
-                for (const transactionItem of transactionItems) {
-                    console.log('Transaction Item:', transactionItem);
-                    // ... do something with the transaction item
-                }
-            }
         } catch (error) {
             console.log(error);
         }
     };
 
+    const fetchDayAggregate = async () => {
+        try {
+            const url = `http://localhost:8000/api/report/aggregate/`;
+            const response = await axios.get(url);
+            setAggregate(response.data.data);
+            console.log(aggregate)
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const startDate = document.getElementById('startDate').value
+            const endDate = document.getElementById('endDate').value
+
+            const response = await axios.post(
+                "http://localhost:8000/api/report/sales-report",
+                { startDate: startDate, endDate: endDate }
+            )
+            setSalesReport(response.data.data);
+            console.log(salesReport)
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         fetchProdInTr();
     }, []);
+
+    useEffect(() => {
+        fetchDayAggregate();
+    }, []);
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+    );
+
+    const days = aggregate.map((data) => data.day);
+    const totalSales = aggregate.map((data) => parseInt(data.totalSales)); // Convert totalSales to numbers
+
+    const chartData = {
+        labels: days,
+        datasets: [
+            {
+                label: 'Total Sales',
+                data: totalSales,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: true,
+            },
+        ],
+    };
+
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart',
+            },
+        },
+    }
 
     return (
         <>
@@ -95,21 +171,20 @@ const Report = () => {
 
                 <Tabs mt={"2em"} variant='enclosed'>
                     <TabList>
-                        <Tab>Sales aggregate per day</Tab>
+                        <Tab>Sales Graph</Tab>
                         <Tab>Transaction History</Tab>
-                        <Tab>Sales report by date range</Tab>
+                        <Tab>Sales Report</Tab>
                     </TabList>
 
                     <TabPanels>
                         {/*tab1*/}
                         <TabPanel>
-                            <p>one!</p>
+                            <Line data={chartData} options={chartOptions} />
                         </TabPanel>
 
                         {/* tab2 */}
                         <TabPanel>
                             <Accordion>
-
                                 {products.map((products) =>
                                     <AccordionItem>
                                         <h2>
@@ -121,11 +196,8 @@ const Report = () => {
                                             </AccordionButton>
                                         </h2>
                                         <AccordionPanel pb={4}>
-                                            {/* {products.TransactionItems} */}
-                                            {/* Display Transaction details */}
-                                            <p>User ID: {products.userId}</p>
-                                            <p>Username: {products.User.username}</p>
-                                            <p>Total Price: {products.totalPrice}</p>
+                                            <p>Cashier ID and username: {products.userId}. {products.User.username}</p>
+                                            <p>Total Price: Rp {products.totalPrice}</p>
 
                                             {/* Display TransactionItems */}
                                             {products.TransactionItems.map((transactionItem) => (
@@ -147,13 +219,70 @@ const Report = () => {
 
                         {/* tab3 */}
                         <TabPanel>
-                            <p>three!</p>
+                            <form onSubmit={handleSubmit}>
+                                <HStack>
+                                    <FormControl>
+                                        <FormLabel>Select Start Date</FormLabel>
+                                        <Input
+                                            placeholder="Select Date"
+                                            size="md"
+                                            type="date"
+                                            id="startDate"
+                                            name="startDate"
+                                            value={startDate}
+                                            onChange={(e) => setStartDate(e.target.value)}
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <FormLabel>Select End Date</FormLabel>
+                                        <Input
+                                            placeholder="Select Date"
+                                            size="md"
+                                            type="date"
+                                            id="endDate"
+                                            name="endDate"
+                                            value={endDate}
+                                            onChange={(e) => setEndDate(e.target.value)}
+                                        />
+                                    </FormControl>
+                                    <FormControl>
+                                        <Button mt={'2em'} type="submit" size='md'>Generate report</Button>
+                                    </FormControl>
+                                </HStack>
+                            </form>
+
+                            <Box mt={'1em'}>
+                                <Table variant="striped">
+                                    <TableCaption>Sales Report</TableCaption>
+                                    <Thead>
+                                        <Tr>
+                                            <Th>Date</Th>
+                                            <Th>Total Sales</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>
+                                        {salesReport.length < 1
+                                            ?
+                                            <Text>No data</Text>
+                                            : (
+                                                salesReport.map((data, index) => (
+                                                    <Tr key={index}>
+                                                        <Td>{data.day}</Td>
+                                                        <Td>Rp {data.totalSales}</Td>
+                                                    </Tr>
+                                                ))
+                                            )
+                                        }
+                                    </Tbody>
+                                </Table>
+
+                            </Box>
                         </TabPanel>
 
                     </TabPanels>
-                </Tabs>
+                </Tabs >
 
-            </Box>
+            </Box >
         </>
     )
 }

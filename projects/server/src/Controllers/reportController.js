@@ -17,10 +17,6 @@ const { Op } = sequelize;
 const reportController = {
     getProductInTransaction: async (req, res) => {
         try {
-            let {
-                date
-            } = req.body;
-
             const data = await transaction.findAll({
                 include: [
                     {
@@ -45,6 +41,64 @@ const reportController = {
             });
         }
     },
+
+    dayAggregate: async (req, res) => {
+        try {
+            let {
+                date
+            } = req.body;
+
+            const result = await transaction.findAll({
+                attributes: [
+                    [sequelize.fn('DATE', sequelize.col('createdAt')), 'day'],
+                    [sequelize.fn('SUM', sequelize.col('totalPrice')), 'totalSales'],
+                ],
+                group: [sequelize.fn('DATE', sequelize.col('createdAt'))],
+            });
+
+            return res.status(200).json({
+                message: "get data success",
+                data: result
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    },
+
+    salesReport: async (req, res) => {
+        try {
+            let {
+                startDate,
+                endDate
+            } = req.body;
+
+            const result = await transaction.findAll({
+                attributes: [
+                    [sequelize.fn('DATE', sequelize.col('createdAt')), 'day'],
+                    [sequelize.fn('SUM', sequelize.col('totalPrice')), 'totalSales'],
+                ],
+                where: {
+                    createdAt: {
+                        [Op.between]: [startDate, endDate],
+                    },
+                },
+                group: [sequelize.fn('DATE', sequelize.col('createdAt'))],
+            });
+
+            return res.status(200).json({
+                message: "get data success",
+                data: result
+            });
+
+        } catch (error) {
+            res.status(500).json({
+                error: error.message
+            });
+        }
+    }
 
 };
 

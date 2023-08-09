@@ -15,6 +15,16 @@ router.get(
     // verifyToken,
     reportController.getProductInTransaction
 );
+router.get(
+    "/aggregate",
+    // verifyToken,
+    reportController.dayAggregate
+);
+router.post(
+    "/sales-report",
+    // verifyToken,
+    reportController.salesReport
+);
 
 
 module.exports = router;
