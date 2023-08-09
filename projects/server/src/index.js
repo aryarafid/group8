@@ -12,6 +12,7 @@ const {
   categoryRouter,
   productRouter,
   transactionRouter,
+  reportRouter,
 } = require("./Routers");
 
 // db.sequelize.sync({
@@ -41,6 +42,8 @@ app.use("/api/transaction-management", transactionRouter)
 app.use("/api/cashier", adminRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/report", reportRouter);
+
 app.use("/public", express.static(path.resolve(__dirname, "../public")))
 //#region API ROUTES
 

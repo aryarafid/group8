@@ -104,6 +104,14 @@ const adminController = {
         if (email) userFind2.email = email;
         if (req.file) {
           await db.sequelize.transaction(async (t) => {
+            if (userFind2.imgProfile) {
+              fs.unlink(userFind2.imgProfile, (err) => {
+                if (err) {
+                  res.status(500).json({ error: "ubah gambar error" })
+                  return;
+                }
+              });
+            }
             const result = await user.update(
               {
                 imgProfile: req.file.path,
@@ -121,12 +129,6 @@ const adminController = {
                 error: err.message,
               });
             }
-            fs.unlink(userFind2.imgProfile, (err) => {
-              if (err) {
-                res.status(500).json({ error: "ubah gambar error" })
-                return;
-              }
-            });
           });
           // productFind.productImg = req.file.path
         }

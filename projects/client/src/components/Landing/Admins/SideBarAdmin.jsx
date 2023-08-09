@@ -11,10 +11,11 @@ import {
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
-import { BiSolidCategory, BiSolidHome, BiUser } from "react-icons/bi";
+import { BiSolidCategory, BiSolidHome, BiUser, BiLineChart } from "react-icons/bi";
 import { AiOutlineShop } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../redux/reducer/AuthReducer";
+
 export default function SideBarAdmin() {
   const { user } = useSelector((state) => state.AuthReducer);
   const dispatch = useDispatch();
@@ -37,7 +38,9 @@ export default function SideBarAdmin() {
           <Text>{user.role}</Text>
         </Box>
 
-        {/* <Link to={"/productAdmin"}>
+        <Box h={'1.5em'}></Box>
+
+        <Link to={"/report"}>
           <Box textAlign={"center"} mt={"20px"}>
             <IconButton
               as="button"
@@ -45,18 +48,14 @@ export default function SideBarAdmin() {
               variant={"unstyled"}
               w={"80px"}
               h={"100px"}
-              icon={<BiSolidCategory size={"2xl"} />}
+              icon={<BiLineChart size={"2xl"} />}
             ></IconButton>
-            <Text>Product & Category</Text>
+            <Text>Reports</Text>
           </Box>
-        </Link> */}
+        </Link>
 
-        <Box
-          h={'4em'}
-        ></Box>
-
-        <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
-          <Link to={"/cashierAdmin"}>
+        <Link to={"/cashierAdmin"}>
+          <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
             <IconButton
               as={"button"}
               variant={"unstyled"}
@@ -65,8 +64,8 @@ export default function SideBarAdmin() {
               icon={<BiUser size={"2xl"} />}
             ></IconButton>
             <Text fontSize={"12px"}>Cashier Management</Text>
-          </Link>
-        </Box>
+          </Box>
+        </Link>
 
         <Link to={"/"}>
           <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
@@ -83,7 +82,7 @@ export default function SideBarAdmin() {
         </Link>
 
         <Box
-          h={'7em'}
+          h={'1.5em'}
         ></Box>
 
         <Box textAlign={"center"} color={"white"} fontFamily={"montserrat"}>
