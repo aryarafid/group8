@@ -43,10 +43,11 @@ export const ProductReducer = createSlice({
   },
 });
 
-export const payment = (totalPrice, carts, toast) => {
+export const payment = (totalPrice, carts, toast, setLoading) => {
   return async () => {
     const token = localStorage.getItem("token");
     try {
+      setLoading(true);
       const respon = await axios.post(
         `${URL_API}/transaction-management/transaction`,
         { totalPrice },
@@ -90,6 +91,8 @@ export const payment = (totalPrice, carts, toast) => {
         duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
   };
 };
