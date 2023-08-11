@@ -46,7 +46,7 @@ export const AuthReducer = createSlice({
 export const loginAuth = (values, setLoading, toast) => {
   return async (dispatch) => {
     try {
-      setLoading(false);
+      setLoading(true);
       console.log("=>", values);
       const respon = await axios.post(`${URL_API}/auth-management/auth/login`, {
         username: values.username,
@@ -74,7 +74,7 @@ export const loginAuth = (values, setLoading, toast) => {
         isClosable: true,
       });
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 };
